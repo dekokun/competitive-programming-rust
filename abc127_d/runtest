@@ -3,7 +3,10 @@
 runtest() {
   output=$(echo "$1" | cargo run 2>/dev/null)
   if [ "$output" != "$2" ]; then
-    echo "$1: $2 expected. but got $output"
+    echo fail
+    echo "input: $1"
+    echo
+    echo "$2 expected. but got $output"
     exit 1
   fi
   echo OK
