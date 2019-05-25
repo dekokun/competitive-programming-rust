@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cargo build || exit 1
+
+runtest() {
+  output=$(echo $1 | cargo run)
+  if [ "$output" != "$2" ]; then
+    echo "$1: $2 expected. but got $output"
+    exit 1
+  fi
+  echo OK
+}
+
+runtest "3 2
+5 1 4
+2 3
+1 5" 14
