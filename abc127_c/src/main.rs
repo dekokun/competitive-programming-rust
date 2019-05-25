@@ -31,7 +31,7 @@ fn main() {
     if max < min {
         println!("0");
     } else {
-    println!("{}", max - min + 1);
+        println!("{}", max - min + 1);
     }
 }
 
