@@ -7,7 +7,6 @@ runtest() {
     echo "input: $1"
     echo
     echo "$2 expected. but got $output"
-    exit 1
   fi
   echo OK
 }
