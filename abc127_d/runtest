@@ -1,7 +1,7 @@
 #!/bin/bash
 
 runtest() {
-  output=$(echo "$1" | cargo run 2>/dev/null)
+  output=$(echo "$1" | cargo run)
   if [ "$output" != "$2" ]; then
     echo fail
     echo "input: $1"
