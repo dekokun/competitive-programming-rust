@@ -1,6 +1,5 @@
 use std::io::*;
 use std::str::FromStr;
-use std::collections::VecDeque;
 
 fn read<T: FromStr>() -> T {
     let stdin = stdin();
@@ -24,7 +23,7 @@ fn main() {
         cards.push(read());
     }
     cards.sort();
-    let mut cards = VecDeque::from(cards);
+    cards.reverse();
 
     for _ in 0..M {
         let b: i32 = read();
@@ -37,12 +36,12 @@ fn main() {
     let mut sum: i64 = 0;
     for (count, num) in replaces {
         for _ in 0..count {
-            if cards[0] < num {
+            let card = cards.pop().unwrap();
+            if card < num {
                 sum += num as i64;
             } else {
-                sum += cards[0] as i64;
+                sum += card as i64;
             }
-            cards.pop_front();
             if cards.len() == 0 {
                 println!("{}", sum);
                 return;
