@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ../runtest
+
+runtest "2 2 2" "8"
