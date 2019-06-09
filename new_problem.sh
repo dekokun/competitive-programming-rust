@@ -9,3 +9,4 @@ program_name="$1"
 cargo new "$program_name" --bin
 cp -pr template/src/main.rs "$program_name"/src
 cp -pr template/runtest "$program_name"/runtest
+cp -pr template/rust-toolchain "$program_name"/rust-toolchain
