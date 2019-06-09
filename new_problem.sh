@@ -6,7 +6,7 @@ if [ -z "$1" ]; then
 fi
 
 program_name="$1"
-cargo new abc127_e --bin
+cargo new "$program_name" --bin
 mkdir "$program_name"/src
 mkdir "$program_name"/runtest
 cp -pr template/src/main.rs "$program_name"/src
