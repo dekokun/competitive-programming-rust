@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source ../runtest
+
+runtest "6 1
+3" "4"
+
+runtest "10 2
+4
+5" 0
+
+runtest "100 5
+1
+23
+45
+67
+89" 608200469
+
+runtest "1000 5
+1
+23
+45
+67
+89" 608200469
