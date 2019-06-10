@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ../runtest
+source ../runtest_func.sh
 
 runtest "6 1
 3" "4"
