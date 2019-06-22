@@ -6,7 +6,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 runtest() {
-  output=$(echo "$1" | cargo run -q)
+  output=$(echo "$1" | time cargo run -q)
   if [ "$output" != "$2" ]; then
     echo -e "${RED}fail"
     echo "input: $1"
