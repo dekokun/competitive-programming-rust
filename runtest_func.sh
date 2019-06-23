@@ -1,3 +1,4 @@
+export RUST_BACKTRACE=1
 # compile check
 cargo build || exit 1
 
