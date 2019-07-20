@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+runtest "6 2" 2
+runtest "14 3" 2
+runtest "20 4" 3
