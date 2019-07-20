@@ -21,7 +21,6 @@ fn main() {
     }
     let mut sunuke_balls = vec![0; vec.len()];
     let mut m = 0;
-    let mut ans = vec![];
     for (i_1, _) in vec.iter().enumerate().rev() {
         let i = i_1 + 1;
         let mut sum = 0;
@@ -32,15 +31,15 @@ fn main() {
             sunuke_balls[i_1] = 0;
         } else {
             sunuke_balls[i_1] = 1;
-            ans.push(i);
             m += 1;
         }
     }
     println!("{}", m);
     println!(
         "{}",
-        ans.iter()
-            .map(|i| i.to_string())
+        sunuke_balls.iter().enumerate()
+            .filter(|&(_, i)| *i == 1)
+            .map(|(i, _)| (i + 1).to_string())
             .collect::<Vec<String>>()
             .join(" ")
     );
