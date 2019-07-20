@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+runtest "4
+3 1 4 2" 16
+runtest "6
+5 2 4 1 6 9" "51"
+
+runtest "10
+3 1 4 1 5 9 2 6 5 3" 115
