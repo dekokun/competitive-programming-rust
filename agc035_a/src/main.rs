@@ -1,6 +1,8 @@
 use std::io::*;
 use std::str::FromStr;
 
+// not passed
+
 fn read<T: FromStr>() -> T {
     let stdin = stdin();
     let stdin = stdin.lock();
