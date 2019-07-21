@@ -21,13 +21,13 @@ fn main() {
     }
     let mut sunuke_balls = vec![0; vec.len()];
     let mut m = 0;
-    for (i_1, _) in vec.iter().enumerate().rev() {
+    for (i_1, v) in vec.iter().enumerate().rev() {
         let i = i_1 + 1;
         let mut sum = 0;
         for j in 1..((vec.len() / i) + 1) {
             sum += sunuke_balls[(i * j) - 1];
         }
-        if sum % 2 == vec[i_1] {
+        if sum % 2 == *v {
             sunuke_balls[i_1] = 0;
         } else {
             sunuke_balls[i_1] = 1;
