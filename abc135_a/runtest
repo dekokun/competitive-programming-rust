@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+runtest "2 16" "9"
+runtest "0 3" "IMPOSSIBLE"
