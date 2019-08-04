@@ -9,7 +9,7 @@ if [ "$program_name" == "master" ]; then
     exit 1;
 fi
 
-git add "$program_name"/*
+git add "$program_name"/
 git commit -m"$program_name pass"
-git checkuot master
+git checkout master
 git merge "$program_name"
