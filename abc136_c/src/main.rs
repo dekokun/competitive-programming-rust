@@ -14,4 +14,28 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: u64 = read();
+    let mut vec: Vec<u64> = vec![];;
+    for _ in 0..n {
+        vec.push(read());
+    }
+    vec.reverse();
+    let mut before = 0;
+    for (i, v) in vec.into_iter().enumerate() {
+        if i == 0 {
+            before = v;
+            continue;
+        }
+        if before >= v {
+            before = v;
+            continue;
+        } else if before < v - 1 {
+            println!("No");
+            return;
+        } else {
+            before = v - 1;
+        }
+    }
+    println!("Yes");
+    return;
 }
