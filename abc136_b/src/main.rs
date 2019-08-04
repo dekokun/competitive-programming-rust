@@ -14,4 +14,14 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: i32 = read::<String>().parse().unwrap();
+    let mut ans = 0;
+    for i in 1..(n + 1) {
+        let s = i.to_string();
+        if s.len() % 2 == 1 {
+            // dbg!(s.len(), s, i);
+            ans += 1;
+        }
+    }
+    println!("{}", ans);
 }
