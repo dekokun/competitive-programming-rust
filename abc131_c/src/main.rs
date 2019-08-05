@@ -39,6 +39,12 @@ fn main() {
     let d_count = (b / d) - ((a - 1) / d);
 
     let lcm = lcm(c, d);
-    let lcm_count = (b / lcm) - (a / lcm);
-    println!("{}", all_count - c_count - d_count + lcm_count);
+    let lcm_count = (b / lcm) - ((a -1)/ lcm);
+    println!(
+        "{}",
+        std::cmp::max(
+            all_count as i64 - c_count as i64 - d_count as i64 + lcm_count as i64,
+            0
+        )
+    );
 }
