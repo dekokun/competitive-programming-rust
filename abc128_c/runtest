@@ -2,4 +2,16 @@
 
 source ../runtest_func.sh
 
-runtest "2 2 2" "8"
+runtest "2 2
+2 1 2
+1 2
+0 1" 1
+runtest "2 3
+2 1 2
+1 1
+1 2
+0 0 1" 0
+runtest "5 2
+3 1 2 5
+2 2 3
+1 0" 8
