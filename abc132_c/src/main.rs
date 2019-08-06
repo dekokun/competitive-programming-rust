@@ -14,4 +14,17 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n = read();
+    let mut vec: Vec<i32> = vec![];
+    for _ in 0..n {
+        vec.push(read());
+    }
+    vec.sort();
+    let l = vec[vec.len() / 2 - 1];
+    let r = vec[vec.len() / 2];
+    if l == r {
+        println!("0");
+        return;
+    }
+    println!("{}", r - l);
 }
