@@ -14,4 +14,18 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let l: i64 = read();
+    let r: i64 = read();
+    if r - l > 2019 {
+        println!("{}", 0);
+        return;
+    }
+    let mut ans = 2019;
+    for i in l..r {
+        for j in (i + 1)..(r + 1) {
+            let v = ((i % 2019) * (j % 2019)) % 2019;
+            ans = std::cmp::min(v, ans);
+        }
+    }
+    println!("{}", ans);
 }
