@@ -2,4 +2,5 @@
 
 source ../runtest_func.sh
 
-runtest "2 2 2" "8"
+runtest "3 10" 0.14583333333333334
+runtest "100000 5" 0.99997375
