@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+runtest 11 9
+runtest 136 46
+runtest 100000 90909
