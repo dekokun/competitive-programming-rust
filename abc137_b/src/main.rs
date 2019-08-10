@@ -14,4 +14,13 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let k: i16 = read();
+    let x: i16 = read();
+    println!(
+        "{}",
+        ((x - k + 1)..(x + k - 1) + 1)
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>()
+            .join(" ")
+    );
 }
