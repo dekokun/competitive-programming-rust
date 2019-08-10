@@ -2,4 +2,16 @@
 
 source ../runtest_func.sh
 
-runtest "2 2 2" "8"
+runtest "3
+acornistnt
+peanutbomb
+constraint" 1
+runtest "2
+oneplustwo
+ninemodsix" 0
+runtest "5
+abaaaaaaaa
+oneplustwo
+aaaaaaaaba
+twoplusone
+aaaabaaaaa" 4
