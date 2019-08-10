@@ -14,7 +14,7 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let a: i8 = read();
-    let b: i8 = read();
+    let a: i16 = read();
+    let b: i16 = read();
     println!("{}", std::cmp::max(std::cmp::max(a + b, a - b), a * b));
 }
