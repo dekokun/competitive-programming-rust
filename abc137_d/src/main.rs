@@ -33,7 +33,7 @@ fn main() {
         match heap.pop() {
             Some(i) => {
                 sum += i;
-            },
+            }
             None => {}
         }
     }
