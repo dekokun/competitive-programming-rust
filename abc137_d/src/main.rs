@@ -1,3 +1,5 @@
+use std::collections::BinaryHeap;
+use std::collections::HashMap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -16,28 +18,24 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let n: i32 = read();
     let m: i32 = read();
-    let mut rewards = vec![];
-    let mut set = std::collections::HashMap::new();
+    let mut jobs: HashMap<i32, Vec<i32>> = HashMap::new();
     for _ in 0..n {
-        let reward = read::<i32>();
-        let days = read::<i32>();
-        set.entry(reward).or_insert(vec![]).push(days);
-        rewards.push(reward);
+        let day: i32 = read();
+        let reward: i32 = read();
+        jobs.entry(day).or_insert(vec![]).push(reward);
     }
-    let mut map = std::collections::HashMap::new();
-    for reward in &rewards {
-        let mut dayss = set.remove(reward).unwrap();
-        dayss.sort();
-        dayss.reverse();
-        map.insert(reward.clone(), dayss);
-    }
-    rewards.sort();
-    rewards.reverse();
-    let mut total_reward = 0;
-    for i in 1..m {
-        for reward in &rewards {
-            for days in map[reward].clone() {}
+    let mut heap: BinaryHeap<i32> = BinaryHeap::new();
+    let mut sum = 0;
+    for i in (0..m).rev() {
+        for v in jobs.entry(m - i).or_insert(vec![]) {
+            heap.push(*v);
+        }
+        match heap.pop() {
+            Some(i) => {
+                sum += i;
+            },
+            None => {}
         }
     }
-    println!("{}", total_reward);
+    println!("{}", sum);
 }
