@@ -2,4 +2,4 @@
 
 source ../runtest_func.sh
 
-runtest "2 2 2" "8"
+t "2 2 2" "8"
