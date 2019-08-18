@@ -14,4 +14,11 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: i16 = read();
+    let mut sum = 0.0;
+    for _ in 0..n {
+        let i: f64 = read();
+        sum += 1.0/i;
+    }
+    println!("{}", 1.0/sum);
 }
