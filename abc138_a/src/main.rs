@@ -14,4 +14,11 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let a: i16 = read();
+    let s: String = read();
+    if a < 3200 {
+        println!("red");
+    } else {
+        println!("{}", s);
+    }
 }
