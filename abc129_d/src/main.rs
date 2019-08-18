@@ -14,4 +14,11 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let h: i32 = read();
+    let w: i32 = read();
+    let mut vec = vec![];
+    for i in 0..h {
+        let str: String = read();
+        vec.push(((*str).clone().chars().clone()).clone());
+    }
 }
