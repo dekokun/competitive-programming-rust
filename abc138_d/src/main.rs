@@ -23,16 +23,15 @@ fn main() {
         tree[a].push(b);
         tree[b].push(a);
     }
-    let mut add_values = vec![0; n];
+    let mut ans = vec![0; n];
     for _ in 0..q {
         // operation vertex
         let p: usize = read::<usize>() - 1;
         // add value
         let x: usize = read::<usize>();
-        add_values[p] += x;
+        ans[p] += x;
     }
-    let mut ans = vec![0; n];
-    get_values(&tree, &add_values, 0, 0, 0, &mut ans);
+    get_values(&tree, 0, 0, &mut ans);
     println!(
         "{}",
         ans
@@ -44,19 +43,15 @@ fn main() {
 }
 fn get_values(
     tree: &Vec<Vec<usize>>,
-    add_values: &Vec<usize>,
     vertex: usize,
     before: usize,
-    plus_val: usize,
     ans: &mut Vec<usize>,
 ) {
-    let mut plus_val = plus_val;
-    plus_val += add_values[vertex];
-    ans[vertex] =  plus_val;
     for vert in &tree[vertex] {
         if *vert == before {
             continue;
         }
-        get_values(&tree, &add_values, *vert, vertex, plus_val, ans)
+        ans[*vert] += ans[vertex];
+        get_values(&tree, *vert, vertex, ans)
     }
 }
