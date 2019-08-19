@@ -14,25 +14,25 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: i64 = read();
-    let q: i64 = read();
-    let mut tree = vec![vec![]; n as usize];
+    let n: usize = read();
+    let q: usize = read();
+    let mut tree = vec![vec![]; n];
     for _ in 0..(n - 1) {
-        let a: i64 = read::<i64>() -1;
-        let b: i64 = read::<i64>() -1;
+        let a: usize = read::<usize>() -1;
+        let b: usize = read::<usize>() -1;
         let min = std::cmp::min(a, b);
         let max = std::cmp::max(a, b);
-        tree[min as usize].push(max);
+        tree[min].push(max);
     }
-    let mut add_values = vec![0; n as usize];
+    let mut add_values = vec![0; n];
     for _ in 0..q {
         // operation vertex
-        let p: i64 = read::<i64>() - 1;
+        let p: usize = read::<usize>() - 1;
         // add value
-        let x: i64 = read::<i64>();
-        add_values[p as usize] += x;
+        let x: usize = read::<usize>();
+        add_values[p] += x;
     }
-    let mut ans = vec![0; n as usize];
+    let mut ans = vec![0; n];
     get_values(&tree, &add_values, 0, 0, n, &mut ans);
     println!(
         "{}",
@@ -44,20 +44,20 @@ fn main() {
     );
 }
 fn get_values(
-    tree: &Vec<Vec<i64>>,
-    add_values: &Vec<i64>,
-    vertex: i64,
-    plus_val: i64,
-    max: i64,
-    ans: &mut Vec<i64>,
+    tree: &Vec<Vec<usize>>,
+    add_values: &Vec<usize>,
+    vertex: usize,
+    plus_val: usize,
+    max: usize,
+    ans: &mut Vec<usize>,
 ) {
     let mut plus_val = plus_val;
     if vertex == max + 1 {
         return;
     }
-    plus_val += add_values[vertex as usize];
-    ans[vertex as usize] =  plus_val;
-    for vert in &tree[vertex as usize] {
+    plus_val += add_values[vertex];
+    ans[vertex] =  plus_val;
+    for vert in &tree[vertex] {
         get_values(&tree, &add_values, *vert, plus_val, max, ans)
     }
 }
