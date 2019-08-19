@@ -20,9 +20,8 @@ fn main() {
     for _ in 0..(n - 1) {
         let a: usize = read::<usize>() -1;
         let b: usize = read::<usize>() -1;
-        let min = std::cmp::min(a, b);
-        let max = std::cmp::max(a, b);
-        tree[min].push(max);
+        tree[a].push(b);
+        tree[b].push(a);
     }
     let mut add_values = vec![0; n];
     for _ in 0..q {
@@ -33,7 +32,7 @@ fn main() {
         add_values[p] += x;
     }
     let mut ans = vec![0; n];
-    get_values(&tree, &add_values, 0, 0, &mut ans);
+    get_values(&tree, &add_values, 0, 0, 0, &mut ans);
     println!(
         "{}",
         ans
@@ -47,6 +46,7 @@ fn get_values(
     tree: &Vec<Vec<usize>>,
     add_values: &Vec<usize>,
     vertex: usize,
+    before: usize,
     plus_val: usize,
     ans: &mut Vec<usize>,
 ) {
@@ -54,6 +54,9 @@ fn get_values(
     plus_val += add_values[vertex];
     ans[vertex] =  plus_val;
     for vert in &tree[vertex] {
-        get_values(&tree, &add_values, *vert, plus_val, ans)
+        if *vert == before {
+            continue;
+        }
+        get_values(&tree, &add_values, *vert, vertex, plus_val, ans)
     }
 }
