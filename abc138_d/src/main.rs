@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -17,29 +16,24 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let n: i64 = read();
     let q: i64 = read();
-    let mut tree = HashMap::new();
-    tree.insert(1, vec![]);
+    let mut tree = vec![vec![]; n as usize];
     for _ in 0..(n - 1) {
-        let a: i64 = read();
-        let b: i64 = read();
+        let a: i64 = read::<i64>() -1;
+        let b: i64 = read::<i64>() -1;
         let min = std::cmp::min(a, b);
         let max = std::cmp::max(a, b);
-        {
-            let entry = tree.entry(min).or_insert(vec![]);
-            entry.push(max);
-        }
-        tree.entry(max).or_insert(vec![]);
+        tree[min as usize].push(max);
     }
     let mut add_values = vec![0; n as usize];
     for _ in 0..q {
         // operation vertex
-        let p: i64 = read();
+        let p: i64 = read::<i64>() - 1;
         // add value
-        let x: i64 = read();
-        add_values[(p - 1) as usize] += x;
+        let x: i64 = read::<i64>();
+        add_values[p as usize] += x;
     }
     let mut ans = vec![0; n as usize];
-    get_values(&tree, &add_values, 1, 0, n, &mut ans);
+    get_values(&tree, &add_values, 0, 0, n, &mut ans);
     println!(
         "{}",
         ans
@@ -50,7 +44,7 @@ fn main() {
     );
 }
 fn get_values(
-    tree: &HashMap<i64, Vec<i64>>,
+    tree: &Vec<Vec<i64>>,
     add_values: &Vec<i64>,
     vertex: i64,
     plus_val: i64,
@@ -61,14 +55,9 @@ fn get_values(
     if vertex == max + 1 {
         return;
     }
-    plus_val += add_values[(vertex - 1) as usize];
-    ans[(vertex - 1) as usize] =  plus_val;
-    match tree.get(&vertex) {
-        Some(vec) => {
-            for &vert in vec {
-                get_values(&tree, &add_values, vert, plus_val, max, ans)
-            }
-        }
-        None => {}
+    plus_val += add_values[vertex as usize];
+    ans[vertex as usize] =  plus_val;
+    for vert in &tree[vertex as usize] {
+        get_values(&tree, &add_values, *vert, plus_val, max, ans)
     }
 }
