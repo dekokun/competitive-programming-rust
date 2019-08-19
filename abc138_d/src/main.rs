@@ -39,22 +39,11 @@ fn main() {
         let entry = add_values.entry(p).or_insert(0);
         *entry += x;
     }
-    let mut ans = HashMap::new();
+    let mut ans = vec![0; n as usize];
     get_values(&tree, &add_values, 1, 0, n, &mut ans);
-    let mut ans_vec = vec![];
-    for i in 1..(n + 1) {
-        match ans.get(&i) {
-            Some(&v) => {
-                ans_vec.push(v);
-            }
-            None => {
-                ans_vec.push(0);
-            }
-        }
-    }
     println!(
         "{}",
-        ans_vec
+        ans
             .iter()
             .map(|i| i.to_string())
             .collect::<Vec<_>>()
@@ -67,7 +56,7 @@ fn get_values(
     vertex: i64,
     plus_val: i64,
     max: i64,
-    ans: &mut HashMap<i64, i64>,
+    ans: &mut Vec<i64>,
 ) {
     let mut plus_val = plus_val;
     if vertex == max + 1 {
@@ -77,7 +66,7 @@ fn get_values(
         Some(i) => plus_val += *i,
         None => {}
     }
-    ans.insert(vertex, plus_val);
+    ans[(vertex - 1) as usize] =  plus_val;
     match tree.get(&vertex) {
         Some(vec) => {
             for &vert in vec {
