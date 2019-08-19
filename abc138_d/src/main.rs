@@ -33,7 +33,7 @@ fn main() {
         add_values[p] += x;
     }
     let mut ans = vec![0; n];
-    get_values(&tree, &add_values, 0, 0, n, &mut ans);
+    get_values(&tree, &add_values, 0, 0, &mut ans);
     println!(
         "{}",
         ans
@@ -48,16 +48,12 @@ fn get_values(
     add_values: &Vec<usize>,
     vertex: usize,
     plus_val: usize,
-    max: usize,
     ans: &mut Vec<usize>,
 ) {
     let mut plus_val = plus_val;
-    if vertex == max + 1 {
-        return;
-    }
     plus_val += add_values[vertex];
     ans[vertex] =  plus_val;
     for vert in &tree[vertex] {
-        get_values(&tree, &add_values, *vert, plus_val, max, ans)
+        get_values(&tree, &add_values, *vert, plus_val, ans)
     }
 }
