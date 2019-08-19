@@ -30,14 +30,13 @@ fn main() {
         }
         tree.entry(max).or_insert(vec![]);
     }
-    let mut add_values = HashMap::new();
+    let mut add_values = vec![0; n as usize];
     for _ in 0..q {
         // operation vertex
         let p: i64 = read();
         // add value
         let x: i64 = read();
-        let entry = add_values.entry(p).or_insert(0);
-        *entry += x;
+        add_values[(p - 1) as usize] += x;
     }
     let mut ans = vec![0; n as usize];
     get_values(&tree, &add_values, 1, 0, n, &mut ans);
@@ -52,7 +51,7 @@ fn main() {
 }
 fn get_values(
     tree: &HashMap<i64, Vec<i64>>,
-    add_values: &HashMap<i64, i64>,
+    add_values: &Vec<i64>,
     vertex: i64,
     plus_val: i64,
     max: i64,
@@ -62,10 +61,7 @@ fn get_values(
     if vertex == max + 1 {
         return;
     }
-    match add_values.get(&vertex) {
-        Some(i) => plus_val += *i,
-        None => {}
-    }
+    plus_val += add_values[(vertex - 1) as usize];
     ans[(vertex - 1) as usize] =  plus_val;
     match tree.get(&vertex) {
         Some(vec) => {
