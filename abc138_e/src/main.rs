@@ -14,4 +14,12 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let s: String = read();
+    let t: String = read();
+    for c in t.chars() {
+        if !s.contains(&(c.to_string())) {
+            println!("-1");
+            return;
+        }
+    }
 }

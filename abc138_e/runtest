@@ -2,4 +2,9 @@
 
 source ../runtest_func.sh
 
-t "2 2 2" "8"
+t "contest
+son" 10
+t "contest
+programming" -1
+t "contest
+sentence" 33
