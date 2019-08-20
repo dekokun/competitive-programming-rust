@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -15,46 +14,27 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: i64 = read();
-    let q: i64 = read();
-    let mut tree = HashMap::new();
-    tree.insert(1, vec![]);
+    let n: usize = read();
+    let q: usize = read();
+    let mut tree = vec![vec![]; n];
     for _ in 0..(n - 1) {
-        let a: i64 = read();
-        let b: i64 = read();
-        let min = std::cmp::min(a, b);
-        let max = std::cmp::max(a, b);
-        {
-            let entry = tree.entry(min).or_insert(vec![]);
-            entry.push(max);
-        }
-        tree.entry(max).or_insert(vec![]);
+        let a: usize = read::<usize>() -1;
+        let b: usize = read::<usize>() -1;
+        tree[a].push(b);
+        tree[b].push(a);
     }
-    let mut add_values = HashMap::new();
+    let mut ans = vec![0; n];
     for _ in 0..q {
         // operation vertex
-        let p: i64 = read();
+        let p: usize = read::<usize>() - 1;
         // add value
-        let x: i64 = read();
-        let entry = add_values.entry(p).or_insert(0);
-        *entry += x;
+        let x: usize = read::<usize>();
+        ans[p] += x;
     }
-    let mut ans = HashMap::new();
-    get_values(&tree, &add_values, 1, 0, n, &mut ans);
-    let mut ans_vec = vec![];
-    for i in 1..(n + 1) {
-        match ans.get(&i) {
-            Some(&v) => {
-                ans_vec.push(v);
-            }
-            None => {
-                ans_vec.push(0);
-            }
-        }
-    }
+    get_values(&tree, 0, 0, &mut ans);
     println!(
         "{}",
-        ans_vec
+        ans
             .iter()
             .map(|i| i.to_string())
             .collect::<Vec<_>>()
@@ -62,28 +42,16 @@ fn main() {
     );
 }
 fn get_values(
-    tree: &HashMap<i64, Vec<i64>>,
-    add_values: &HashMap<i64, i64>,
-    vertex: i64,
-    plus_val: i64,
-    max: i64,
-    ans: &mut HashMap<i64, i64>,
+    tree: &Vec<Vec<usize>>,
+    vertex: usize,
+    before: usize,
+    ans: &mut Vec<usize>,
 ) {
-    let mut plus_val = plus_val;
-    if vertex == max + 1 {
-        return;
-    }
-    match add_values.get(&vertex) {
-        Some(i) => plus_val += *i,
-        None => {}
-    }
-    ans.insert(vertex, plus_val);
-    match tree.get(&vertex) {
-        Some(vec) => {
-            for &vert in vec {
-                get_values(&tree, &add_values, vert, plus_val, max, ans)
-            }
+    for vert in &tree[vertex] {
+        if *vert == before {
+            continue;
         }
-        None => {}
+        ans[*vert] += ans[vertex];
+        get_values(&tree, *vert, vertex, ans)
     }
 }
