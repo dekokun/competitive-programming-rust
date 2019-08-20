@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -16,10 +17,36 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let s: String = read();
     let t: String = read();
+    let mut map = HashMap::new();
+    for (i, c) in (s.clone() + &s).chars().enumerate() {
+        let entry = map.entry(c).or_insert(vec![]);
+        entry.push(i);
+    }
+    let n = s.len();
+    let mut ans = 0;
+    let mut now = 0;
     for c in t.chars() {
-        if !s.contains(&(c.to_string())) {
-            println!("-1");
-            return;
+        match map.get(&c) {
+            Some(vec) => {
+                match vec.binary_search(&now) {
+                    Ok(idx) => {
+                        now = vec[idx] + 1;
+                    }
+                    Err(idx) => {
+                        now = vec[idx] + 1;
+                    }
+                }
+                if now >= n {
+                    now -= n;
+                    ans += n;
+                }
+            }
+            None => {
+                println!("-1");
+                return;
+            }
         }
     }
+    ans += now;
+    println!("{}", ans);
 }
