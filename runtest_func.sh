@@ -18,3 +18,6 @@ runtest() {
   fi
 }
 
+t() {
+    runtest "$@"
+}
