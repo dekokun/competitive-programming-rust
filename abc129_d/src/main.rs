@@ -14,11 +14,80 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let h: i32 = read();
-    let w: i32 = read();
-    let mut vec = vec![];
-    for i in 0..h {
+    let h: usize = read();
+    let w: usize = read();
+    let mut result = vec![vec![0; w]; h];
+    let mut square = vec![];
+    for _ in 0..h {
         let str: String = read();
-        vec.push(((*str).clone().chars().clone()).clone());
+        let row = str.chars().collect::<Vec<char>>();
+        square.push(row);
     }
+    for i in 0..h {
+        let mut counter = 0;
+        let mut start = None;
+        for j in 0..w {
+            if square[i][j] == '#' {
+                if start.is_some() {
+                    for s in start.unwrap()..j {
+                        result[i][s] += counter;
+                    }
+                }
+                start = None;
+                counter = 0;
+            } else if j == (w - 1) {
+                counter += 1;
+                if start.is_none() {
+                    start = Some(j);
+                }
+                for s in start.unwrap()..j + 1 {
+                    result[i][s] += counter;
+                }
+                start = None;
+                counter = 0;
+            } else {
+                counter += 1;
+                if start.is_none() {
+                    start = Some(j);
+                }
+            }
+        }
+    }
+    for j in 0..w {
+        let mut counter = 0;
+        let mut start = None;
+        for i in 0..h {
+            if square[i][j] == '#' {
+                if start.is_some() {
+                    for s in start.unwrap()..i {
+                        result[s][j] += counter;
+                    }
+                }
+                start = None;
+                counter = 0;
+            } else if i == (h - 1) {
+                counter += 1;
+                if start.is_none() {
+                    start = Some(i);
+                }
+                for s in start.unwrap()..i + 1 {
+                    result[s][j] += counter;
+                }
+                start = None;
+                counter = 0;
+            } else {
+                counter += 1;
+                if start.is_none() {
+                    start = Some(i);
+                }
+            }
+        }
+    }
+    let mut max = 0;
+    for row in result {
+        for cell in row {
+            max = std::cmp::max(max, cell);
+        }
+    }
+    println!("{}", max - 1);
 }
