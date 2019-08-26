@@ -1,3 +1,4 @@
+use std::collections::BinaryHeap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -14,4 +15,38 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+    let k: usize = read();
+    let mut queue: Vec<i32> = vec![];
+    for _ in 0..n {
+        queue.push(read());
+    }
+    let mut ans = 0;
+    for l in 0..std::cmp::min(n, k) {
+        for r in 0..(std::cmp::min(n, k) - l) {
+            let mut now = 0;
+            let mut hands: BinaryHeap<i32> = BinaryHeap::new();
+            for i in 0..l {
+                now += queue[i];
+                hands.push(-queue[i]);
+            }
+            for j in 0..r {
+                now += queue[n - j - 1];
+                hands.push(-queue[n - j - 1]);
+            }
+            for _ in 0..k - (r + l) {
+                let minus_value = match hands.pop() {
+                    Some(i) => i,
+                    None => break
+                };
+                if minus_value < 0 {
+                    break;
+                }
+                // negate value
+                now += minus_value;
+                ans = std::cmp::max(ans, now);
+            }
+        }
+    }
+    println!("{}", ans);
 }
