@@ -22,8 +22,8 @@ fn main() {
         queue.push(read());
     }
     let mut ans = 0;
-    for l in 0..std::cmp::min(n, k) {
-        for r in 0..(std::cmp::min(n, k) - l) {
+    for l in 0..(std::cmp::min(n, k) + 1) {
+        for r in 0..(std::cmp::min(n, k) - l + 1) {
             let mut now = 0;
             let mut hands: BinaryHeap<i32> = BinaryHeap::new();
             for i in 0..l {
@@ -37,15 +37,15 @@ fn main() {
             for _ in 0..k - (r + l) {
                 let minus_value = match hands.pop() {
                     Some(i) => i,
-                    None => break
+                    None => break,
                 };
                 if minus_value < 0 {
                     break;
                 }
                 // negate value
                 now += minus_value;
-                ans = std::cmp::max(ans, now);
             }
+            ans = std::cmp::max(ans, now);
         }
     }
     println!("{}", ans);
