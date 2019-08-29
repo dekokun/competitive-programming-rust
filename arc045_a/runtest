@@ -2,4 +2,6 @@
 
 source ../runtest_func.sh
 
-t "2 2 2" "8"
+t "Left Right AtCoder" "< > A"
+t "Left Left Right Right AtCoder" "< < > > A"
+t "Right Right AtCoder Left Left AtCoder" "> > A < < A"
