@@ -21,4 +21,13 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let a: i8 = read();
+    let b: i8 = read();
+    let mut socket_num = 1;
+    let mut power_stripe_num = 0;
+    while socket_num < b {
+        socket_num += a - 1;
+        power_stripe_num += 1;
+    }
+    println!("{}", power_stripe_num);
 }
