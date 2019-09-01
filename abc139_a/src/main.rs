@@ -21,4 +21,15 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let s: String = read();
+    let t: String = read();
+    let s: Vec<_> = s.chars().collect();
+    let t: Vec<_> = t.chars().collect();
+    let mut ans = 0;
+    for (i, c) in s.iter().enumerate() {
+        if *c == t[i] {
+            ans += 1;
+        }
+    }
+    println!("{}", ans);
 }

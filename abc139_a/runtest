@@ -2,4 +2,9 @@
 
 source ../runtest_func.sh
 
-t "2 2 2" "8"
+t "CSS
+CSR" 2
+t "SSR
+SSR" 3
+t "RRR
+SSS" 0
