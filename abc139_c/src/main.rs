@@ -21,4 +21,23 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: i32 = read();
+    let mut vec: Vec<i32> = vec![];
+    for _ in 0..n {
+        vec.push(read());
+    }
+    let mut before = 0;
+    let mut ans = 0;
+    let mut now = 0;
+    for v in vec {
+        if before >= v {
+            now += 1;
+            ans = std::cmp::max(ans, now);
+        } else {
+            ans = std::cmp::max(ans, now);
+            now = 0;
+        }
+        before = v;
+    }
+    println!("{}", ans);
 }
