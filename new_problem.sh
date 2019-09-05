@@ -7,7 +7,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-if [ "$program_name" != "master" ]; then
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch" != "master" ]; then
     echo "Please checkout master branch."
     exit 1;
 fi
