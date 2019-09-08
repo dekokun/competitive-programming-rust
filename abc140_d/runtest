@@ -2,4 +2,11 @@
 
 source ../runtest_func.sh
 
-t "2 2 2" "8"
+t "6 1
+LRLRRL" 3
+t "13 3
+LRRLRLRRLRLLR" 9
+t "10 1
+LLLLLRRRRR" 9
+t "9 2
+RRRLRLRLL" 7

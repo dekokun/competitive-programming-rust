@@ -21,4 +21,16 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: i32 = read();
+    let k: i32 = read();
+    let s: String = read();
+    let mut score: i32 = n - 1;
+    let mut before = s.chars().collect::<Vec<_>>()[0];
+    for c in s.chars() {
+        if before != c {
+            score = std::cmp::max(0, score - 1);
+        }
+        before = c;
+    }
+    println!("{}", std::cmp::min(n - 1, score + k * 2));
 }
