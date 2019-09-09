@@ -21,4 +21,30 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+    // let mut vec = vec![0; n];
+    let mut p: Vec<usize> = vec![];
+    let mut sum = 0;
+    let mut max;
+    let mut second;
+    for _ in 0..n {
+        p.push(read());
+    }
+    for i in 0..n {
+        for j in i + 1..n {
+            max = 0;
+            second = 0;
+            for k in i..j + 1 {
+                // vec[k] += 1;
+                if max < p[k] {
+                    second = max;
+                    max = p[k];
+                } else if second < p[k] {
+                    second = p[k];
+                }
+            }
+            sum += second;
+        }
+    }
+    println!("{}", sum);
 }
