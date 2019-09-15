@@ -2,4 +2,8 @@
 
 source ../runtest_func.sh
 
-t "2 2 2" "8"
+t "RUDLUDR" "Yes"
+t "DULL" "No"
+t "UUUUUUUUUUUUUUU" Yes
+t "ULURU" No
+t "RDULULDURURLRDULRLR" Yes

@@ -21,4 +21,19 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let s: String = read();
+    for (i, c) in s.chars().enumerate() {
+        if (i + 1) % 2 == 0 {
+            if c == 'R' {
+                println!("No");
+                return;
+            }
+        } else {
+            if c == 'L' {
+                println!("No");
+                return;
+            }
+        }
+    }
+    println!("Yes");
 }
