@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+t "2 2 2" "8"
