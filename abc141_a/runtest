@@ -2,4 +2,5 @@
 
 source ../runtest_func.sh
 
-t "2 2 2" "8"
+t "Sunny" "Cloudy"
+t "Rainy" "Sunny"

@@ -21,4 +21,13 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let s: String = read();
+    let tomorrow = if s == "Sunny".to_string() {
+        "Cloudy"
+    } else if s == "Cloudy".to_string() {
+        "Rainy"
+    } else {
+        "Sunny"
+    };
+    println!("{}", tomorrow);
 }
