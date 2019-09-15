@@ -21,4 +21,18 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+    let k: usize = read();
+    let q: usize = read();
+    let mut user_points: Vec<i32> = vec![-(q as i32); n];
+    for _ in 0..q {
+        user_points[read::<usize>() - 1] += 1;
+    }
+    for i in user_points {
+        if i > -(k as i32) {
+            println!("Yes");
+        } else {
+            println!("No");
+        }
+    }
 }
