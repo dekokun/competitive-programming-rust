@@ -89,7 +89,7 @@ impl<T: PartialOrd + Copy> Iterator for MyBinaryHeap<T> {
 
 #[test]
 fn it_works() {
-    let mut a = BinaryHeap2::new();
+    let mut a = MyBinaryHeap::new();
     assert_eq!(a.pop(), None);
     a.push(1);
     a.push(5);
