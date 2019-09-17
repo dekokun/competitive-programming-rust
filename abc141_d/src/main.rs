@@ -31,10 +31,7 @@ impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
     pub fn push(&mut self, item: T) {
         self.data.push(item);
         let mut now_index = self.data.len() - 1;
-        loop {
-            if now_index == 0 {
-                break;
-            }
+        while now_index > 0 {
             // startは1か0か。0にしてみる
             let parent_index = (now_index - 1) / 2;
             if self.data[now_index] <= self.data[parent_index] {
