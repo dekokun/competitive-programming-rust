@@ -48,9 +48,6 @@ impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
         }
     }
     pub fn pop(&mut self) -> Option<T> {
-        if self.data.len() == 0 {
-            return None;
-        }
         let item = self.data.pop();
         if self.data.len() == 0 {
             return item;
