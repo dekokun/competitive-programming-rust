@@ -24,6 +24,8 @@ fn read<T: FromStr>() -> T {
 struct MyBinaryHeap<T> {
     data: Vec<T>,
 }
+// TODO: add impl for Debug
+// TODO: add impl for Clone
 impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
     pub fn new() -> MyBinaryHeap<T> {
         MyBinaryHeap { data: vec![] }
