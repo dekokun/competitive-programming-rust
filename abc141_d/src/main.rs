@@ -105,6 +105,19 @@ fn it_works() {
     assert_eq!(a.pop(), None);
 }
 
+#[test]
+fn iter_works() {
+    let mut a = MyBinaryHeap::new();
+    assert_eq!(a.pop(), None);
+    a.push(1);
+    a.push(5);
+    a.push(0);
+    a.push(100);
+    let expected = vec![100, 5, 1, 0];
+    for (i, v) in a.enumerate() {
+        assert_eq!(expected[i], v);
+    }
+}
 fn main() {
     let mut queue = MyBinaryHeap::new();
     let n: i32 = read();
