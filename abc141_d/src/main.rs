@@ -28,6 +28,7 @@ impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
     pub fn new() -> MyBinaryHeap<T> {
         MyBinaryHeap { data: vec![] }
     }
+    // TODO: panic if partial_cmp return None
     pub fn push(&mut self, item: T) {
         self.data.push(item);
         let mut now_index = self.data.len() - 1;
@@ -44,6 +45,7 @@ impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
             now_index = parent_index;
         }
     }
+    // TODO: panic if partial_cmp return None
     pub fn pop(&mut self) -> Option<T> {
         let item = self.data.pop();
         if self.data.len() == 0 {
