@@ -1,4 +1,3 @@
-use std::collections::BinaryHeap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -21,8 +20,97 @@ fn read<T: FromStr>() -> T {
     opt.expect("failed to parse token")
 }
 
+// binary heap for PartialOrd
+struct MyBinaryHeap<T> {
+    data: Vec<T>,
+}
+impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
+    pub fn new() -> MyBinaryHeap<T> {
+        MyBinaryHeap { data: vec![] }
+    }
+    pub fn push(&mut self, item: T) {
+        self.data.push(item);
+        let mut now_index = self.data.len() - 1;
+        loop {
+            if now_index == 0 {
+                break;
+            }
+            // startは1か0か。0にしてみる
+            let parent_index = (now_index - 1) / 2;
+            if self.data[now_index] <= self.data[parent_index] {
+                break;
+            }
+            let now = self.data[now_index];
+            let parent = self.data[parent_index];
+            self.data[now_index] = parent;
+            self.data[parent_index] = now;
+            now_index = parent_index;
+        }
+    }
+    pub fn pop(&mut self) -> Option<T> {
+        if self.data.len() == 0 {
+            return None;
+        }
+        let item = self.data.pop();
+        if self.data.len() == 0 {
+            return item;
+        }
+        let ret = self.data[0];
+        self.data[0] = item.unwrap();
+        let mut now_index = 0;
+        loop {
+            // startは1か0か。0にしてみる
+            let child_index1 = (now_index + 1) * 2 - 1;
+            let child_index2 = (now_index + 1) * 2;
+            if child_index1 > self.data.len() - 1 {
+                break;
+            }
+            let change_index = if child_index2 > self.data.len() - 1
+                || self.data[child_index1] > self.data[child_index2]
+            {
+                child_index1
+            } else {
+                child_index2
+            };
+            if self.data[now_index] >= self.data[change_index] {
+                break;
+            }
+            let now = self.data[now_index];
+            let child = self.data[change_index];
+            self.data[now_index] = child;
+            self.data[change_index] = now;
+            now_index = change_index;
+        }
+        Some(ret)
+    }
+}
+// slow because when call next, popped every time.
+impl<T: PartialOrd + Copy> Iterator for MyBinaryHeap<T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<T> {
+        self.pop()
+    }
+}
+
+#[test]
+fn it_works() {
+    let mut a = BinaryHeap2::new();
+    assert_eq!(a.pop(), None);
+    a.push(1);
+    a.push(5);
+    a.push(0);
+    a.push(100);
+    assert_eq!(a.pop(), Some(100));
+    assert_eq!(a.pop(), Some(5));
+    assert_eq!(a.pop(), Some(1));
+    assert_eq!(a.pop(), Some(0));
+    assert_eq!(a.pop(), None);
+    assert_eq!(a.pop(), None);
+}
+
 fn main() {
-    let mut queue = BinaryHeap::new();
+    let mut queue = MyBinaryHeap::new();
     let n: i32 = read();
     let m: i64 = read();
     for _ in 0..n {
