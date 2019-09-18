@@ -60,12 +60,12 @@ impl<T: PartialOrd> MyBinaryHeap<T> {
         }
     }
     pub fn pop(&mut self) -> Option<T> {
-        if self.data.len() == 0 {
+        if self.data.is_empty() {
             return None;
         }
         let ret = self.data.swap_remove(0);
         let mut now_index = 0;
-        if self.data.len() == 0 {
+        if self.data.is_empty() {
             return Some(ret);
         }
         loop {
