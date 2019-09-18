@@ -1,4 +1,5 @@
 use core::fmt;
+use std::cmp::Ordering::{Equal, Greater, Less};
 use std::io::*;
 use std::str::FromStr;
 
@@ -41,21 +42,23 @@ impl<T: PartialOrd> MyBinaryHeap<T> {
     pub fn new() -> MyBinaryHeap<T> {
         MyBinaryHeap { data: vec![] }
     }
-    // TODO: panic if partial_cmp return None
     pub fn push(&mut self, item: T) {
         self.data.push(item);
         let mut now_index = self.data.len() - 1;
         while now_index > 0 {
             // 0 start
             let parent_index = (now_index - 1) / 2;
-            if self.data[now_index] <= self.data[parent_index] {
+            let cmp_result = self.data[now_index].partial_cmp(&self.data[parent_index]);
+            if cmp_result.is_none() {
+                panic!("compare non comparable values");
+            }
+            if cmp_result.unwrap() == Less || cmp_result.unwrap() == Equal {
                 break;
             }
             self.data.swap(now_index, parent_index);
             now_index = parent_index;
         }
     }
-    // TODO: panic if partial_cmp return None
     pub fn pop(&mut self) -> Option<T> {
         if self.data.len() == 0 {
             return None;
@@ -78,7 +81,11 @@ impl<T: PartialOrd> MyBinaryHeap<T> {
             } else {
                 child_index2
             };
-            if self.data[now_index] >= self.data[change_index] {
+            let cmp_result = self.data[now_index].partial_cmp(&self.data[change_index]);
+            if cmp_result.is_none() {
+                panic!("compare non comparable");
+            }
+            if cmp_result.unwrap() == Greater || cmp_result.unwrap() == Equal {
                 break;
             }
             self.data.swap(now_index, change_index);
@@ -124,6 +131,13 @@ fn iter_works() {
     for (i, v) in a.enumerate() {
         assert_eq!(expected[i], v);
     }
+}
+#[test]
+#[should_panic]
+fn nan_panic() {
+    let mut a = MyBinaryHeap::new();
+    a.push(1.5);
+    a.push(std::f64::NAN);
 }
 fn main() {
     let mut queue = MyBinaryHeap::new();
