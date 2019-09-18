@@ -1,3 +1,4 @@
+use core::fmt;
 use std::io::*;
 use std::str::FromStr;
 
@@ -24,8 +25,18 @@ fn read<T: FromStr>() -> T {
 struct MyBinaryHeap<T> {
     data: Vec<T>,
 }
-// TODO: add impl for Debug
-// TODO: add impl for Clone
+impl<T: Clone> Clone for MyBinaryHeap<T> {
+    fn clone(&self) -> Self {
+        MyBinaryHeap {
+            data: self.data.clone(),
+        }
+    }
+}
+impl<T: fmt::Debug> core::fmt::Debug for MyBinaryHeap<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_list().entries(self.data.iter()).finish()
+    }
+}
 impl<T: PartialOrd> MyBinaryHeap<T> {
     pub fn new() -> MyBinaryHeap<T> {
         MyBinaryHeap { data: vec![] }
