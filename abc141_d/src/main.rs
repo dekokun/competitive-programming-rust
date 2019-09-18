@@ -35,7 +35,7 @@ impl<T: PartialOrd> MyBinaryHeap<T> {
         self.data.push(item);
         let mut now_index = self.data.len() - 1;
         while now_index > 0 {
-            // startは1か0か。0にしてみる
+            // 0 start
             let parent_index = (now_index - 1) / 2;
             if self.data[now_index] <= self.data[parent_index] {
                 break;
@@ -55,7 +55,6 @@ impl<T: PartialOrd> MyBinaryHeap<T> {
             return Some(ret);
         }
         loop {
-            // startは1か0か。0にしてみる
             let child_index1 = (now_index + 1) * 2 - 1;
             let child_index2 = (now_index + 1) * 2;
             if child_index1 > self.data.len() - 1 {
