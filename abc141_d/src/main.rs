@@ -95,7 +95,7 @@ impl<T: PartialOrd> MyBinaryHeap<T> {
     }
 }
 // slow because when call next, popped every time.
-impl<T: PartialOrd + Copy> Iterator for MyBinaryHeap<T> {
+impl<T: PartialOrd> Iterator for MyBinaryHeap<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
