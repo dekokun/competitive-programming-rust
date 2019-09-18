@@ -26,7 +26,7 @@ struct MyBinaryHeap<T> {
 }
 // TODO: add impl for Debug
 // TODO: add impl for Clone
-impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
+impl<T: PartialOrd> MyBinaryHeap<T> {
     pub fn new() -> MyBinaryHeap<T> {
         MyBinaryHeap { data: vec![] }
     }
@@ -40,22 +40,20 @@ impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
             if self.data[now_index] <= self.data[parent_index] {
                 break;
             }
-            let now = self.data[now_index];
-            let parent = self.data[parent_index];
-            self.data[now_index] = parent;
-            self.data[parent_index] = now;
+            self.data.swap(now_index, parent_index);
             now_index = parent_index;
         }
     }
     // TODO: panic if partial_cmp return None
     pub fn pop(&mut self) -> Option<T> {
-        let item = self.data.pop();
         if self.data.len() == 0 {
-            return item;
+            return None;
         }
-        let ret = self.data[0];
-        self.data[0] = item.unwrap();
+        let ret = self.data.swap_remove(0);
         let mut now_index = 0;
+        if self.data.len() == 0 {
+            return Some(ret);
+        }
         loop {
             // startは1か0か。0にしてみる
             let child_index1 = (now_index + 1) * 2 - 1;
@@ -73,10 +71,7 @@ impl<T: PartialOrd + Copy> MyBinaryHeap<T> {
             if self.data[now_index] >= self.data[change_index] {
                 break;
             }
-            let now = self.data[now_index];
-            let child = self.data[change_index];
-            self.data[now_index] = child;
-            self.data[change_index] = now;
+            self.data.swap(now_index, change_index);
             now_index = change_index;
         }
         Some(ret)
