@@ -1,3 +1,4 @@
+extern crate core;
 use core::fmt;
 use std::cmp::Ordering::{Equal, Greater, Less};
 use std::io::*;
@@ -34,7 +35,7 @@ impl<T: Clone> Clone for MyBinaryHeap<T> {
     }
 }
 impl<T: fmt::Debug> core::fmt::Debug for MyBinaryHeap<T> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_list().entries(self.data.iter()).finish()
     }
 }
