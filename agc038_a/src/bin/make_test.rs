@@ -2,8 +2,8 @@ use rand::prelude::*;
 // h w a b
 fn make_random_vec() -> (usize, usize, usize, usize, Vec<Vec<usize>>) {
     let mut rng = rand::thread_rng();
-    let h = rng.gen_range(1, 10);
-    let w = rng.gen_range(1, 10);
+    let h = 4;
+    let w = 4;
     dbg!(h, w);
     let mut vec = vec![vec![0; w]; h];
     'outer: loop {
