@@ -8,7 +8,10 @@ NC='\033[0m'
 
 runtest() {
   output=$(echo "$1" | time cargo run -q)
-  if [ "$output" != "$2" ]; then
+  if [ "$?" -ne 0 ]; then
+    echo -e "${RED}command fail${NC}"
+    echo -e "please run command: echo $1 | time cargo run"
+  elif [ "$output" != "$2" ]; then
     echo -e "${RED}fail"
     echo "input: $1"
     echo
