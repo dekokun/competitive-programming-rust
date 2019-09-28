@@ -21,4 +21,11 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+    let mut ans = vec![0; n];
+    for i in 0..n {
+        let k: usize = read();
+        ans[k - 1] = i + 1;
+    }
+    println!("{}", ans.iter().map(|i| i.to_string()).collect::<Vec<_>>().join(" "))
 }
