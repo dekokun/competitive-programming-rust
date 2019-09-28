@@ -21,4 +21,14 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+    let k: usize = read();
+    let mut ans = 0;
+    for _ in 0..n {
+        let h: usize = read();
+        if h >= k {
+            ans += 1;
+        }
+    }
+    println!("{}", ans);
 }
