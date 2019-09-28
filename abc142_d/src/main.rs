@@ -52,8 +52,9 @@ fn main() {
     let b: i64 = read();
     let gcd = gcd(a, b);
     let mut set: HashSet<i64> = HashSet::new();
+    let sqrt = (gcd as f64).sqrt().ceil() as usize;
     let mut now = gcd;
-    for i in 2..gcd + 1 {
+    for i in 2..sqrt + 100 {
         let i = i as i64;
         while now % i == 0 {
             set.insert(i);
@@ -63,6 +64,8 @@ fn main() {
             break;
         }
     }
-    // dbg!(gcd, sqrt, set.clone());
+    if now != 1 {
+        set.insert(now);
+    }
     println!("{}", set.len() + 1);
 }
