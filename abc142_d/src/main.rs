@@ -30,7 +30,13 @@ fn gcd(a: i64, b: i64) -> i64 {
     if b == 0 {
         return a;
     }
-    gcd(b, a % b)
+    let mut r;
+    while (a % b) != 0 {
+        r = a % b;
+        a = b;
+        b = r;
+    }
+    b
 }
 #[test]
 fn test_gcd() {
@@ -38,6 +44,7 @@ fn test_gcd() {
     assert_eq!(gcd(20, 30), 10);
     assert_eq!(gcd(100, 3), 1);
     assert_eq!(gcd(3, 60), 3);
+    assert_eq!(gcd(30, 20), 10);
 }
 
 fn main() {
@@ -45,13 +52,15 @@ fn main() {
     let b: i64 = read();
     let gcd = gcd(a, b);
     let mut set: HashSet<i64> = HashSet::new();
-    let sqrt = (gcd as f64).sqrt().ceil() as usize;
     let mut now = gcd;
-    for i in 2..sqrt + 1 {
+    for i in 2..gcd + 1 {
         let i = i as i64;
         while now % i == 0 {
             set.insert(i);
             now = now / i;
+        }
+        if now == 1 {
+            break;
         }
     }
     // dbg!(gcd, sqrt, set.clone());
