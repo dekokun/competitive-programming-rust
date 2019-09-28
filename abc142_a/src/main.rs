@@ -21,4 +21,11 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n = read::<f32>();
+    let ans = if n % 2.0 == 0.0 {
+        1.0 / 2.0
+    } else {
+        ((n + 1.0) / 2.0) / n
+    };
+    println!("{}", ans);
 }
