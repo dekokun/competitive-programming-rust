@@ -3,4 +3,6 @@
 source ../runtest_func.sh
 cargo test
 
-t "2 2 2" "8"
+t "12 18" 3
+t "420 660" 4
+t "1 2019" 1

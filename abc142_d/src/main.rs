@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::io::*;
 use std::str::FromStr;
 
@@ -20,5 +21,39 @@ fn read<T: FromStr>() -> T {
     opt.expect("failed to parse token")
 }
 
+fn gcd(a: i64, b: i64) -> i64 {
+    let mut a = a;
+    let mut b = b;
+    if a < b {
+        std::mem::swap(&mut a, &mut b);
+    }
+    if b == 0 {
+        return a;
+    }
+    gcd(b, a % b)
+}
+#[test]
+fn test_gcd() {
+    assert_eq!(gcd(10, 5), 5);
+    assert_eq!(gcd(20, 30), 10);
+    assert_eq!(gcd(100, 3), 1);
+    assert_eq!(gcd(3, 60), 3);
+}
+
 fn main() {
+    let a: i64 = read();
+    let b: i64 = read();
+    let gcd = gcd(a, b);
+    let mut set: HashSet<i64> = HashSet::new();
+    let sqrt = (gcd as f64).sqrt().ceil() as usize;
+    let mut now = gcd;
+    for i in 2..sqrt + 1 {
+        let i = i as i64;
+        while now % i == 0 {
+            set.insert(i);
+            now = now / i;
+        }
+    }
+    // dbg!(gcd, sqrt, set.clone());
+    println!("{}", set.len() + 1);
 }
