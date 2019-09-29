@@ -21,4 +21,21 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: i32 = read();
+    let k: i32 = read();
+    let mut heights: Vec<i32> = vec![];
+    for _ in 0..n {
+        heights.push(read());
+    }
+    let mut dp = vec![0; n as usize];
+    for i in 1..n as usize {
+        dp[i] = std::i32::MAX;
+        for j in 1..(k + 1) as usize {
+            if i < j {
+                break;
+            }
+            dp[i] = std::cmp::min(dp[i], dp[i - j] + (heights[i - j] - heights[i]).abs());
+        }
+    }
+    println!("{}", dp[n as usize - 1]);
 }
