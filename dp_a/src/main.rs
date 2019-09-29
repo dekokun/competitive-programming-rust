@@ -21,4 +21,18 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: i32 = read();
+    let mut vec = vec![];
+    let mut dp = vec![0; n as usize];
+    for _ in 0..n {
+        vec.push(read::<i32>());
+    }
+    dp[1] = (vec[0] - vec[1]).abs();
+    for i in 2..n as usize {
+        dp[i] = std::cmp::min(
+            dp[i - 1] + (vec[i - 1] - vec[i]).abs(),
+            dp[i - 2] + (vec[i - 2] - vec[i]).abs(),
+        );
+    }
+    println!("{}", dp[n as usize - 1 ]);
 }
