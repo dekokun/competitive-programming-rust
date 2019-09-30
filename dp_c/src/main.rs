@@ -21,4 +21,22 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: usize = read();
+    let mut dp: Vec<Vec<usize>> = vec![];
+    for i in 0..n {
+        if i == 0 {
+            dp.push(vec![read(), read(), read()]);
+            continue;
+        }
+        let a: usize = read();
+        let b: usize = read();
+        let c: usize = read();
+        let vec = vec![
+            std::cmp::max(dp[i - 1][1] + a, dp[i - 1][2] + a),
+            std::cmp::max(dp[i - 1][0] + b, dp[i - 1][2] + b),
+            std::cmp::max(dp[i - 1][0] + c, dp[i - 1][1] + c),
+        ];
+        dp.push(vec);
+    }
+    println!("{}", dp[n - 1].iter().max().unwrap());
 }
