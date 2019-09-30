@@ -34,21 +34,23 @@ fn main() {
         }
         keys.push((key, a));
     }
-    const INF: usize = 1001001001;
-    let mut dp = vec![INF; (2 as usize).pow(n as u32)];
-    dp[0] = 0;
+    let mut dp = vec![None; (2 as usize).pow(n as u32)];
+    dp[0] = Some(0);
     for i in 0..(2 as usize).pow(n as u32) {
-        if dp[i] == INF {
+        if dp[i].is_none() {
             continue;
         }
         for key in keys.iter() {
             let k = i | key.0;
-            dp[k] = std::cmp::min(dp[k], dp[i] + key.1);
+            dp[k] = match dp[k] {
+                None => Some(dp[i].unwrap() + key.1),
+                Some(v) => Some(std::cmp::min(v, dp[i].unwrap() + key.1))
+            };
         }
     }
     let v = dp.pop().unwrap();
-    println!("{}", if v != INF {
-        v as i32
+    println!("{}", if v.is_some() {
+        v.unwrap() as i32
     } else {
         -1
     });
