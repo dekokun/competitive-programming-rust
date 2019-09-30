@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io::*;
 use std::str::FromStr;
 
@@ -24,33 +23,33 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let n: usize = read();
     let m: usize = read();
-    let mut map = HashMap::new();
+    let mut keys: Vec<(usize, usize)> = vec![];
     for _ in 0..m {
         let a: usize = read();
         let b: usize = read();
+        let mut key = 0;
         for _ in 0..b {
-            let c: usize = read();
-            map.entry(c).or_insert(vec![]).push(a);
+            let c: u32 = read();
+            key |= (2 as usize).pow(c - 1);
+        }
+        keys.push((key, a));
+    }
+    const INF: usize = 1001001001;
+    let mut dp = vec![INF; (2 as usize).pow(n as u32)];
+    dp[0] = 0;
+    for i in 0..(2 as usize).pow(n as u32) {
+        if dp[i] == INF {
+            continue;
+        }
+        for key in keys.iter() {
+            let k = i | key.0;
+            dp[k] = std::cmp::min(dp[k], dp[i] + key.1);
         }
     }
-    let mut ans = 0;
-    for i in 1..n + 1 {
-        let val = map.get(&i);
-        if val.is_none() {
-            dbg!(i, val);
-            println!("-1");
-            return;
-        }
-        let val = val.unwrap();
-        if val.len() == 0 {
-            println!("-1");
-            return;
-        }
-        let mut min = 1000000000;
-        for v in val {
-            min = std::cmp::min(min, *v);
-        }
-        ans += min;
-    }
-    println!("{}", ans);
+    let v = dp.pop().unwrap();
+    println!("{}", if v != INF {
+        v as i32
+    } else {
+        -1
+    });
 }
