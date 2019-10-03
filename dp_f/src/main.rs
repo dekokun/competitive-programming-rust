@@ -28,13 +28,11 @@ fn main() {
     let mut dp: Vec<Vec<usize>> = vec![vec![0; t.len() + 1]; s.len() + 1];
     for i in 0..s.len() {
         for j in 0..t.len() {
-            if s[i] == t[j] {
-                dp[i + 1][j + 1] =
-                    std::cmp::max(std::cmp::max(dp[i][j] + 1, dp[i][j + 1]), dp[i + 1][j]);
+            dp[i + 1][j + 1] = if s[i] == t[j] {
+                std::cmp::max(std::cmp::max(dp[i][j] + 1, dp[i][j + 1]), dp[i + 1][j])
             } else {
-                dp[i + 1][j + 1] =
-                    std::cmp::max(std::cmp::max(dp[i][j], dp[i][j + 1]), dp[i + 1][j]);
-            }
+                std::cmp::max(std::cmp::max(dp[i][j], dp[i][j + 1]), dp[i + 1][j])
+            };
         }
     }
     dbg!(dp[s.len()][t.len()]);
