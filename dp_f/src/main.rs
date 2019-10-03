@@ -25,29 +25,17 @@ fn main() {
     let t: String = read();
     let s = s.chars().collect::<Vec<_>>();
     let t = t.chars().collect::<Vec<_>>();
-    let mut dp: Vec<Vec<(usize, String)>> =
-        vec![vec![(0, "".to_string()); t.len() + 1]; s.len() + 1];
+    let mut dp: Vec<Vec<usize>> = vec![vec![0; t.len() + 1]; s.len() + 1];
     for i in 0..s.len() {
         for j in 0..t.len() {
-            let mut vec = if s[i] == t[j] {
-                let mut s2 = dp[i][j].1.clone();
-                s2.push(s[i]);
-                vec![
-                    (dp[i][j].0 + 1, s2),
-                    dp[i][j + 1].clone(),
-                    dp[i + 1][j].clone(),
-                ]
+            if s[i] == t[j] {
+                dp[i + 1][j + 1] =
+                    std::cmp::max(std::cmp::max(dp[i][j] + 1, dp[i][j + 1]), dp[i + 1][j]);
             } else {
-                vec![
-                    (dp[i][j].0, dp[i][j].1.clone()),
-                    dp[i][j + 1].clone(),
-                    dp[i + 1][j].clone(),
-                ]
-            };
-            vec.sort_by_key(|v| v.0);
-            dp[i + 1][j + 1] = vec.pop().unwrap();
+                dp[i + 1][j + 1] =
+                    std::cmp::max(std::cmp::max(dp[i][j], dp[i][j + 1]), dp[i + 1][j]);
+            }
         }
     }
-    // dbg!(&dp[s.len()][t.len()]);
-    println!("{}", dp[s.len()][t.len()].1);
+    dbg!(dp[s.len()][t.len()]);
 }

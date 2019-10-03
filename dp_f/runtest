@@ -5,7 +5,7 @@ source ../runtest_func.sh
 cargo test
 
 t "axyb
-abyxb" ayb
+abyxb" axb
 t "aa
 xayaz" aa
 t "a
