@@ -21,4 +21,27 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let s: String = read();
+    let k: i64 = read();
+    let s2 = s.clone() + &s;
+    let mut before_char = ';';
+    let mut cnt = 0;
+    for c in s2.chars() {
+        if c == before_char {
+            cnt += 1;
+            before_char = ';';
+        } else {
+            before_char = c;
+        }
+    }
+    let unique: std::collections::HashSet<char> = s2.chars().collect();
+    // all same
+    let ans = if unique.len() == 1 {
+        (s.len() as i64 * k) / 2
+    } else if cnt % 2 == 0 {
+        (cnt + 1) / 2 * k
+    } else {
+        ((cnt + 1) / 2 * k) - 1
+    };
+    println!("{}", ans)
 }
