@@ -21,4 +21,33 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
+    let n: u32 = read();
+    let two: i64 = 2;
+    eprintln!("n: {}", n);
+    for i in 0..two.pow(n) {
+        let mut now = i;
+        let mut cnt = 0;
+        // eprintln!("start {:?}", i);
+        // eprintln!("{:0>1$b} start", i, n as usize);
+        loop {
+            cnt += 1;
+            if now % 2 == 0 {
+                now = (now / 2) + two.pow(n - 1);
+            } else {
+                now = (now - 1) / 2;
+            }
+            // eprintln!("{:0>1$b}", now, n as usize);
+            if now == i {
+                // dbg!(cnt);
+                if cnt != n * 2 {
+                    dbg!(i, cnt);
+                }
+                break;
+            }
+            if cnt == 100_000 {
+                println!("failed");
+                break;
+            }
+        }
+    }
 }
