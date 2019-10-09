@@ -30,6 +30,8 @@ fn main() {
         let y: usize = read();
         vec[x - 1].insert(y - 1);
     }
+
+    // topological sort
     let mut incoming_degrees = vec![Some(0); n];
     for set in &vec {
         for s in set {
@@ -60,6 +62,8 @@ fn main() {
             }
         }
     }
+
+    // dp
     let mut dp = vec![0; n];
     for v in sorted {
         for &v2 in &vec[v] {
