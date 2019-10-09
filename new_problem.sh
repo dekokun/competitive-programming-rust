@@ -20,6 +20,8 @@ git checkout -b "$program_name"
 cp -pr template/src/main.rs "$program_name"/src
 cp -pr template/runtest "$program_name"/runtest
 cp -pr template/rust-toolchain "$program_name"/rust-toolchain.bak
+mkdir "$program_name"/.vscode/
+cargo snippet snippets -t vscode > "$program_name"/.vscode/rs.code-snippets
 git add "$program_name"
 git commit -m"$program_name initialize"
 code "$program_name"
