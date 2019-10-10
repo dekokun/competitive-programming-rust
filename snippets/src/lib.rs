@@ -123,3 +123,28 @@ fn nan_panic() {
     a.push(1.5);
     a.push(std::f64::NAN);
 }
+
+#[snippet = "read_option"]
+use std::io::{stdin, Read};
+#[snippet = "read_option"]
+use std::str::FromStr;
+
+#[snippet = "read_option"]
+fn read_option<T: FromStr>() -> Option<T> {
+    let stdin = stdin();
+    let stdin = stdin.lock();
+    let token: String = stdin
+        .bytes()
+        .map(|c| c.expect("failed to read char") as char)
+        .skip_while(|c| c.is_whitespace())
+        .take_while(|c| !c.is_whitespace())
+        .collect();
+    token.parse().ok()
+}
+
+#[snippet(include = "read_option")]
+#[snippet = "read"]
+fn read<T: FromStr>() -> T {
+    let opt = read_option();
+    opt.expect("failed to parse token")
+}
