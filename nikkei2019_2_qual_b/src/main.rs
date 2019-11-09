@@ -20,4 +20,47 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let N: u32 = read();
+    let mut vec: Vec<u64> = vec![];
+    for i in 0..N {
+        let v = read();
+        if (i == 0 && v != 0) || (i != 0 && v == 0) {
+            println!("0");
+            return;
+        }
+        vec.push(v);
+    }
+    vec.sort();
+    // (v, count)
+    let mut v2: Vec<(u64, u64)> = vec![];
+    for v in vec {
+        if v2.is_empty() {
+            v2.push((v, 1));
+        } else if v2[v2.len() - 1].0 != v {
+            if v - v2[v2.len() - 1].0 != 1 {
+                println!("0");
+                return;
+            }
+            v2.push((v, 1));
+        } else {
+            let (last_v, last_count) = v2.pop().unwrap();
+            v2.push((last_v, last_count + 1));
+        }
+    }
+    let mut before = 1u64;
+    let mut ans = 1;
+    for (_, count) in v2 {
+        ans *= mod_pow(before, count);
+        ans %= 998_244_353;
+        before = count;
+    }
+    println!("{}", ans);
+}
+
+fn mod_pow(base: u64, exp: u64) -> u64 {
+    let mut ans = 1;
+    for _ in 0..exp {
+        ans *= base;
+        ans %= 998_244_353;
+    }
+    ans
 }
