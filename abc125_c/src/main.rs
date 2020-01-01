@@ -19,7 +19,7 @@ fn gcd(min: i32, max: i32) -> i32 {
     if r == 0 {
         return min;
     }
-    return gcd(r, min);
+    gcd(r, min)
 }
 
 fn main() {
@@ -36,14 +36,14 @@ fn main() {
     for i in 0..n {
         let mut now_gcd: i32 = vec[i];
         for j in 0..n {
+            // jがi-1の時以外(0の時はn-1)
+            // なんでこんなことしてるんだっけ？
             if (i != 0 && i - 1 != j) || (i == 0 && j != n - 1) {
                 let r = vec[j];
-                now_gcd = gcd(std::cmp::min(r, now_gcd), std::cmp::max(r, now_gcd));
-                // dbg!(i, j, vec[j], now_gcd);
+                now_gcd = gcd(r, now_gcd);
             }
         }
         max = std::cmp::max(max, now_gcd);
-        // dbg!(max);
     }
     println!("{}", max);
 }
