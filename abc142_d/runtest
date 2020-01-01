@@ -1,0 +1,12 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+cargo test
+
+t "12 18" 3
+t "18 12" 3
+t "420 660" 4
+t "660 420" 4
+t "1 2019" 1
+t "2019 1" 1
+t "14 28" 3

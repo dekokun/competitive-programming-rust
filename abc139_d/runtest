@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+t 2 1
+t 13 78
+t 1 0

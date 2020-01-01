@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+t "3200
+pink" pink
+t "3199
+pink" red
+t "4049
+red" red

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+t "contest
+son" 10
+t "contest
+programming" -1
+t "contest
+sentence" 33

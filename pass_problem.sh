@@ -13,3 +13,4 @@ git add "$program_name"/
 git commit -m"$program_name pass"
 git checkout master
 git merge "$program_name"
+git branch -d "$program_name"

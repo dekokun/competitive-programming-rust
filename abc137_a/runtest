@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+runtest "-13 3" -10
+runtest "1 -33" 34
+runtest "13 3" 39

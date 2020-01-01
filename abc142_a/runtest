@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+cargo test
+
+t 4 0.5
+t 5 0.6
+t 1 1

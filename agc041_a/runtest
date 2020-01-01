@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $(dirname $0)
+source ../runtest_func.sh
+cargo test
+
+t "5 2 4" 1
+t "5 2 3" 2
+t "5 1 2" 1
+t "5 3 4" 2
+t "5 4 5" 1

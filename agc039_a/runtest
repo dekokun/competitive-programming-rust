@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cd $(dirname $0)
+source ../runtest_func.sh
+cargo test
+
+t "issii
+2" 4
+t "qq
+81" 81
+t "qaq
+2" 1
+t "qaq
+3" 2
+t "aab
+3" 3
+t "aaa
+3" 4
+t "aaa
+4" 6
+t "aaaa
+3" 6
+t "cooooooooonteeeeeeeeeest
+999993333" 8999939997

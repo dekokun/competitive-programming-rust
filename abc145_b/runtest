@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd $(dirname $0)
+source ../runtest_func.sh
+cargo test
+
+t "6
+abcabc" Yes
+t "6
+abcadc" No
+t "1
+z" No

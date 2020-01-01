@@ -1,0 +1,11 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+cargo test
+
+t "4
+10 30 40 20" 30
+t "2
+10 10" 0
+t "6
+30 10 60 10 60 50" 40

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source ../runtest_func.sh
+
+t "Left Right AtCoder" "< > A"
+t "Left Left Right Right AtCoder" "< < > > A"
+t "Right Right AtCoder Left Left AtCoder" "> > A < < A"
