@@ -13,7 +13,7 @@ fn read<T: FromStr>() -> T {
     token.parse().ok().expect("failed to parse token")
 }
 
-fn gcd(min: i32, max: i32) -> i32 {
+fn gcd(min: usize, max: usize) -> usize {
     if min == 0 {}
     let r = max % min;
     if r == 0 {
@@ -25,25 +25,33 @@ fn gcd(min: i32, max: i32) -> i32 {
 fn main() {
     let n: usize = read();
     if n == 2 {
-        println!("{}", std::cmp::max(read::<i32>(), read::<i32>()));
+        println!("{}", std::cmp::max(read::<usize>(), read::<usize>()));
         return;
     }
-    let mut vec = vec![];
+    let mut vec: Vec<usize> = vec![];
     for _ in 0..n {
         vec.push(read());
     }
-    let mut max: i32 = 0;
+    let mut gcd_l = vec![0; n];
+    let mut now_l_gcd = vec[0];
+    let mut gcd_r = vec![0; n];
+    let mut now_r_gcd = vec[n - 1];
     for i in 0..n {
-        let mut now_gcd: i32 = vec[i];
-        for j in 0..n {
-            // jがi-1の時以外(0の時はn-1)
-            // 上で最初の最大公約数であるvec[i]をとっており、そのi以外の何か1つを避けるためにこうしている。最大公約数になりえるものを取ろうとしてこうなった模様(最小公倍数だったら1でいいんでけど)
-            if (i != 0 && i - 1 != j) || (i == 0 && j != n - 1) {
-                let r = vec[j];
-                now_gcd = gcd(r, now_gcd);
-            }
-        }
-        max = std::cmp::max(max, now_gcd);
+        gcd_l[i] = gcd(now_l_gcd, vec[i]);
+        now_l_gcd = gcd_l[i];
+        gcd_r[n - i - 1] = gcd(now_r_gcd, vec[n - i - 1]);
+        now_r_gcd = gcd_r[n - i - 1];
+    }
+    let mut max = 1;
+    for i in 0..n {
+        let gcd = if i == 0 {
+            gcd_r[i + 1]
+        } else if i == n - 1 {
+            gcd_l[i - 1]
+        } else {
+            gcd(gcd_l[i - 1], gcd_r[i + 1])
+        };
+        max = std::cmp::max(gcd, max);
     }
     println!("{}", max);
 }
