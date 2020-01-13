@@ -39,7 +39,7 @@ fn main() {
     println!("{}", ans);
 }
 
-fn wfs (i: usize, j: usize, map: &Vec<Vec<char>>, i_max: usize, j_max: usize) -> usize {
+fn wfs (i: usize, j: usize, map: &[Vec<char>], i_max: usize, j_max: usize) -> usize {
     let mut depth_map: Vec<Vec<Option<usize>>> = vec![vec![None; j_max + 1]; i_max + 1];
     let mut queue: VecDeque<(usize, usize)> = VecDeque::new();
     queue.push_front((i, j));
@@ -68,5 +68,5 @@ fn wfs (i: usize, j: usize, map: &Vec<Vec<char>>, i_max: usize, j_max: usize) ->
         }
 
     }
-    return max_depth;
+    max_depth
 }
