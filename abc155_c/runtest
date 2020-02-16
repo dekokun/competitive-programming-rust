@@ -4,4 +4,37 @@ cd $(dirname $0)
 source ../runtest_func.sh
 cargo test
 
-t "2 2 2" "8"
+t "7
+beat
+vet
+beet
+bed
+vet
+bet
+beet" "beet
+vet"
+t "8
+buffalo
+buffalo
+buffalo
+buffalo
+buffalo
+buffalo
+buffalo
+buffalo" buffalo
+t "7
+bass
+bass
+kick
+kick
+bass
+kick
+kick" kick
+t "4
+ushi
+tapu
+nichia
+kun" "kun
+nichia
+tapu
+ushi"
