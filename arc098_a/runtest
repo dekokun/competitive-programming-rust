@@ -4,4 +4,9 @@ cd $(dirname $0)
 source ../runtest_func.sh
 cargo test
 
-t "2 2 2" "8"
+t "5
+WEEWW" 1
+t "12
+WEWEWEEEWWWE" 4
+t "8
+WWWWWEEE" 3
