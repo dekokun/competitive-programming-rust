@@ -4,4 +4,24 @@ cd $(dirname $0)
 source ../runtest_func.sh
 cargo test
 
-t "2 2 2" "8"
+t "a
+4
+2 1 p
+1
+2 2 c
+1" cpa
+t "a
+6
+2 2 a
+2 1 b
+1
+2 2 c
+1
+1" aabc
+t "y
+1
+2 1 x" xy
+t "y
+2
+1
+2 1 x" xy
