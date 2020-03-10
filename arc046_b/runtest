@@ -4,4 +4,11 @@ cd $(dirname $0)
 source ../runtest_func.sh
 cargo test
 
-t "2 2 2" "8"
+t "5
+3 3" Takahashi
+t "4
+3 3" Aoki
+t "5
+3 2" Takahashi
+t "1000000000
+1000000000 1" Takahashi
