@@ -21,14 +21,18 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let _N: usize = read();
     let S: String = read();
-    let (ans, _) = S.chars().fold((0, false), |(ans, blackExists), c| {
-        if c == '#' {
-            (ans, true)
-        } else if blackExists {
-            (ans + 1, true)
-        } else {
-            (ans, false)
-        }
-    });
+    let whiteCount = S.chars().filter(|&c| c == '.').count();
+    let (ans, _blackCount, _whiteCount) = S.chars().fold(
+        (std::usize::MAX, 0, whiteCount),
+        |(ans, leftBlackCount, rightWhiteCount), c| {
+            let (lb, rw) = if c == '.' {
+                (leftBlackCount, rightWhiteCount - 1)
+            } else {
+                (leftBlackCount + 1, rightWhiteCount)
+            };
+            let ans = std::cmp::min(ans, lb + rw);
+            (ans, lb, rw)
+        },
+    );
     println!("{}", ans);
 }
