@@ -22,7 +22,7 @@ fn main() {
     let a: i64 = read();
     let b: i64 = read();
     let c: i64 = read();
-    if c < a + b {
+    if c <= a + b {
         println!("No");
     } else if 2 * (a * b + b * c + c * a) < a.pow(2) + b.pow(2) + c.pow(2) {
         println!("Yes");
