@@ -25,13 +25,19 @@ fn main() {
     let (ans, _blackCount, _whiteCount) = S.chars().fold(
         (std::usize::MAX, 0, whiteCount),
         |(ans, leftBlackCount, rightWhiteCount), c| {
-            let (lb, rw) = if c == '.' {
+            let (leftBlackCount, rightWhiteCount) = if c == '.' {
                 (leftBlackCount, rightWhiteCount - 1)
             } else {
-                (leftBlackCount + 1, rightWhiteCount)
+                (leftBlackCount, rightWhiteCount)
             };
-            let ans = std::cmp::min(ans, lb + rw);
-            (ans, lb, rw)
+            // 境目で判定
+            let ans = std::cmp::min(ans, leftBlackCount + rightWhiteCount);
+            let (leftBlackCount, rightWhiteCount) = if c == '#' {
+                (leftBlackCount + 1, rightWhiteCount)
+            } else {
+                (leftBlackCount, rightWhiteCount)
+            };
+            (ans, leftBlackCount, rightWhiteCount)
         },
     );
     println!("{}", ans);
