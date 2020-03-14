@@ -30,15 +30,16 @@ fn main() {
             } else {
                 (leftBlackCount, rightWhiteCount)
             };
-            // 境目で判定
-            let ans = std::cmp::min(ans, leftBlackCount + rightWhiteCount);
             let (leftBlackCount, rightWhiteCount) = if c == '#' {
                 (leftBlackCount + 1, rightWhiteCount)
             } else {
                 (leftBlackCount, rightWhiteCount)
             };
+            let ans = std::cmp::min(ans, leftBlackCount + rightWhiteCount);
             (ans, leftBlackCount, rightWhiteCount)
         },
     );
+    // 先頭の判定をしていないのでここでする
+    let ans = std::cmp::min(ans, whiteCount);
     println!("{}", ans);
 }
