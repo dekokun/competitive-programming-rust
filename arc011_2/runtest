@@ -4,4 +4,13 @@ cd $(dirname $0)
 source ../runtest_func.sh
 cargo test
 
-t "2 2 2" "8"
+t "3
+Mozart plays magic." "7003 756 791"
+t "3
+Columbus found USA." "15716 492 6"
+t "7
+I have a scissors for right hand." "85 616606 40 0983 892"
+t "4
+abc ab aa aiueo" "11 1"
+t "4
+aaa aa a aa" ""
