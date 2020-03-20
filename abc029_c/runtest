@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exi
+source ../runtest_func.sh
+cargo test
+
+t "1" "a
+b
+c"
+t "2" "aa
+ab
+ac
+ba
+bb
+bc
+ca
+cb
+cc"
