@@ -20,8 +20,23 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let N: u8 = read();
 
+    let ans = dfs("".to_string(), N as usize);
+    for s in ans {
+        println!("{}", s);
+    }
 }
 
-fn dfs(now: String, max: u8) -> String {
-
+fn dfs(now: String, max: usize) -> Vec<String> {
+    let mut ans = vec![];
+    if now.len() == max {
+        ans.push(now);
+        return ans;
+    }
+    let mut a = dfs(now.clone() + "a", max);
+    let mut b = dfs(now.clone() + "b", max);
+    let mut c = dfs(now + "c", max);
+    ans.append(&mut a);
+    ans.append(&mut b);
+    ans.append(&mut c);
+    ans
 }
