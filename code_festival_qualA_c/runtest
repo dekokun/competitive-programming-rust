@@ -4,4 +4,6 @@ cd "$(dirname "$0")" || exi
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "1988 2014" "7"
+t "997 1003" "0"
+t "1 2000000000" 485000000
