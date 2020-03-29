@@ -4,4 +4,17 @@ cd "$(dirname "$0")" || exi
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "4
+ab
+ba
+ab
+cb" "LOSE"
+t "3
+atcoder
+redcoder
+recorder" "DRAW"
+t "4
+ab
+ba
+aa
+ab" "WIN"
