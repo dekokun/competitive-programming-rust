@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "$0")" || exi
+cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
