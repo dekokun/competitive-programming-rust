@@ -21,19 +21,19 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let N: usize = read();
     use std::collections::HashMap;
-    let mut map: HashMap<usize, Vec<usize>> = HashMap::new();
+    let mut map: HashMap<usize, usize> = HashMap::new();
     for _ in 0..N {
         let v: usize = read();
-        let entry = map.entry(v).or_insert(vec![]);
-        entry.push(v);
+        let entry = map.entry(v).or_insert(0);
+        *entry += 1;
     }
     let mut ans = 0;
     for (key, value) in map {
         use std::cmp::Ordering;
-        match key.cmp(&value.len()) {
+        match key.cmp(&value) {
             Ordering::Equal => continue,
-            Ordering::Less => ans += value.len() - key,
-            Ordering::Greater => ans += value.len(),
+            Ordering::Less => ans += value - key,
+            Ordering::Greater => ans += value,
         }
     }
     println!("{}", ans);
