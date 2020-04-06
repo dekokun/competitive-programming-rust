@@ -29,12 +29,11 @@ fn main() {
     }
     let mut ans = 0;
     for (key, value) in map {
-        if key == value.len() {
-            continue;
-        } else if key < value.len() {
-            ans += value.len() - key;
-        } else {
-            ans += value.len();
+        use std::cmp::Ordering;
+        match key.cmp(&value.len()) {
+            Ordering::Equal => continue,
+            Ordering::Less => ans += value.len() - key,
+            Ordering::Greater => ans += value.len(),
         }
     }
     println!("{}", ans);
