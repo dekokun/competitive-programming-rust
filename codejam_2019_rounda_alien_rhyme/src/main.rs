@@ -1,5 +1,25 @@
 #![allow(non_snake_case)]
 
+#[derive(Debug)]
+struct Count((String, usize));
+use std::cmp::Ordering;
+impl PartialEq for Count {
+    fn eq(&self, other: &Self) -> bool {
+        (self.0).0.len() == (other.0).0.len()
+    }
+}
+impl Eq for Count {}
+impl PartialOrd for Count {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+impl Ord for Count {
+    fn cmp(&self, other: &Self) -> Ordering {
+        (self.0).0.len().cmp(&(other.0).0.len())
+    }
+}
+
 use std::io::{stdin, Read};
 use std::str::FromStr;
 fn read_option<T: FromStr>() -> Option<T> {
@@ -35,29 +55,40 @@ fn main() {
             }
         }
         let mut ans = 0;
-        loop {
-            let map2 = map.clone();
-            let mut v: Vec<_> = map2.iter().collect();
-            // 文字列の長さの昇順にソート
-            // TODO: BinaryHeapを使用
-            v.sort_by(|x, y| x.0.len().cmp(&y.0.len()));
-            if let Some((suffix, &count)) = v.pop() {
-                if count < 2 {
-                    map.remove(suffix);
-                    continue;
-                }
-                let mut s2 = "".to_string();
-                for c in suffix.chars() {
-                    s2.push(c);
-                    let s3 = s2.clone();
+        let map2 = map.clone();
+        use std::collections::BinaryHeap;
+        let mut heap: BinaryHeap<Count> = BinaryHeap::new();
+        for (key, count) in map2 {
+            let count = Count((key, count));
+            heap.push(count);
+        }
+        while let Some(count) = heap.pop() {
+            dbg!(&count);
+            let suffix = (count.0).0;
+            let count = (count.0).1;
+            if map.get(&suffix).is_none() {
+                continue;
+            }
+            if count < 2 {
+                map.remove(&suffix);
+                continue;
+            }
+            let mut s2 = "".to_string();
+            for c in suffix.chars() {
+                s2.push(c);
+                let s3 = s2.clone();
+                let now_val;
+                {
                     let entry = map.entry(s3).or_insert(0);
                     *entry -= 2;
+                    now_val = *entry;
                 }
-                ans += 2;
-                map.remove(suffix);
-            } else {
-                break;
-            };
+                if now_val == 0 {
+                    map.remove(&s2);
+                }
+            }
+            ans += 2;
+            map.remove(&suffix);
         }
         println!("Case #{}: {}", t, ans);
     }
