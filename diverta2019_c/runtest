@@ -4,4 +4,32 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "3
+ABCA
+XBAZ
+BAD" 2
+t "9
+BEWPVCRWH
+ZZNQYIJX
+BAVREA
+PA
+HJMYITEOX
+BCJHMRMNK
+BP
+QVFABZ
+PRGKSPUNA" 4
+t "7
+RABYBBE
+JOZ
+BMHQUVA
+BPA
+ISU
+MCMABAOBHZ
+SZMEHMA" 4
+t "2
+BBA
+BA" 1
+t "3
+CBA
+BBA
+BA" 2
