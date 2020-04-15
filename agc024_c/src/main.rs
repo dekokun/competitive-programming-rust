@@ -47,7 +47,7 @@ fn main() {
             if m == 0 {
                 continue;
             }
-            if set.get(&(m - 1)).is_none() {
+            if !set.contains(&(m - 1)) {
                 next_must.push(m - 1);
                 set.insert(m - 1);
                 ans += 1;
