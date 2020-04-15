@@ -34,22 +34,20 @@ fn main() {
         }
     }
     let mut ans = 0;
-    let mut must = vec![];
+    use std::collections::HashSet;
+    let mut must = HashSet::new();
     for &v in vec.iter().rev() {
         if v == 0 {
             continue;
         }
-        let mut next_must = vec![];
-        use std::collections::HashSet;
-        let mut set = HashSet::new();
-        must.push(v);
+        let mut next_must = HashSet::new();
+        must.insert(v);
         for &m in &must {
             if m == 0 {
                 continue;
             }
-            if !set.contains(&(m - 1)) {
-                next_must.push(m - 1);
-                set.insert(m - 1);
+            if !next_must.contains(&(m - 1)) {
+                next_must.insert(m - 1);
                 ans += 1;
             }
         }
