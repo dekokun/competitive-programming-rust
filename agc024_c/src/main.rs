@@ -53,7 +53,7 @@ fn main() {
     let mut ans = 0;
     use std::collections::{BinaryHeap, HashSet};
     let mut set = HashSet::new();
-    let mut heap = BinaryHeap::new();
+    let mut heap: BinaryHeap<Rev<usize>> = BinaryHeap::new();
 
     for (minus_val, &v) in vec.iter().rev().enumerate() {
         if v == 0 {
@@ -61,11 +61,16 @@ fn main() {
             heap.clear();
             continue;
         }
-        if let Some(Rev(v)) = heap.peek() {
-            if (v - minus_val) == 0 {
-                set.remove(v);
-                heap.pop();
+        let mut remove_flag = false;
+        if let Some(min) = heap.peek() {
+            let Rev(min) = *min;
+            if (min - minus_val) == 0 {
+                remove_flag = true;
             }
+        }
+        if remove_flag {
+            let min = heap.pop().unwrap().0;
+            set.remove(&min);
         }
         if !set.contains(&(v + minus_val)) {
             set.insert(v + minus_val);
