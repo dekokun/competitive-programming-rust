@@ -18,6 +18,23 @@ fn read<T: FromStr>() -> T {
     opt.expect("failed to parse token")
 }
 
+use std::cmp::Ordering;
+
+#[derive(Eq, PartialEq, Clone, Debug)]
+pub struct Rev<T>(pub T);
+
+impl<T: PartialOrd> PartialOrd for Rev<T> {
+    fn partial_cmp(&self, other: &Rev<T>) -> Option<Ordering> {
+        other.0.partial_cmp(&self.0)
+    }
+}
+
+impl<T: Ord> Ord for Rev<T> {
+    fn cmp(&self, other: &Rev<T>) -> Ordering {
+        other.0.cmp(&self.0)
+    }
+}
+
 fn main() {
     let N: usize = read();
     let vec = (0..N).map(|_| read::<usize>()).collect::<Vec<usize>>();
@@ -34,24 +51,27 @@ fn main() {
         }
     }
     let mut ans = 0;
-    use std::collections::HashSet;
-    let mut must = HashSet::new();
-    for &v in vec.iter().rev() {
+    use std::collections::{BinaryHeap, HashSet};
+    let mut set = HashSet::new();
+    let mut heap = BinaryHeap::new();
+
+    for (minus_val, &v) in vec.iter().rev().enumerate() {
         if v == 0 {
+            set.clear();
+            heap.clear();
             continue;
         }
-        let mut next_must = HashSet::new();
-        must.insert(v);
-        for &m in &must {
-            if m == 0 {
-                continue;
-            }
-            if !next_must.contains(&(m - 1)) {
-                next_must.insert(m - 1);
-                ans += 1;
+        if let Some(Rev(v)) = heap.peek() {
+            if (v - minus_val) == 0 {
+                set.remove(v);
+                heap.pop();
             }
         }
-        must = next_must;
+        if !set.contains(&(v + minus_val)) {
+            set.insert(v + minus_val);
+            heap.push(Rev(v + minus_val));
+        }
+        ans += set.len();
     }
     println!("{}", ans);
 }
