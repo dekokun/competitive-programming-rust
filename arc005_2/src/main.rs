@@ -30,20 +30,18 @@ fn main() {
             row.push(n);
         }
     }
-    let (add_x, add_y): (isize, isize) = match W.as_str() {
-        "R" => (1, 0),
-        "L" => (-1, 0),
-        "U" => (0, -1),
-        "D" => (0, 1),
-        "RU" => (1, -1),
-        "RD" => (1, 1),
-        "LU" => (-1, -1),
-        "LD" => (-1, 1),
-        _ => panic!("unimplemented"),
-    };
+    let mut add_x = 0;
+    let mut add_y = 0;
+    for c in W.chars() {
+        match c {
+            'R' => add_x = 1,
+            'L' => add_x = -1,
+            'U' => add_y = -1,
+            'D' => add_y = 1,
+            _ => panic!("おかしい"),
+        }
+    }
     let mut ans = "".to_string();
-    let mut add_x = add_x;
-    let mut add_y = add_y;
     let mut x = x;
     let mut y = y;
     for _ in 0..4 {
