@@ -46,14 +46,14 @@ fn main() {
     let mut y = y;
     for _ in 0..4 {
         ans += &card[y as usize][x as usize].to_string();
-        x += add_x;
-        y += add_y;
-        if x == 0 || x == 8 {
+        if x == 0 && add_x < 0 || x == 8 && add_x > 0 {
             add_x = -add_x;
         }
-        if y == 0 || y == 8 {
+        if y == 0 && add_y < 0 || y == 8 && add_y > 0 {
             add_y = -add_y;
         }
+        x += add_x;
+        y += add_y;
     }
     println!("{}", ans);
 }
