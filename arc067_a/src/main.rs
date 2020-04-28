@@ -42,7 +42,7 @@ fn main() {
         if is_composite {
             continue;
         }
-        factors.entry(i).or_insert(1);
+        factors.insert(i, 1);
         primes.push(i);
     }
 
