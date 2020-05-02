@@ -33,6 +33,9 @@ fn main() {
     }
 }
 
+// - あるキーよりも上のものがいくつあるかが重要
+//   - ちょうど2倍のもの、2倍以上のもの、ちょうど3倍のもの、3倍以上のもの…がいくつあるかも重要
+// - あるキーが何個あるのかを大きい順から見ていき、そのキーよりも上の数で何個新たにそのキーを作り出せるかを計算する
 fn solve(diner: usize, vec: Vec<i64>) -> usize {
     use std::collections::HashMap;
     let mut map = HashMap::new();
