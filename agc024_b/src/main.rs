@@ -24,21 +24,19 @@ fn main() {
     for _ in 0..N {
         vec.push(read());
     }
-    let mut now_val = 0;
-    for &v in &vec {
-        if v == now_val + 1 {
-            now_val += 1;
+    use std::collections::HashMap;
+    let mut map: HashMap<usize, usize> = HashMap::new();
+    for v in vec {
+        {
+            let entry = map.entry(v - 1).or_insert(0);
+            *entry += 1;
         }
+        let count = map.remove(&(v - 1)).unwrap();
+        map.insert(v, count);
     }
-    let mut ans_candidates = vec![];
-    ans_candidates.push(N - now_val);
-    vec.reverse();
-    let mut now_val = N + 1;
-    for &v in &vec {
-        if v == now_val - 1 {
-            now_val -= 1;
-        }
+    let mut max = 0;
+    for (_i, v) in map {
+        max = std::cmp::max(max, v);
     }
-    ans_candidates.push(now_val - 1);
-    println!("{}", std::cmp::min(ans_candidates[0], ans_candidates[1]));
+    println!("{}", N - max);
 }
