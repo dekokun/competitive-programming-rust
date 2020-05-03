@@ -24,19 +24,11 @@ fn main() {
     for _ in 0..N {
         vec.push(read());
     }
-    use std::collections::HashMap;
-    let mut map: HashMap<usize, usize> = HashMap::new();
-    for v in vec {
-        {
-            let entry = map.entry(v - 1).or_insert(0);
-            *entry += 1;
-        }
-        let count = map.remove(&(v - 1)).unwrap();
-        map.insert(v, count);
-    }
+    let mut map: Vec<usize> = vec![0; N + 1];
     let mut max = 0;
-    for (_i, v) in map {
-        max = std::cmp::max(max, v);
+    for v in vec {
+        map[v] = map[v - 1] + 1;
+        max = std::cmp::max(max, map[v]);
     }
     println!("{}", N - max);
 }
