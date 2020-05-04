@@ -35,41 +35,34 @@ fn main() {
     for v in map {
         vec.push(v);
     }
-    let mins = dfs(0, &vec, vec![], vec![]);
+    let mins = dfs(0, &vec, vec![]);
     println!("{}", mins.iter().max().unwrap());
 }
 
-fn dfs(
-    depth: usize,
-    vec: &[(usize, usize)],
-    now_times: Vec<usize>,
-    mins: Vec<usize>,
-) -> Vec<usize> {
+fn dfs(depth: usize, vec: &[(usize, usize)], times: Vec<usize>) -> Vec<usize> {
     if depth == vec.len() {
-        let mut now_times = now_times;
+        let mut now_times = times;
         now_times.sort();
         now_times.push(24);
         let min = now_times
             .windows(2)
             .fold(1000, |acc, v| std::cmp::min(acc, (v[1] - v[0]) % 24));
-        let mut mins = mins;
-        mins.push(min);
-        return mins;
+        return vec![min];
     }
     let v = vec[depth].0;
     let count = vec[depth].1;
     if count == 2 {
-        let mut now_times = now_times;
+        let mut now_times = times;
         now_times.push(v);
         now_times.push(24 - v);
-        dfs(depth + 1, vec, now_times, mins)
+        dfs(depth + 1, vec, now_times)
     } else {
-        let mut now_times_mut = now_times.clone();
+        let mut now_times_mut = times.clone();
         now_times_mut.push(v);
-        let mins1 = dfs(depth + 1, vec, now_times_mut, mins.clone());
-        let mut now_times_mut = now_times;
+        let mins1 = dfs(depth + 1, vec, now_times_mut);
+        let mut now_times_mut = times;
         now_times_mut.push(24 - v);
-        let mins2 = dfs(depth + 1, vec, now_times_mut, mins);
+        let mins2 = dfs(depth + 1, vec, now_times_mut);
         [mins1, mins2].concat()
     }
 }
