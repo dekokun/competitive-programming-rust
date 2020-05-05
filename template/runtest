@@ -3,5 +3,6 @@
 cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
+RUST_BACKTRACE = 1
 
 t "" ""
