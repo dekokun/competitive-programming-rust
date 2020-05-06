@@ -50,7 +50,7 @@ fn main() {
 fn solve(cones: Vec<(usize, usize, usize)>, queries: Vec<(usize, usize)>) -> Vec<f64> {
     let max = 2 * 10_usize.pow(4);
     let mut vec: Vec<f64> = vec![0.0; max + 1];
-    for i in 0..max + 1 {
+    for (i, v) in vec.iter_mut().enumerate() {
         for &(bottom, top, r2) in &cones {
             if i >= top {
                 continue;
@@ -59,7 +59,7 @@ fn solve(cones: Vec<(usize, usize, usize)>, queries: Vec<(usize, usize)>) -> Vec
             let origin_height = top - bottom;
             let origin_v = r2 * origin_height;
             let height = top - tmp_bottom;
-            vec[i] += origin_v as f64 * (height.pow(3) as f64 / origin_height.pow(3) as f64);
+            *v += origin_v as f64 * (height.pow(3) as f64 / origin_height.pow(3) as f64);
         }
     }
     queries
