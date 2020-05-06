@@ -41,7 +41,7 @@ fn main() {
     println!(
         "{}",
         ans.iter()
-            .map(|v| v.to_string())
+            .map(|v| format!("{:.6}", v))
             .collect::<Vec<_>>()
             .join("\n")
     );
