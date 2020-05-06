@@ -26,8 +26,9 @@ fn main() {
         .map(|_key| {
             let bottom: usize = read();
             let r: usize = read();
-            let top: usize = bottom + read::<usize>();
-            (bottom, top, r.pow(2))
+            let height: usize = read();
+            let v: f64 = (r.pow(2) * height) as f64;
+            (bottom, height, v)
         })
         .collect();
     let queries: Vec<_> = (0..Q)
@@ -47,18 +48,16 @@ fn main() {
     );
 }
 
-fn solve(cones: Vec<(usize, usize, usize)>, queries: Vec<(usize, usize)>) -> Vec<f64> {
+fn solve(cones: Vec<(usize, usize, f64)>, queries: Vec<(usize, usize)>) -> Vec<f64> {
     let max = 2 * 10_usize.pow(4);
     let mut vec: Vec<f64> = vec![0.0; max + 1];
     for (i, v) in vec.iter_mut().enumerate() {
-        for &(bottom, top, r2) in &cones {
-            if i >= top {
+        for &(bottom, origin_height, origin_v) in &cones {
+            if i >= bottom + origin_height {
                 continue;
             }
             let tmp_bottom = cmp::max(i, bottom);
-            let origin_height = top - bottom;
-            let origin_v = r2 * origin_height;
-            let height = top - tmp_bottom;
+            let height = bottom + origin_height - tmp_bottom;
             *v += origin_v as f64 * (height.pow(3) as f64 / origin_height.pow(3) as f64);
         }
     }
