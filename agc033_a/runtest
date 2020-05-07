@@ -3,6 +3,19 @@
 cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
-RUST_BACKTRACE=1
+# RUST_BACKTRACE=1
 
-t "" ""
+t "2 3
+.#.
+..." 2
+t "3 3
+...
+.#.
+..." 2
+t "6 6
+..#..#
+......
+#..#..
+......
+.#....
+....#." 3
