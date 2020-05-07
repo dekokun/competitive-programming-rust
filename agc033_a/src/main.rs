@@ -44,21 +44,24 @@ fn solve(mut v: Vec<Vec<char>>) -> usize {
     let mut max = 0;
     while let Some((i, j, count)) = queue.pop_front() {
         max = std::cmp::max(count, max);
-        v[i][j] = '#';
         // 上
         if j != 0 && v[i][j - 1] == '.' {
+            v[i][j - 1] = '#';
             queue.push_back((i, j - 1, count + 1));
         }
         // 下
         if j != v[0].len() - 1 && v[i][j + 1] == '.' {
+            v[i][j + 1] = '#';
             queue.push_back((i, j + 1, count + 1));
         }
         // 左
         if i != 0 && v[i - 1][j] == '.' {
+            v[i - 1][j] = '#';
             queue.push_back((i - 1, j, count + 1));
         }
         // 右
         if i != v.len() - 1 && v[i + 1][j] == '.' {
+            v[i + 1][j] = '#';
             queue.push_back((i + 1, j, count + 1));
         }
     }
