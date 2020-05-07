@@ -67,32 +67,39 @@ fn main() {
 fn solve(size: usize, queries: Vec<Query>) -> Vec<Output> {
     let mut stack = vec![];
     let mut ans: Vec<Output> = vec![];
+    let mut stack_len = 0;
     for q in queries {
         match q {
-            Query::Push(count, _val) if size - stack.len() < count => {
+            Query::Push(count, _val) if size - stack_len < count => {
                 ans.push(Output::FULL);
                 break;
             }
             Query::Push(count, val) => {
-                for _ in 0..count {
-                    stack.push(val)
-                }
+                stack_len += count;
+                stack.push((count, val))
             }
-            Query::Pop(count) if stack.len() < count => {
+            Query::Pop(count) if stack_len < count => {
                 ans.push(Output::EMPTY);
                 break;
             }
-            Query::Pop(count) => {
-                for _ in 0..count {
-                    stack.pop();
+            Query::Pop(mut count) => {
+                stack_len -= count;
+                while count > 0 {
+                    let elm = stack.pop().unwrap();
+                    if elm.0 > count {
+                        stack.push((elm.0 - count, elm.1));
+                        break;
+                    } else {
+                        count -= elm.0;
+                    }
                 }
             }
-            Query::Top if stack.is_empty() => {
+            Query::Top if stack_len == 0 => {
                 ans.push(Output::EMPTY);
                 break;
             }
-            Query::Top => ans.push(Output::Display(*stack.last().unwrap())),
-            Query::Size => ans.push(Output::Display(stack.len() as i32)),
+            Query::Top => ans.push(Output::Display(stack.last().unwrap().1)),
+            Query::Size => ans.push(Output::Display(stack_len as i32)),
         }
     }
     if let Output::Display(_) = *ans.last().unwrap() {
