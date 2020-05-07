@@ -5,4 +5,34 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "7 20
+Push 2 3
+Push 4 5
+Top
+Size
+Pop 5
+Top
+Size" "5
+6
+3
+1
+SAFE"
+t "1 10
+Push 40 40" FULL
+t "5 10
+Push 1 2
+Top
+Pop 1
+Top
+Size" "2
+EMPTY"
+t "4 10
+Top
+Size
+Push 1 1
+Top" EMPTY
+t "4 10
+Top
+Size
+Push 1 -1
+Top" EMPTY
