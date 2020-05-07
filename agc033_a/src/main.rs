@@ -42,8 +42,7 @@ fn solve(mut v: Vec<Vec<char>>) -> usize {
         }
     }
     let mut max = 0;
-    while let Some((i, j, count)) = queue.pop_back() {
-        dbg!(i, j, count);
+    while let Some((i, j, count)) = queue.pop_front() {
         max = std::cmp::max(count, max);
         v[i][j] = '#';
         // 上
