@@ -102,7 +102,9 @@ fn solve(size: usize, queries: Vec<Query>) -> Vec<Output> {
             Query::Size => ans.push(Output::Display(stack_len as i32)),
         }
     }
-    if let Output::Display(_) = *ans.last().unwrap() {
+    if ans.is_empty() {
+        ans.push(Output::SAFE)
+    } else if let Output::Display(_) = *ans.last().unwrap() {
         ans.push(Output::SAFE)
     }
     ans
