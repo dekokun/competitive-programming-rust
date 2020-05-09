@@ -39,7 +39,8 @@ fn solve(
     let mut water_queue = VecDeque::new();
     let mut water_map: Vec<bool> = vec![false; beaker_max + 1];
     water_queue.push_front(0_usize);
-    water_map[0] = true;
+    // 水が0はありえない
+    water_map[0] = false;
 
     while let Some(g) = water_queue.pop_back() {
         let next_0 = g + waters.0 * 100;
@@ -83,7 +84,7 @@ fn solve(
         .map(|v| v.0)
         .collect();
     let mut max_density = 0.0;
-    let mut tuple = (0, 0);
+    let mut tuple = (100 * waters.0, 0);
     for &s in &salt_possibles {
         for &w in &water_possibles {
             if s + w > beaker_max {
