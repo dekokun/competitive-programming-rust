@@ -13,6 +13,6 @@ mod tests {
 
     #[test]
     fn test1() {
-        assert_eq!();
+        assert_eq!(true, true);
     }
 }
