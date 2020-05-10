@@ -97,6 +97,12 @@ fn solve(seq: Vec<isize>) -> (usize, Vec<(isize, isize)>) {
                 ans.push((zero, minus));
                 pluses.push(-minus);
             }
+            (1, _, _) => {
+                let plus = pluses.pop().unwrap();
+                let zero = zeros.pop().unwrap();
+                ans.push((plus, zero));
+                pluses.push(plus);
+            }
             (_, _, _) => {
                 let zero_1 = zeros.pop().unwrap();
                 let zero_2 = zeros.pop().unwrap();
