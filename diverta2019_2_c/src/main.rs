@@ -111,5 +111,9 @@ fn solve(seq: Vec<isize>) -> (usize, Vec<(isize, isize)>) {
             }
         }
     }
-    (pluses[0] as usize, ans)
+    if pluses.is_empty() {
+        (0, ans)
+    } else {
+        (pluses[0] as usize, ans)
+    }
 }
