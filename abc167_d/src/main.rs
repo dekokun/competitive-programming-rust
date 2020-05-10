@@ -38,9 +38,11 @@ fn main() {
             Some(_) => break,
         }
     }
-    assert_eq!(set.len(), vec2.len());
-    let loop_first_idx = set.get(&now).unwrap();
-    let rem = K % (set.len() - loop_first_idx) as i64;
-    dbg!(now, loop_first_idx, &vec2, rem);
-    println!("{}", vec2[rem as usize] + 1);
+    let &loop_first_idx = set.get(&now).unwrap();
+    if K < loop_first_idx as i64 {
+        println!("{}", vec2[K as usize] + 1);
+        return;
+    }
+    let rem = (K - loop_first_idx as i64) % (set.len() - loop_first_idx) as i64;
+    println!("{}", vec2[rem as usize + loop_first_idx] + 1);
 }
