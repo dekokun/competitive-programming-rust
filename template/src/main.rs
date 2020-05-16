@@ -1,13 +1,12 @@
 #![allow(non_snake_case)]
 
-fn main() {
-}
+fn main() {}
 
-fn solve() {
-
-}
+#[allow(dead_code)]
+fn solve() {}
 
 #[cfg(test)]
+#[allow(unused_imports)]
 mod tests {
     use super::*;
 
