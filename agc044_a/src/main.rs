@@ -59,19 +59,6 @@ fn solve(N: i64, A: i64, B: i64, C: i64, D: i64) -> i64 {
                     now_cost.saturating_add((v - next).saturating_mul(D)),
                 );
 
-                // if next == 3 {
-                //     let rem = v % d;
-                //     dbg!(v, now_cost, new_cost, add_cost, cost, A, B, C, D);
-                //     dbg!(
-                //         rem,
-                //         v,
-                //         d,
-                //         v - rem,
-                //         v + (d - rem),
-                //         ((v - rem) / d, rem * D),
-                //         ((v + (d - rem)) / d, (d - rem) * D),
-                //     );
-                // }
                 match dp.get(&next) {
                     None => {
                         dp.insert(next, new_cost);
