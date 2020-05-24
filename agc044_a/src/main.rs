@@ -77,18 +77,3 @@ fn solve(N: i64, A: i64, B: i64, C: i64, D: i64) -> i64 {
     }
     min_cost
 }
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(solve(11, 1, 2, 4, 8), 20);
-    }
-    #[test]
-    fn test2() {
-        assert_eq!(solve(11, 1, 2, 2, 8), 19);
-    }
-}
