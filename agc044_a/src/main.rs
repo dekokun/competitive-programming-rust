@@ -35,10 +35,7 @@ fn solve(N: i64, A: i64, B: i64, C: i64, D: i64) -> i64 {
     let mut new = VecDeque::new();
     dp.insert(N, 0);
     new.push_front((N, 0));
-    let mut min_cost: i64 = match N.checked_mul(D) {
-        None => std::i64::MAX,
-        Some(v) => v,
-    };
+    let mut min_cost: i64 = N.saturating_mul(D);
     while let Some((v, now_cost)) = new.pop_back() {
         if v == 0 {
             min_cost = min(min_cost, now_cost);
@@ -57,10 +54,10 @@ fn solve(N: i64, A: i64, B: i64, C: i64, D: i64) -> i64 {
             };
             for (next, add_cost) in nexts {
                 // 後者は全部1を引いた場合と比較している。全部1が少ないコストの場合はadd_costなしで最初からv - nextに直線で行けば良い
-                let new_cost = match (v - next).checked_mul(D) {
-                    None => now_cost + cost + add_cost,
-                    Some(v) => min(now_cost + cost + add_cost, now_cost + v),
-                };
+                let new_cost = min(
+                    now_cost + cost + add_cost,
+                    now_cost.saturating_add((v - next).saturating_mul(D)),
+                );
 
                 // if next == 3 {
                 //     let rem = v % d;
