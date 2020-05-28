@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t "7
+nikoandsolstice" nikoand...
+t "40
+ferelibenterhominesidquodvoluntcredunt" ferelibenterhominesidquodvoluntcredunt
