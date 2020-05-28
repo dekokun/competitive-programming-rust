@@ -24,15 +24,15 @@ fn main() {
     let mut seq = 1;
     let mut ans = vec![];
     for c in s.chars() {
-        if before.is_none() {
-            before = Some(c);
-            continue;
-        }
-        if before.unwrap() == c {
-            seq += 1;
-        } else {
-            ans.push((before.unwrap(), seq));
-            seq = 1;
+        match before {
+            None => {}
+            Some(char) if char == c => {
+                seq += 1;
+            }
+            Some(char) => {
+                ans.push((char, seq));
+                seq = 1;
+            }
         }
         before = Some(c);
     }
@@ -44,19 +44,4 @@ fn main() {
             .collect::<Vec<_>>()
             .join("")
     )
-}
-
-#[allow(dead_code)]
-fn solve() {}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
-    }
 }
