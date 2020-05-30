@@ -37,7 +37,7 @@ fn main() {
             }
         }
     }
-    if now_string.len() != 0 {
+    if !now_string.is_empty() {
         println!("NO");
     } else {
         println!("YES");
