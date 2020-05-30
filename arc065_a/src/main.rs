@@ -37,5 +37,9 @@ fn main() {
             }
         }
     }
-    println!("YES");
+    if now_string.len() != 0 {
+        println!("NO");
+    } else {
+        println!("YES");
+    }
 }

@@ -8,3 +8,4 @@ RUST_BACKTRACE=1
 t "erasedream" YES
 t "dreameraser" YES
 t "dreamerer" NO
+t "erdreamer" NO
