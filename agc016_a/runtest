@@ -5,4 +5,7 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "serval" 3
+t jackal 2
+t zzz 0
+t whbrjpjyhsrywlqjxdbrbaomnw 8
