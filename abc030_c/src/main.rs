@@ -25,31 +25,22 @@ fn main() {
     let b_deps: Vec<usize> = (0..M).map(|_| read()).collect();
     let mut now = 0;
     let mut ans = 0;
-    loop {
-        match a_deps.binary_search(&now) {
-            Ok(a) => {
-                now = a_deps[a];
+    let depses = vec![(a_deps, X), (b_deps, Y)];
+    'outer: loop {
+        for (deps, time) in &depses {
+            match deps.binary_search(&now) {
+                Ok(a) => {
+                    now = deps[a];
+                }
+                Err(a) if a < deps.len() => {
+                    now = deps[a];
+                }
+                Err(_) => {
+                    break 'outer;
+                }
             }
-            Err(a) if a < a_deps.len() => {
-                now = a_deps[a];
-            }
-            Err(_) => {
-                break;
-            }
+            now += time;
         }
-        now += X;
-        match b_deps.binary_search(&now) {
-            Ok(a) => {
-                now = b_deps[a];
-            }
-            Err(a) if a < b_deps.len() => {
-                now = b_deps[a];
-            }
-            Err(_) => {
-                break;
-            }
-        }
-        now += Y;
         ans += 1;
     }
     println!("{}", ans);
