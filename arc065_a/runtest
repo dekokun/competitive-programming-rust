@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t "erasedream" YES
+t "dreameraser" YES
+t "dreamerer" NO
+t "erdreamer" NO

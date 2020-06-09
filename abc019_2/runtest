@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t "aabbbaad" a2b3a2d1
+t "aabbbbbbbbbbbbxyza" a2b12x1y1z1a1
+t "edcba" e1d1c1b1a1
+t "edcbaa" e1d1c1b1a2

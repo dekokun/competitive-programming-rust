@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t "PD?D??P" PDPDPDP
+t "P?P?" PDPD
+t "??" PD
+t "???" DPD
+t "?D?" PDD
+t "?P?" DPD
+t "????" PDPD
