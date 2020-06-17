@@ -21,37 +21,31 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let n: usize = read();
     let vec: Vec<i32> = (0..n).map(|_| read()).collect();
-    let diffs: Vec<_> = vec.windows(2).map(|a| a[1] - a[0]).collect();
-    let mut before = None;
-    let mut ans = 0;
-    // dbg!(&diffs);
-    for v in diffs {
-        if v < 0 {
-            match before {
-                None => before = Some(v),
-                Some(a) if a <= 0 => before = Some(v),
-                Some(a) if a > 0 => {
-                    before = None;
-                    ans += 1;
-                }
-                Some(_) => unreachable!(),
-            }
-        } else if v > 0 {
-            match before {
-                None => before = Some(v),
-                Some(a) if a >= 0 => before = Some(v),
-                Some(a) if a < 0 => {
-                    before = None;
-                    ans += 1;
-                }
-                Some(_) => unreachable!(),
-            }
-        } else if v == 0 {
-            match before {
-                None => before = Some(v),
-                Some(_) => {}
-            }
+    let mut unique = vec![vec[0]];
+    for v in vec.windows(2) {
+        if v[0] != v[1] {
+            unique.push(v[1]);
         }
     }
-    println!("{}", ans + 1)
+    let mut ans = 0;
+    let mut seq = vec![];
+    for v in unique {
+        if seq.is_empty() {
+            seq.push(v);
+            ans += 1;
+            continue;
+        }
+        if seq.len() == 1 {
+            seq.push(v);
+            continue;
+        }
+        let (a, b, x) = (seq[seq.len() - 2], seq[seq.len() - 1], v);
+        if (a > b && b > x) || (a < b && b < x) {
+            seq.push(x);
+        } else {
+            seq = vec![x];
+            ans += 1;
+        }
+    }
+    println!("{}", ans);
 }
