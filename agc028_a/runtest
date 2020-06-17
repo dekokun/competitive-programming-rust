@@ -5,4 +5,12 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "3 2
+acp
+ae" 6
+t "6 3
+abcdef
+abc" -1
+t "15 9
+dnsusrayukuaiia
+dujrunuma" 45
