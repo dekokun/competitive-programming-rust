@@ -20,16 +20,13 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    let mut max = n;
     let mut ans = n;
-    for min in 1..=n {
-        while min * max > n {
-            max -= 1;
-        }
-        if min > max {
+    for lower in 1..=n {
+        let upper = n / lower;
+        if lower > upper {
             break;
         }
-        ans = std::cmp::min(ans, (max - min) + (n - max * min));
+        ans = std::cmp::min(ans, (upper - lower) + (n - upper * lower));
     }
     println!("{}", ans)
 }
