@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t 90 4
+t 1 360
+t 179 360
