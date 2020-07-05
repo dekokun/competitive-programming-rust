@@ -32,7 +32,7 @@ fn main() {
     }
     let mut ans = 0;
     for (k, v) in ends {
-        match starts.get(&(k)) {
+        match starts.get(&k) {
             Some(a) => {
                 ans += a * v;
             }
