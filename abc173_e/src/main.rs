@@ -20,7 +20,7 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let N: usize = read();
     let K: usize = read();
-    let mut vec: Vec<i32> = (0..N).map(|_| read()).collect();
+    let mut vec: Vec<i64> = (0..N).map(|_| read()).collect();
     let MOD = 10_i64.pow(9) + 7;
     vec.sort();
     if vec.iter().all(|&x| x < 0) && K % 2 == 1 {
@@ -33,4 +33,57 @@ fn main() {
         println!("{}", tmp + MOD);
         return;
     }
+    let mut negatives: Vec<i64> = vec.iter().filter(|&x| x < &0).copied().collect();
+    let mut positives: Vec<i64> = vec.iter().filter(|&x| x >= &0).copied().collect();
+    negatives.sort();
+    positives.sort();
+    let mut ans_vec: Vec<i64> = vec![];
+    while ans_vec.len() != K {
+        if negatives.len() < 2 {
+            let v = positives.pop().unwrap();
+            ans_vec.push(v);
+            continue;
+        }
+        if K - ans_vec.len() == 1 {
+            let v = positives.pop().unwrap();
+            ans_vec.push(v);
+            continue;
+        }
+        if positives.is_empty() {
+            let v = negatives.pop().unwrap();
+            ans_vec.push(-v);
+            continue;
+        }
+        if positives.len() == 1 && K >= 2 {
+            let v1 = negatives.pop().unwrap();
+            let v2 = negatives.pop().unwrap();
+            ans_vec.push(-v1);
+            ans_vec.push(-v2);
+            continue;
+        }
+        if positives.len() == 1 && K == 1 {
+            let v = positives.pop().unwrap();
+            ans_vec.push(v);
+            continue;
+        }
+        let neg = negatives[negatives.len() - 1] * negatives[negatives.len() - 2];
+        let pos = positives[positives.len() - 1] * positives[positives.len() - 2];
+        if pos > neg {
+            let v1 = positives.pop().unwrap();
+            let v2 = positives.pop().unwrap();
+            ans_vec.push(v1);
+            ans_vec.push(v2);
+        } else {
+            let v1 = negatives.pop().unwrap();
+            let v2 = negatives.pop().unwrap();
+            ans_vec.push(-v1);
+            ans_vec.push(-v2);
+        }
+    }
+    let mut ans: i64 = 1;
+    for v in ans_vec {
+        ans *= v;
+        ans %= MOD;
+    }
+    println!("{}", ans)
 }
