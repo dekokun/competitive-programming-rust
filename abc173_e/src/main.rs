@@ -33,12 +33,22 @@ fn main() {
         println!("{}", tmp + MOD);
         return;
     }
-    let mut negatives: Vec<i64> = vec.iter().filter(|&x| x < &0).copied().collect();
+    let mut negatives: Vec<i64> = vec
+        .iter()
+        .filter(|&x| x < &0)
+        .copied()
+        .map(|x| -x)
+        .collect();
     let mut positives: Vec<i64> = vec.iter().filter(|&x| x >= &0).copied().collect();
     negatives.sort();
     positives.sort();
     let mut ans_vec: Vec<i64> = vec![];
     while ans_vec.len() != K {
+        if positives.is_empty() {
+            let v = negatives.pop().unwrap();
+            ans_vec.push(-v);
+            continue;
+        }
         if negatives.len() < 2 {
             let v = positives.pop().unwrap();
             ans_vec.push(v);
@@ -47,11 +57,6 @@ fn main() {
         if K - ans_vec.len() == 1 {
             let v = positives.pop().unwrap();
             ans_vec.push(v);
-            continue;
-        }
-        if positives.is_empty() {
-            let v = negatives.pop().unwrap();
-            ans_vec.push(-v);
             continue;
         }
         if positives.len() == 1 && K >= 2 {
@@ -69,10 +74,8 @@ fn main() {
         let neg = negatives[negatives.len() - 1] * negatives[negatives.len() - 2];
         let pos = positives[positives.len() - 1] * positives[positives.len() - 2];
         if pos > neg {
-            let v1 = positives.pop().unwrap();
-            let v2 = positives.pop().unwrap();
-            ans_vec.push(v1);
-            ans_vec.push(v2);
+            let v = positives.pop().unwrap();
+            ans_vec.push(v);
         } else {
             let v1 = negatives.pop().unwrap();
             let v2 = negatives.pop().unwrap();
