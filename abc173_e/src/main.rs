@@ -59,16 +59,11 @@ fn main() {
             ans_vec.push(v);
             continue;
         }
-        if positives.len() == 1 && K >= 2 {
+        if positives.len() == 1 && K - ans_vec.len() >= 2 {
             let v1 = negatives.pop().unwrap();
             let v2 = negatives.pop().unwrap();
             ans_vec.push(-v1);
             ans_vec.push(-v2);
-            continue;
-        }
-        if positives.len() == 1 && K == 1 {
-            let v = positives.pop().unwrap();
-            ans_vec.push(v);
             continue;
         }
         let neg = negatives[negatives.len() - 1] * negatives[negatives.len() - 2];
@@ -87,6 +82,10 @@ fn main() {
     for v in ans_vec {
         ans *= v;
         ans %= MOD;
+    }
+    // K == Nの場合はマイナスになる場合もある
+    if ans < 0 {
+        ans += MOD;
     }
     println!("{}", ans)
 }
