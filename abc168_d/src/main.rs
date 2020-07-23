@@ -34,25 +34,12 @@ fn main() {
     queue.push_front(1);
     let mut ans: Vec<usize> = vec![0; N + 1];
     while let Some(now) = queue.pop_back() {
-        match graph.get(&now) {
-            None => {
+        for &next in graph.get(&now).unwrap() {
+            if ans[next] != 0 {
                 continue;
             }
-            Some(nexts) => {
-                for &next in nexts {
-                    if ans[next] != 0 {
-                        continue;
-                    }
-                    ans[next] = now;
-                    queue.push_front(next);
-                }
-            }
-        }
-    }
-    for &v in ans.iter().skip(2) {
-        if v == 0 {
-            println!("-1");
-            return;
+            ans[next] = now;
+            queue.push_front(next);
         }
     }
     println!("Yes");
