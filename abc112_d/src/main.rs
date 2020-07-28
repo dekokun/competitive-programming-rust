@@ -1,11 +1,62 @@
 #![allow(non_snake_case)]
 
+use std::io::{stdin, Read};
+use std::str::FromStr;
+fn read_option<T: FromStr>() -> Option<T> {
+    let stdin = stdin();
+    let stdin = stdin.lock();
+    let token: String = stdin
+        .bytes()
+        .map(|c| c.expect("failed to read char") as char)
+        .skip_while(|c| c.is_whitespace())
+        .take_while(|c| !c.is_whitespace())
+        .collect();
+    token.parse().ok()
+}
+fn read<T: FromStr>() -> T {
+    let opt = read_option();
+    opt.expect("failed to parse token")
+}
+
 fn main() {
+    let N: usize = read();
+    let mut M: usize = read();
+    if M % N == 0 {
+        println!("{}", M / N);
+        return;
+    }
+    use std::collections::HashMap;
+    let mut primeFactor = HashMap::new();
+    for i in 2..((M as f64).sqrt().ceil() as usize) {
+        while M % i == 0 {
+            let entry = primeFactor.entry(i).or_insert(0);
+            *entry += 1;
+            M /= i;
+        }
+    }
+    if M != 1 {
+        let entry = primeFactor.entry(M).or_insert(0);
+        *entry += 1;
+    }
+    dbg!(&primeFactor);
+    let mut ans = 1;
+    let mut keys: Vec<_> = primeFactor.keys().collect();
+    keys.sort();
+    let mut split_key = None;
+    for key in keys {
+        match split_key {
+            None => {
+                if primeFactor.get(&key).unwrap() >= &N {
+                    split_key = Some(key);
+                }
+            }
+        }
+    }
+    println!("{}", ans)
 }
 
 #[allow(dead_code)]
-fn solve() {
-}
+fn solve() {}
 
 #[cfg(test)]
 #[allow(unused_imports)]
