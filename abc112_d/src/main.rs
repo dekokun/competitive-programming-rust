@@ -38,34 +38,20 @@ fn main() {
         let entry = primeFactor.entry(M).or_insert(0);
         *entry += 1;
     }
-    dbg!(&primeFactor);
     let mut ans = 1;
     let mut keys: Vec<_> = primeFactor.keys().collect();
     keys.sort();
     let mut split_key = None;
     for key in keys {
-        match split_key {
-            None => {
-                if primeFactor.get(&key).unwrap() >= &N {
-                    split_key = Some(key);
-                }
-            }
+        let mut val = key.pow(*primeFactor.get(&key).unwrap());
+        if split_key.is_none() && val >= N {
+            split_key = Some(key);
+            val /= key * std::cmp::max(N / key, 1);
         }
+        ans *= val;
+    }
+    if split_key.is_none() {
+        ans = 1;
     }
     println!("{}", ans)
-}
-
-#[allow(dead_code)]
-fn solve() {}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
-    }
 }
