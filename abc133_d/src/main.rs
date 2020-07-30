@@ -47,10 +47,9 @@ fn main() {
     }
     A.pop();
     ans.push(firstVal as usize);
-    let mut now = firstVal as usize;
     for dam in A {
+        let now = ans[ans.len() - 1];
         let next = (dam - (now as usize / 2)) * 2;
-        now = next;
         ans.push(next);
     }
     println!(
