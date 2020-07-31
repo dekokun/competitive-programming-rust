@@ -5,4 +5,7 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "CQSAS10SQH10SKSJD3" CQH10
+t "S10SJSQSKSAC2" 0
+t "S10SJSQSKSA" 0
+t "CQS10SJSQSKSA" CQ
