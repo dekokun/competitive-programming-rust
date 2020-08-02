@@ -5,4 +5,41 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "4 4
+##..
+##..
+..##
+..##" "possible
+#...
+....
+....
+...#"
+t "4 4
+###.
+####
+..##
+..##" "possible
+##..
+....
+...#
+...#"
+t "4 4
+###.
+##.#
+..##
+..##" "impossible"
+t "4 4
+###.
+##..
+..##
+..##" "impossible"
+t "4 4
+##..
+##.#
+..##
+..##" "impossible"
+t "4 4
+##..
+##..
+.##.
+.##." "impossible"
