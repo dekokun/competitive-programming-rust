@@ -22,61 +22,64 @@ fn main() {
     let H: usize = read();
     let W: usize = read();
     let mut map: Vec<Vec<char>> = vec![];
-    for _ in 0..1 {
-        map.push(vec!['#'; W + 2]);
-    }
     for _ in 0..H {
-        let mut row = vec!['#'; 1];
-        let mut string: Vec<char> = read::<String>().chars().collect();
-        row.append(&mut string);
-        row.append(&mut vec!['#'; 1]);
+        let row: Vec<char> = read::<String>().chars().collect();
         map.push(row);
     }
-    for _ in 0..1 {
-        map.push(vec!['#'; W + 2]);
-    }
-    for v in &map {
-        let row = v
-            .iter()
-            .map(|&c| c.to_string())
-            .collect::<Vec<_>>()
-            .join("");
-        eprintln!("{}", row);
-    }
+    let mut before_map: Vec<Vec<char>> = vec![vec!['#'; W]; H];
     for i in 0..H {
-        let mut continuous = 0;
         for j in 0..W {
-            match map[i][j] {
-                '#' => {
-                    continuous += 1;
-                }
-                '.' => {
-                    if 0 < continuous && continuous < 3 {
-                        println!("impossible");
-                        return;
+            for addy in &[-1, 0, 1] {
+                for addx in &[-1, 0, 1] {
+                    if i as i32 + addy < 0
+                        || j as i32 + addx < 0
+                        || H as i32 <= i as i32 + addy
+                        || W as i32 <= j as i32 + addx
+                    {
+                        continue;
                     }
-                    continuous = 0;
+                    let nexty = (i as i32 + addy) as usize;
+                    let nextx = (j as i32 + addx) as usize;
+                    if map[nexty][nextx] == '.' {
+                        before_map[i][j] = '.';
+                    }
                 }
-                _ => unimplemented!(),
             }
         }
     }
-    for j in 0..W {
-        let mut continuous = 0;
-        for i in 0..H {
-            match map[i][j] {
-                '#' => {
-                    continuous += 1;
-                }
-                '.' => {
-                    if 0 < continuous && continuous < 3 {
-                        println!("impossible");
-                        return;
+    let mut next_before_map: Vec<Vec<char>> = vec![vec!['.'; W]; H];
+    for i in 0..H {
+        for j in 0..W {
+            for addy in &[-1, 0, 1] {
+                for addx in &[-1, 0, 1] {
+                    if i as i32 + addy < 0
+                        || j as i32 + addx < 0
+                        || H as i32 <= i as i32 + addy
+                        || W as i32 <= j as i32 + addx
+                    {
+                        continue;
                     }
-                    continuous = 0;
+                    let nexty = (i as i32 + addy) as usize;
+                    let nextx = (j as i32 + addx) as usize;
+                    if before_map[nexty][nextx] == '#' {
+                        next_before_map[i][j] = '#';
+                    }
                 }
-                _ => unimplemented!(),
             }
         }
+    }
+    if map == next_before_map {
+        println!("possible");
+        for row in before_map {
+            println!(
+                "{}",
+                row.into_iter()
+                    .map(|c| c.to_string())
+                    .collect::<Vec<_>>()
+                    .join("")
+            )
+        }
+    } else {
+        println!("impossible");
     }
 }
