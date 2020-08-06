@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t "xyz
+4" aya
+t "a
+25" z
+t "aa
+51" az
+t "aza
+26" aaz
+t "codefestival
+100" aaaafeaaivap
