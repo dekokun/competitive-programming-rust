@@ -20,52 +20,23 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let N: usize = read();
-    let mut M: usize = read();
+    let M: usize = read();
     if M % N == 0 {
         println!("{}", M / N);
         return;
     }
-    use std::collections::HashMap;
-    let mut primeFactor = HashMap::new();
-    for i in 2..((M as f64).sqrt().ceil() as usize) {
-        while M % i == 0 {
-            let entry = primeFactor.entry(i).or_insert(0);
-            *entry += 1;
-            M /= i;
+    let mut factors = vec![];
+    for i in 1..((M as f64).sqrt().ceil() as usize) {
+        if M % i == 0 {
+            factors.push(i);
+            factors.push(M / i);
         }
     }
-    if M != 1 {
-        let entry = primeFactor.entry(M).or_insert(0);
-        *entry += 1;
-    }
-    dbg!(&primeFactor);
-    let mut ans = 1;
-    let mut keys: Vec<_> = primeFactor.keys().collect();
-    keys.sort();
-    let mut split_key = None;
-    for key in keys {
-        match split_key {
-            None => {
-                if primeFactor.get(&key).unwrap() >= &N {
-                    split_key = Some(key);
-                }
-            }
+    let mut ans = 0;
+    for v in factors {
+        if v <= M / N {
+            ans = std::cmp::max(ans, v);
         }
     }
     println!("{}", ans)
-}
-
-#[allow(dead_code)]
-fn solve() {}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
-    }
 }
