@@ -21,10 +21,6 @@ fn read<T: FromStr>() -> T {
 fn main() {
     let N: u64 = read();
     let K: u64 = read();
-    if K == 0 {
-        println!("0");
-        return;
-    }
     use std::collections::VecDeque;
     let mut sub: VecDeque<u64> = VecDeque::new();
     let mut now: u64 = 1;
