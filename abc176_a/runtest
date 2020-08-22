@@ -5,4 +5,5 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "20 12 6" 12
+t "1000 1 1000" 1000000
