@@ -5,4 +5,6 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "BBBWW" 1
+t "WWWWWW" 0
+t "WBWBWBWBWB" 9
