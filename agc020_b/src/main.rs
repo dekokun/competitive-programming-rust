@@ -20,32 +20,36 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let K: usize = read();
-    let A: Vec<usize> = (0..K).map(|_| read()).rev().collect();
-    if A[0] > 2 {
+    let mut A: Vec<usize> = (0..K).map(|_| read()).collect();
+    A.reverse();
+    if *A.first().unwrap() > 2 {
         println!("{}", -1);
         return;
     }
-    let mut before = 2;
-    for &a in &A {
-        if a >= before * 2 {
+    let mut min = 2;
+    let mut max = 2;
+    let mut a_max = A[0];
+    for &a in &A[1..] {
+        if a >= a_max * 2 {
             println!("{}", -1);
             return;
         }
-        before = a;
-    }
-    let mut min = *A.iter().max().unwrap();
-    let mut max = 0;
-    let mut a_max = A[0];
-    for &a in &A[1..] {
-        if a > a_max {
-            max = a * 2 - 1;
+        if a >= a_max {
+            max = std::cmp::max(max, a * 2 - 1);
             a_max = a;
-            min = a;
-        } else if a_max % a == 0 {
+            min = std::cmp::max(a, min);
+        }
+        if a_max % a == 0 {
             continue;
         } else {
-            // maxは、a_maxの倍にならない範囲で増える
+            // max は、aによってmax以下になるようになるまで増える
+            if max % a != 0 {
+                max += a - (max % a) - 1;
+            }
             // minも増える
+            if min % a != 0 {
+                min += a - (min % a);
+            }
         }
     }
     println!("{} {}", min, max)
