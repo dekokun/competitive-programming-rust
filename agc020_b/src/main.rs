@@ -27,29 +27,15 @@ fn main() {
         return;
     }
     let mut min = 2;
-    let mut max = 2;
-    let mut a_max = A[0];
+    let mut max = if A[0] == 1 { 2 } else { 3 };
     for &a in &A[1..] {
-        if a >= a_max * 2 {
-            println!("{}", -1);
-            return;
+        if (min - 1)/ a == max / a {
+            println!("-1");
+            return
         }
-        if a >= a_max {
-            max = std::cmp::max(max, a * 2 - 1);
-            a_max = a;
-            min = std::cmp::max(a, min);
-        }
-        if a_max % a == 0 {
-            continue;
-        } else {
-            // max は、aによってmax以下になるようになるまで増える
-            if max % a != 0 {
-                max += a - (max % a) - 1;
-            }
-            // minも増える
-            if min % a != 0 {
-                min += a - (min % a);
-            }
+        max += a - (max % a) - 1;
+        if min % a != 0 {
+            min += a - (min % a);
         }
     }
     println!("{} {}", min, max)
