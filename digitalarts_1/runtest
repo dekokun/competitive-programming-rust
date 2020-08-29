@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+RUST_BACKTRACE=1
+
+t "abc aaa ababa abcba abc
+2
+abc
+**a**" "*** aaa ***** abcba ***"
+t "aaaa aaa aaaaaa aaaa
+3
+a
+aa
+aaa" "aaaa *** aaaaaa aaaa"
+t "i have a pen
+1
+*" "* have * pen"
+t "digital arts
+1
+digital*arts" "digital arts"
