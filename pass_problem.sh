@@ -10,7 +10,7 @@ if [ "$program_name" == "master" ]; then
 fi
 
 git add "$program_name"/
-git commit -m"$program_name pass"
+git commit -m"$program_name pass" --allow-empty
 git checkout master
 git merge "$program_name"
 git branch -d "$program_name"
