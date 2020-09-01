@@ -23,53 +23,44 @@ use std::collections::HashMap;
 fn main() {
     let N: usize = read();
     let A: Vec<usize> = (0..N).map(|_| read()).collect();
-    let MOD = 10_usize.pow(9) + 7;
+    let MOD = 10_u64.pow(9) + 7;
     let mut lcm = HashMap::new();
     let mut primes = vec![];
-    dbg!(1);
-    for v in A {
-        primes.push(prime_factorization(v));
+    for v in &A {
+        primes.push(prime_factorization(*v));
     }
-    dbg!(2);
     for primes in &primes {
         for (p, &count) in primes {
             let entry = lcm.entry(p).or_insert(0);
             *entry = max(*entry, count);
         }
     }
-    dbg!(3);
+    let mut lcm_num = 1;
+    for (p, count) in lcm {
+        lcm_num *= bin_pow(*p as u64, count as u64, MOD);
+        lcm_num %= MOD;
+    }
     let mut ans = 0;
-    dbg!(lcm.len(), primes.len());
-    for map in &primes {
-        let mut now = 1;
-        for (&p, &count) in &lcm {
-            let count = match map.get(&p) {
-                None => count,
-                Some(&a) => count - a,
-            };
-            now *= p.pow(count as u32);
-            now %= MOD;
-        }
-        ans += now;
+    for v in A {
+        ans += lcm_num * inverse_mod(v as u64, MOD);
         ans %= MOD;
     }
-    dbg!(4);
     println!("{}", ans)
 }
 
-fn binary_pow(x: u64, n: u64, MOD: u64) -> u64 {
+fn bin_pow(x: u64, n: u64, MOD: u64) -> u64 {
     if n == 0 {
         return 1;
     }
     if n % 2 == 0 {
-        (binary_pow(x, n / 2, MOD) % MOD).pow(2) % MOD
+        (bin_pow(x, n / 2, MOD) % MOD).pow(2) % MOD
     } else {
-        binary_pow(x, n - 1, MOD) % MOD * x % MOD
+        bin_pow(x, n - 1, MOD) % MOD * x % MOD
     }
 }
 
 fn inverse_mod(n: u64, MOD: u64) -> u64 {
-    binary_pow(n, MOD - 2, MOD)
+    bin_pow(n, MOD - 2, MOD)
 }
 
 fn prime_factorization(n: usize) -> HashMap<usize, usize> {
