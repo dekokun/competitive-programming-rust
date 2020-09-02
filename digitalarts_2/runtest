@@ -5,4 +5,12 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "abc" "f"
+t "zzzzzzzzzzzzzzzzzzzz" "NO"
+t "abcdef" u
+t "k" ja
+t "aa" b
+t "a" NO
+t "zz" zya
+t "za" "yb"
+t "zza" "yzb"
