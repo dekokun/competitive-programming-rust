@@ -5,4 +5,7 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "rokovoko" 3
+t "tomtom" 6
+t "vwxyz" 1
+t "succeeded" 3
