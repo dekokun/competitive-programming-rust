@@ -148,3 +148,39 @@ fn read<T: FromStr>() -> T {
     let opt = read_option();
     opt.expect("failed to parse token")
 }
+
+#[snippet = "mod_pow"]
+fn mod_pow(x: u64, n: u64, MOD: u64) -> u64 {
+    if n == 0 {
+        return 1;
+    }
+    if n % 2 == 0 {
+        (bin_pow(x, n / 2, MOD) % MOD).pow(2) % MOD
+    } else {
+        bin_pow(x, n - 1, MOD) % MOD * x % MOD
+    }
+}
+
+#[snippet(include = "mod_pow")]
+#[snippet = "mod_inverse"]
+fn mod_inverse(n: u64, MOD: u64) -> u64 {
+    bin_pow(n, MOD - 2, MOD)
+}
+
+#[snippet = "prime_factorization"]
+fn prime_factorization(n: usize) -> HashMap<usize, usize> {
+    let mut ans = HashMap::new();
+    let mut n = n;
+    for i in 2..=((n as f64).sqrt().ceil() as usize) {
+        while n % i == 0 && n != 1 {
+            n /= i;
+            let entry = ans.entry(i).or_insert(0);
+            *entry += 1;
+        }
+    }
+    if n != 1 {
+        let entry = ans.entry(n).or_insert(0);
+        *entry += 1;
+    }
+    ans
+}
