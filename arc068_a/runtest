@@ -5,4 +5,5 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "7" 2
+t "149696127901" 27217477801
