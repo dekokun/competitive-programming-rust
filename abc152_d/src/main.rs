@@ -1,6 +1,5 @@
 #![allow(non_snake_case)]
 
-use std::cmp::Ordering;
 use std::io::{stdin, Read};
 use std::str::FromStr;
 fn read_option<T: FromStr>() -> Option<T> {
@@ -21,37 +20,17 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let N: usize = read();
-    let mut vec: Vec<usize> = vec![0; N + 1];
-    for i in 1..N + 1 {
-        let right_digit = i % 10;
-        let (left_digit, num_of_digits) = left_digit_and_num_of_digits(i);
-        let reverse = if num_of_digits == 0 {
-            left_digit
-        } else {
-            right_digit * 10 + left_digit
-        };
-        let normal = if num_of_digits == 0 {
-            left_digit
-        } else {
-            left_digit * 10 + right_digit
-        };
-        vec[i] = match normal.cmp(&reverse) {
-            Ordering::Greater if right_digit == 0 => vec[i - 1],
-            Ordering::Greater => vec[i - 1] + 2,
-            Ordering::Equal if i < 10 => vec[i - 1] + 1,
-            Ordering::Equal => vec[i - 1] + 3,
-            Ordering::Less => vec[i - 1],
-        };
+    let mut nums: Vec<Vec<usize>> = vec![vec![0; 10]; 10];
+    for i in 1..=N {
+        let first = i.to_string().chars().next().unwrap().to_digit(10).unwrap() as usize;
+        let last = i.to_string().chars().last().unwrap().to_digit(10).unwrap() as usize;
+        nums[first][last] += 1;
     }
-    println!("{}", vec[N]);
-}
-
-fn left_digit_and_num_of_digits(i: usize) -> (usize, usize) {
-    let mut i = i;
-    let mut num_of_digits = 0;
-    while i >= 10 {
-        i /= 10;
-        num_of_digits += 1;
+    let mut ans = 0;
+    for i in 0..=9 {
+        for j in 0..=9 {
+            ans += nums[i][j] * nums[j][i];
+        }
     }
-    (i, num_of_digits)
+    println!("{}", ans);
 }
