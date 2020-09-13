@@ -150,15 +150,18 @@ fn read<T: FromStr>() -> T {
 }
 
 #[snippet = "mod_pow"]
-fn mod_pow(x: u64, n: u64, MOD: u64) -> u64 {
-    if n == 0 {
-        return 1;
+fn mod_pow(x: i64, n: i64, MOD: i64) -> i64 {
+    let mut ans = 1;
+    let mut n = n;
+    let mut x = x;
+    while n != 0 {
+        if n % 2 == 1 {
+            ans = (ans * x) % MOD;
+        }
+        x = (x * x) % MOD;
+        n /= 2;
     }
-    if n % 2 == 0 {
-        (bin_pow(x, n / 2, MOD) % MOD).pow(2) % MOD
-    } else {
-        bin_pow(x, n - 1, MOD) % MOD * x % MOD
-    }
+    ans
 }
 
 #[snippet(include = "mod_pow")]
