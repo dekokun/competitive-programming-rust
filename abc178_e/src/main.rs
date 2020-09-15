@@ -20,8 +20,23 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let N: usize = read();
-    let mut vec: Vec<(usize, usize)> = vec![];
+    let mut vec: Vec<(i32, i32)> = vec![];
     for _ in 0..N {
         vec.push((read(), read()));
     }
+
+    use std::cmp::{max, min};
+    let mut z_max = std::i32::MIN;
+    let mut z_min = std::i32::MAX;
+    let mut w_max = std::i32::MIN;
+    let mut w_min = std::i32::MAX;
+    for (x, y) in vec {
+        let z = x - y;
+        let w = x + y;
+        z_max = max(z_max, z);
+        z_min = min(z_min, z);
+        w_max = max(w_max, w);
+        w_min = min(w_min, w);
+    }
+    println!("{}", max(z_max - z_min, w_max - w_min));
 }
