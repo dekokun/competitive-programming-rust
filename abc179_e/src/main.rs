@@ -19,13 +19,40 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let N: u64 = read();
-    let X: u64 = read();
-    let M: u64 = read();
-    use std::collections::HashSet;
-    let anses = HashSet::new();
-    let mut now = X;
-    while true {
-        let next = now.pow(2) % M;
+    let n: u64 = read();
+    let mut x: u64 = read();
+    let m: u64 = read();
+    use std::collections::HashMap;
+    let mut map = HashMap::new();
+    let mut i = 0;
+    let mut cumsum = vec![0; m as usize];
+    let mut sum = 0;
+    let mut vec = vec![];
+    while !map.contains_key(&x) {
+        map.insert(x, i);
+        vec.push(x);
+        i += 1;
+        sum += x;
+        cumsum[i] = sum;
+        x = x.pow(2) % m;
+        if i == n as usize {
+            println!("{}", sum);
+            return;
+        }
     }
+    let loop_sum = cumsum[i] - cumsum[map[&x]];
+    let inner_loop_count = i - map[&x];
+    let loop_start_sum = cumsum[map[&x]];
+    dbg!(
+        loop_sum,
+        inner_loop_count,
+        loop_start_sum,
+        (n - i as u64 + 1) / inner_loop_count as u64,
+        (n - map[&x] as u64 + 1) % inner_loop_count as u64
+    );
+    let mut ans = loop_sum * ((n - i as u64 + 1) / inner_loop_count as u64) + loop_start_sum;
+    for v in 0..((n - map[&x] as u64) % inner_loop_count as u64) {
+        ans += (vec[map[&x] + v as usize]) as u64;
+    }
+    println!("{}", ans)
 }
