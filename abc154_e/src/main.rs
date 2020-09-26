@@ -17,18 +17,39 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: Vec<_> = read::<String>().chars().map(|c| c.to_digit(10).unwrap() as usize).collect();
+    let n: Vec<_> = read::<String>()
+        .chars()
+        .map(|c| c.to_digit(10).unwrap() as usize)
+        .collect();
     let k: usize = read();
     // 桁DP
     // [左からの桁数][smaller(0 or 1)][0じゃない桁の数]
-    let mut dp: Vec<Vec<Vec<usize>>> = vec![vec![vec![0; k + 1]; 2]; n.len() + 1];
-    for i in 0..=n.len() {
+    let mut dp: Vec<Vec<Vec<usize>>> = vec![vec![vec![0; k + 2]; 2]; n.len() + 2];
+    dp[0][0][0] = 1;
+    for i in 0..n.len() {
         for smaller in 0..=1 {
             for j in 0..=k {
                 for digit in 0..=9 {
-                    if smaller == 0 &&
+                    if smaller == 0 && digit > n[i] {
+                        break;
+                    }
+                    if smaller == 0 && digit == n[i] {
+                        if digit == 0 {
+                            dp[i + 1][smaller][j] += dp[i][smaller][j];
+                        } else if j < k {
+                            dp[i + 1][smaller][j + 1] += dp[i][smaller][j];
+                        }
+                        // j == kの場合は、それ以上数えても意味ないので何もしない
+                        continue;
+                    }
+                    if digit == 0 {
+                        dp[i + 1][1][j] += dp[i][smaller][j];
+                    } else if j < k {
+                        dp[i + 1][1][j + 1] += dp[i][smaller][j];
+                    }
                 }
             }
         }
     }
+    println!("{}", dp[n.len()][0][k] + dp[n.len()][1][k]);
 }
