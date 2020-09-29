@@ -1,20 +1,11 @@
 #![allow(non_snake_case)]
 
 fn main() {
+    let p: f64 = read();
+    let mut lb = 0.0;
+    let mut ub = 0.0;
 }
 
-#[allow(dead_code)]
-fn solve() {
-}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
-    }
+fn f(x: f64, p: f64) {
+    x + p * 0.5.pow(x / 1.5)
 }
