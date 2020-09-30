@@ -5,4 +5,6 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "2" NO
+t "9" YES
+t "3" YES
