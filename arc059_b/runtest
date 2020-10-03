@@ -5,4 +5,7 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "needed" "2 3"
+t "atcoder" "-1 -1"
+t "zz" "1 2"
+t "ab" "-1 -1"
