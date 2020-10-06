@@ -27,7 +27,6 @@ fn main() {
         }
         strings[4 - i - 1] = line.chars().rev().collect();
     }
-    dbg!(&strings);
     for s in strings {
         println!(
             "{}",
