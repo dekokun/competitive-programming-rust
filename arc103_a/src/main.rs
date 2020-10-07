@@ -24,7 +24,7 @@ fn main() {
     let mut odds = HashMap::new();
     let mut evens = HashMap::new();
     let mut vec = vec![];
-    for i in 0..n {
+    for i in 1..=n {
         let v: usize = read();
         vec.push(v);
         if i % 2 == 0 {
@@ -39,20 +39,20 @@ fn main() {
     let mut evens: Vec<_> = evens.into_iter().collect();
     odds.sort_by_key(|v| v.1);
     evens.sort_by_key(|v| v.1);
-    let odd_1 = odds[odds.len() - 1].1;
-    let even_1 = evens[evens.len() - 1].1;
+    let odd_1 = odds[odds.len() - 1].0;
+    let even_1 = evens[evens.len() - 1].0;
     let odd_2 = if odds.len() >= 2 {
-        odds[odds.len() - 2].1
+        odds[odds.len() - 2].0
     } else {
         odd_1
     };
     let even_2 = if evens.len() >= 2 {
-        evens[evens.len() - 2].1
+        evens[evens.len() - 2].0
     } else {
         even_1
     };
 
-    let mut ans = 0;
+    let mut ans = n;
     let mut change = false;
     for &(odd, even) in &[
         (odd_1, even_1),
