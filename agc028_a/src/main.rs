@@ -19,23 +19,34 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    let m: usize = read();
-    let s: String = read();
-    let t: String = read();
+    let n: u64 = read();
+    let m: u64 = read();
+    let s: Vec<char> = read::<String>().chars().collect();
+    let t: Vec<char> = read::<String>().chars().collect();
     let lcm = lcm(n, m);
-    use std::collections::HashSet;
-    let ss = HashSet::new();
-    let ts = HashSet::new();
+    use std::collections::HashMap;
+    let mut x: HashMap<u64, char> = HashMap::new();
+    for (i, c) in s.into_iter().enumerate() {
+            x.insert((lcm / n) * i as u64, c);
+    }
+    for (i, c) in t.into_iter().enumerate() {
+        if let Some(&c2) = x.get(&((lcm / m) * i as u64)) {
+            if c2 != c {
+                println!("-1");
+                return
+            }
+        }
+    }
+    println!("{}", lcm);
 }
 
-fn lcm(a: usize, b: usize) -> u64 {
+fn lcm(a: u64, b: u64) -> u64 {
     let gcd = gcd(a, b);
-    let a = a as u64;
-    let b = b as u64;
-    (a * b) / gcd as u64
+    let a = a;
+    let b = b;
+    (a * b) / gcd
 }
-fn gcd(mut a: usize, mut b: usize) -> usize {
+fn gcd(mut a: u64, mut b: u64) -> u64 {
     if a < b {
         std::mem::swap(&mut a, &mut b);
     }
