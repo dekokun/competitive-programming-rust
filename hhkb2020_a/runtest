@@ -5,4 +5,8 @@ source ../runtest_func.sh
 cargo test
 RUST_BACKTRACE=1
 
-t "" ""
+t "Y
+a" A
+t "N
+b" b
+
