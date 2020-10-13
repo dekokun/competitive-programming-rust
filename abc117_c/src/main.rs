@@ -20,6 +20,10 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let (n, m): (usize, usize) = (read(), read());
+    if n >= m {
+        println!("0");
+        return;
+    }
     let mut vec: Vec<i32> = vec![];
     for _ in 0..m {
         vec.push(read());
