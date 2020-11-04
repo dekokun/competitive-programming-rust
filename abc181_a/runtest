@@ -4,4 +4,5 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "2" White
+t 5 Black
