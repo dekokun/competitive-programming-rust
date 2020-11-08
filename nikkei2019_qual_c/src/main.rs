@@ -27,11 +27,11 @@ fn main() {
     vec.sort_by_key(|&(a, b)| (b + a));
     let mut ans = 0;
     for (i, (a, b)) in vec.into_iter().enumerate() {
-        if i % 2 == 0 {
-            ans += a;
+        ans += if i % 2 == 0 {
+            a
         } else {
-            ans -= b;
-        }
+            -b
+        };
     }
     println!("{}", ans);
 }
