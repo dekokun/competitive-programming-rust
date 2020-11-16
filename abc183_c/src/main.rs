@@ -47,7 +47,10 @@ fn dfs(
     if remain.len() == 0 && time + times[now][0] == k {
         return 1;
     }
-    if remain.len() == 0 || time + times[now][0] >= k {
+    if remain.len() == 0 && time + times[now][0] != k {
+        return 0;
+    }
+    if time + times[now][0] >= k {
         return 0;
     }
     let mut ans = 0;
