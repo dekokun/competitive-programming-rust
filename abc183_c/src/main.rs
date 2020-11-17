@@ -49,9 +49,6 @@ fn dfs(
     if remain.len() == 0 && time + times[now][0] != k {
         return 0;
     }
-    if time + times[now][0] >= k {
-        return 0;
-    }
     let mut ans = 0;
     for &v in remain {
         let time = time + times[now][v];
