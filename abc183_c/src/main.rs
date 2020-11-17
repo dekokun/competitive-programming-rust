@@ -32,7 +32,7 @@ fn main() {
     }
     // 1(0)から始まって1に戻るので、0は除く
     let mut remain: HashSet<_> = (1..n).collect();
-    let ans = dfs(0, &mut remain, 0, &times, k, n);
+    let ans = dfs(0, &mut remain, 0, &times, k);
     println!("{}", ans)
 }
 
@@ -42,7 +42,6 @@ fn dfs(
     time: usize,
     times: &Vec<Vec<usize>>,
     k: usize,
-    n: usize,
 ) -> usize {
     if remain.len() == 0 && time + times[now][0] == k {
         return 1;
@@ -55,10 +54,10 @@ fn dfs(
     }
     let mut ans = 0;
     for &v in remain {
-        let time = time + times[now][v] + if remain.len() == n { times[0][v] } else { 0 };
+        let time = time + times[now][v];
         let mut remain2 = remain.clone();
         remain2.remove(&v);
-        ans += dfs(v, &mut remain2, time, times, k, n);
+        ans += dfs(v, &mut remain2, time, times, k);
     }
     ans
 }
