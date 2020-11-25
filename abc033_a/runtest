@@ -4,4 +4,6 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "2222" SAME
+t 1221 DIFFERENT
+t 0000 SAME
