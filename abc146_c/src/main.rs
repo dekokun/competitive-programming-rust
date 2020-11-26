@@ -22,37 +22,24 @@ fn main() {
     let a: u64 = read();
     let b: u64 = read();
     let x: u64 = read();
-    let mut ans = x / a;
     let max = 10_u64.pow(9);
     if sum(max, a, b) <= x {
         println!("{}", max);
-        return
+        return;
     }
-    if sum(ans, a, b) == x {
-        println!("{}", ans);
-        return
-    }
-    if sum(ans, a, b) > x {
-        loop {
-            if ans == 0 {
-                println!("0");
-                return
-            }
-            ans -= 1;
-            if sum(ans, a, b) <= x {
-                break;
-            }
-        }
-    } else {
-        loop {
-            ans += 1;
-            if sum(ans, a, b) > x {
-                ans -= 1;
-                break
-            }
+
+    let mut ng = max;
+    let mut ok: u64 = 0;
+
+    while ng - ok > 1 {
+        let mid = (ng + ok) / 2;
+        if sum(mid, a, b) <= x {
+            ok = mid;
+        } else {
+            ng = mid;
         }
     }
-    println!("{}", ans);
+    println!("{}", ok);
 }
 
 fn len(n: u64) -> u64 {
