@@ -22,7 +22,7 @@ fn main() {
     let _n: usize = read();
     let s: String = read();
     let mut vec = vec![];
-    'outer: for c in s.chars() {
+    for c in s.chars() {
         vec.push(c);
         if c == 'x' && vec.len() >= 3 {
             if vec[vec.len() - 1] == 'x' && vec[vec.len() - 2] == 'o' && vec[vec.len() - 3] == 'f' {
