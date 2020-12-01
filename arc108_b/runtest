@@ -4,4 +4,11 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "6
+icefox" 3
+t "7
+firebox" 7
+t "48
+ffoxoxuvgjyzmehmopfohrupffoxoxfofofoxffoxoxejffo" 27
+t '7
+xxxxxxx' 0
