@@ -505,20 +505,17 @@ fn main() {
     let n: usize = read();
     let q: usize = read();
     let mut segtree = Segtree::<BitXor>::new(n + 1);
-    let mut vec = vec![0];
     for i in 1..=n {
         let a: usize = read();
         segtree.set(i, a);
-        vec.push(a);
     }
     for _ in 0..q {
         let t: usize = read();
         let x: usize = read();
         let y: usize = read();
         if t == 1 {
-            let new = vec[x] ^ y;
-            segtree.set(x, new);
-            vec[x] = new;
+            let a= segtree.get(x);
+            segtree.set(x, a^y);
         } else {
             println!("{}", segtree.prod(x, y + 1));
         }
