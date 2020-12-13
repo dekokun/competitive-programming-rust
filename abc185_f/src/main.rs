@@ -514,8 +514,8 @@ fn main() {
         let x: usize = read();
         let y: usize = read();
         if t == 1 {
-            let a= segtree.get(x);
-            segtree.set(x, a^y);
+            let a = segtree.get(x);
+            segtree.set(x, a ^ y);
         } else {
             println!("{}", segtree.prod(x, y + 1));
         }
