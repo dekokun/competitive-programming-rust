@@ -507,21 +507,19 @@ fn main() {
     let w: usize = read();
     let m: usize = read();
     use std::collections::HashMap;
-    let mut yoko_min: HashMap<usize, usize> = HashMap::new();
+    let mut yoko_min = vec![w; h];
     let mut yoko: HashMap<usize, Vec<usize>> = HashMap::new();
-    let mut tate_min: HashMap<usize, usize> = HashMap::new();
+    let mut tate_min = vec![h; w];
     for _ in 0..m {
         let x = read::<usize>() - 1;
         let y = read::<usize>() - 1;
-        let entry = yoko_min.entry(x).or_insert(y);
-        *entry = std::cmp::min(*entry, y);
+        yoko_min[x] = yoko_min[x].min(y);
         let entry = yoko.entry(x).or_insert(vec![]);
         (*entry).push(y);
-        let entry = tate_min.entry(y).or_insert(x);
-        *entry = std::cmp::min(*entry, x);
+        tate_min[y] = tate_min[y].min(x);
         if x == 0 {
             for i in y..w {
-                tate_min.insert(i, 0);
+                tate_min[i] = 0;
                 let entry = yoko.entry(0).or_insert(vec![]);
                 (*entry).push(i);
             }
@@ -529,27 +527,15 @@ fn main() {
     }
     let mut ans = 0;
     // yoko
-    let yoko_0_min = match yoko_min.get(&0) {
-        Some(&a) => a,
-        None => w,
-    };
+    let yoko_0_min = yoko_min[0];
     for i in 0..yoko_0_min {
-        ans += match tate_min.get(&i) {
-            Some(&a) => a,
-            None => h,
-        };
+        ans += tate_min[i];
     }
     // tate
     let mut segtree = Segtree::<Sum>::new(w + 1);
-    let tate_0_min = match tate_min.get(&0) {
-        Some(&a) => a,
-        None => h,
-    };
+    let tate_0_min = tate_min[0];
     for i in 0..tate_0_min {
-        let right_edge = match yoko_min.get(&i) {
-            Some(&a) => a,
-            None => w,
-        };
+        let right_edge = yoko_min[i];
         if yoko.get(&i).is_some() {
             for &v in yoko.get(&i).unwrap() {
                 segtree.set(v, 1);
