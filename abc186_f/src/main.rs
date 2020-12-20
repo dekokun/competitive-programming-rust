@@ -506,22 +506,19 @@ fn main() {
     let h: usize = read();
     let w: usize = read();
     let m: usize = read();
-    use std::collections::HashMap;
     let mut yoko_min = vec![w; h];
-    let mut yoko: HashMap<usize, Vec<usize>> = HashMap::new();
+    let mut yoko = vec![vec![]; h];
     let mut tate_min = vec![h; w];
     for _ in 0..m {
         let x = read::<usize>() - 1;
         let y = read::<usize>() - 1;
         yoko_min[x] = yoko_min[x].min(y);
-        let entry = yoko.entry(x).or_insert(vec![]);
-        (*entry).push(y);
+        yoko[x].push(y);
         tate_min[y] = tate_min[y].min(x);
         if x == 0 {
             for i in y..w {
                 tate_min[i] = 0;
-                let entry = yoko.entry(0).or_insert(vec![]);
-                (*entry).push(i);
+                yoko[0].push(i);
             }
         }
     }
@@ -536,10 +533,8 @@ fn main() {
     let tate_0_min = tate_min[0];
     for i in 0..tate_0_min {
         let right_edge = yoko_min[i];
-        if yoko.get(&i).is_some() {
-            for &v in yoko.get(&i).unwrap() {
-                segtree.set(v, 1);
-            }
+        for &v in &yoko[i] {
+            segtree.set(v, 1);
         }
         ans += segtree.prod(0, right_edge);
     }
