@@ -506,13 +506,11 @@ fn main() {
     let h: usize = read();
     let w: usize = read();
     let m: usize = read();
-    let mut yoko_min = vec![w; h];
-    let mut yoko = vec![vec![]; h];
+    let mut yoko = vec![vec![w]; h];
     let mut tate_min = vec![h; w];
     for _ in 0..m {
         let x = read::<usize>() - 1;
         let y = read::<usize>() - 1;
-        yoko_min[x] = yoko_min[x].min(y);
         yoko[x].push(y);
         tate_min[y] = tate_min[y].min(x);
         if x == 0 {
@@ -522,9 +520,12 @@ fn main() {
             }
         }
     }
+    for v in &mut yoko {
+        v.sort();
+    }
     let mut ans = 0;
     // yoko
-    let yoko_0_min = yoko_min[0];
+    let yoko_0_min = yoko[0][0];
     for i in 0..yoko_0_min {
         ans += tate_min[i];
     }
@@ -532,7 +533,7 @@ fn main() {
     let mut segtree = Segtree::<Sum>::new(w + 1);
     let tate_0_min = tate_min[0];
     for i in 0..tate_0_min {
-        let right_edge = yoko_min[i];
+        let right_edge = yoko[i][0];
         for &v in &yoko[i] {
             segtree.set(v, 1);
         }
