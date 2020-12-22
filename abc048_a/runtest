@@ -4,4 +4,7 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "AtCoder Beginner Contest" ABC
+t "AtCoder Snuke Contest" ASC
+t "AtCoder X Contest" AXC
+
