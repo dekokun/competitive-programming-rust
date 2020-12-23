@@ -25,35 +25,6 @@ fn main() {
         let s: u64 = read();
         let k: u64 = read();
 
-        // if (n - s) % k == 0 {
-        //     println!("{}", (n - s) / k);
-        //     continue 'outer;
-        // }
-        // // n, k が互いに素だったら絶対に答えはあるし逆元もある(k < n)
-        // if gcd(n, k) == 1 {
-        //     println!("{}", ((n - s) * mod_pow(k, n - 2, n)) % n);
-        //     continue 'outer;
-        // }
-        // use std::collections::HashSet;
-        // let mut set = HashSet::new();
-        // for i in 0..=n {
-        //     let rem = (s + i * k) % n;
-        //     if rem == 0 {
-        //         println!("{}", i);
-        //         continue 'outer;
-        //     }
-        //     if set.contains(&rem) {
-        //         println!("-1");
-        //         continue 'outer;
-        //     }
-        //     set.insert(rem);
-        // }
-        // for i in 1..=n {
-        //     let rem = (s + i * k) % n;
-        //     if
-        // }
-        // println!("{}", -1);
-
         // baby step giant step
         use std::collections::HashMap;
         let mut table = HashMap::new();
@@ -65,7 +36,7 @@ fn main() {
         }
         for i in (0..=n).step_by(sqrt as usize) {
             let tmp = (s + k * i) % n;
-            let rem = if tmp == 0 { 0 } else { n - tmp };
+            let rem = (n - tmp) % n ;
             match table.get(&rem) {
                 None => {
                     continue;
