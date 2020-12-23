@@ -18,28 +18,6 @@ fn read<T: FromStr>() -> T {
     opt.expect("failed to parse token")
 }
 
-fn mod_pow(x: u64, n: u64, MOD: u64) -> u64 {
-    let mut ans = 1;
-    let mut n = n;
-    let mut x = x;
-    while n != 0 {
-        if n % 2 == 1 {
-            ans = (ans * x) % MOD;
-        }
-        x = (x * x) % MOD;
-        n /= 2;
-    }
-    ans
-}
-
-fn gcd(a: u64, b: u64) -> u64 {
-    if b == 0 {
-        a
-    } else {
-        gcd(b, a % b)
-    }
-}
-
 fn main() {
     let t: usize = read();
     'outer: for _ in 0..t {
@@ -47,29 +25,57 @@ fn main() {
         let s: u64 = read();
         let k: u64 = read();
 
-        if (n - s) % k == 0 {
-            println!("{}", (n - s) / k);
-            continue 'outer;
+        // if (n - s) % k == 0 {
+        //     println!("{}", (n - s) / k);
+        //     continue 'outer;
+        // }
+        // // n, k が互いに素だったら絶対に答えはあるし逆元もある(k < n)
+        // if gcd(n, k) == 1 {
+        //     println!("{}", ((n - s) * mod_pow(k, n - 2, n)) % n);
+        //     continue 'outer;
+        // }
+        // use std::collections::HashSet;
+        // let mut set = HashSet::new();
+        // for i in 0..=n {
+        //     let rem = (s + i * k) % n;
+        //     if rem == 0 {
+        //         println!("{}", i);
+        //         continue 'outer;
+        //     }
+        //     if set.contains(&rem) {
+        //         println!("-1");
+        //         continue 'outer;
+        //     }
+        //     set.insert(rem);
+        // }
+        // for i in 1..=n {
+        //     let rem = (s + i * k) % n;
+        //     if
+        // }
+        // println!("{}", -1);
+
+        // baby step giant step
+        use std::collections::HashMap;
+        let mut table = HashMap::new();
+        let sqrt = (n as f64).sqrt().ceil() as u64;
+        for i in 0..=sqrt {
+            let pos = (k * i) % n;
+            let entry = table.entry(pos).or_insert(n + 1);
+            *entry = std::cmp::min(*entry, i);
         }
-        // n, k が互いに素だったら絶対に答えはあるし逆元もある(k < n)
-        if gcd(n, k) == 1 {
-            println!("{}", ((n - s) * mod_pow(k, n - 2, n)) % n);
-            continue 'outer;
-        }
-        use std::collections::HashSet;
-        let mut set = HashSet::new();
-        for i in 1..=n {
-            let rem = (s + i * k) % n;
-            if rem == 0 {
-                println!("{}", i);
-                continue 'outer;
+        for i in (0..=n).step_by(sqrt as usize) {
+            let tmp = (s + k * i) % n;
+            let rem = if tmp == 0 { 0 } else { n - tmp };
+            match table.get(&rem) {
+                None => {
+                    continue;
+                }
+                Some(a) => {
+                    println!("{}", a + i);
+                    continue 'outer;
+                }
             }
-            if set.contains(&rem) {
-                println!("-1");
-                continue 'outer;
-            }
-            set.insert(rem);
         }
-        println!("{}", -1);
+        println!("-1");
     }
 }
