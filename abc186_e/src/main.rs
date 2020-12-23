@@ -36,15 +36,10 @@ fn main() {
         }
         for i in (0..=n).step_by(sqrt as usize) {
             let tmp = (s + k * i) % n;
-            let rem = (n - tmp) % n ;
-            match table.get(&rem) {
-                None => {
-                    continue;
-                }
-                Some(a) => {
-                    println!("{}", a + i);
-                    continue 'outer;
-                }
+            let rem = (n - tmp) % n;
+            if let Some(a) = table.get(&rem) {
+                println!("{}", a + i);
+                continue 'outer;
             }
         }
         println!("-1");
