@@ -31,8 +31,9 @@ fn main() {
         let sqrt = (n as f64).sqrt().ceil() as u64;
         for i in 0..=sqrt {
             let pos = (k * i) % n;
-            let entry = table.entry(pos).or_insert(n + 1);
-            *entry = std::cmp::min(*entry, i);
+            if ! table.contains_key(&pos) {
+                table.insert(pos, i);
+            }
         }
         for i in (0..=n).step_by(sqrt as usize) {
             let tmp = (s + k * i) % n;
