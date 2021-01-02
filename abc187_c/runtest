@@ -4,4 +4,29 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "6
+a
+!a
+b
+!c
+d
+!d" a
+t "6
+!a
+a
+b
+!c
+d
+!d" a
+t "10
+red
+red
+red
+!orange
+yellow
+!blue
+cyan
+!green
+brown
+!gray" satisfiable
+
