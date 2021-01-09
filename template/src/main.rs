@@ -1,10 +1,10 @@
 #![allow(non_snake_case)]
 
 fn main() {
+    println!("{}", solve(read(), ));
 }
 
-#[allow(dead_code)]
-fn solve() {
+fn solve(n: usize) -> usize {
 }
 
 #[cfg(test)]
