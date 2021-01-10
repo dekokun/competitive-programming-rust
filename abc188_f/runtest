@@ -4,4 +4,8 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "3 9" 3
+t "7 11" 3
+t "1000000000000000000 1000000000000000000" 0
+t "11 7" 4
+
