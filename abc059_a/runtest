@@ -4,4 +4,8 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "atcoder beginner contest" ABC
+t "resident register number" RRN
+t "k nearest neighbor" KNN
+t "async layered coding" ALC
+
