@@ -4,4 +4,8 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "rng gorilla apple" YES
+t "yakiniku unagi sushi" NO
+t "a a a" YES
+t "aaaaaaaaab aaaaaaaaaa aaaaaaaaab" NO
+
