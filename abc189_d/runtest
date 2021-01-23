@@ -4,4 +4,13 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "2
+AND
+OR" 5
+t "5
+OR
+OR
+OR
+OR
+OR" 63
+
