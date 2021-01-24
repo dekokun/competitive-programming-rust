@@ -1,10 +1,7 @@
 #![allow(non_snake_case)]
 
+use std::io::{stdin, Read};
 use std::str::FromStr;
-use std::{
-    collections::{BTreeSet, HashMap},
-    io::{stdin, Read},
-};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -27,24 +24,14 @@ fn main() {
     println!("{}", solve((0..n).map(|_| read()).collect()));
 }
 fn solve(a: Vec<usize>) -> usize {
-    let n = a.len();
-    let mut map: HashMap<usize, Vec<usize>> = HashMap::new();
-    for (i, &v) in a.iter().enumerate() {
-        let entry = map.entry(v).or_insert(vec![]);
-        entry.push(i);
-    }
     let mut max = 0;
-    let mut set: BTreeSet<(usize, usize)> = BTreeSet::new();
-    for v in 1..=10_usize.pow(5) {
-        if let Some(vec) = map.get(&v) {
-            for &i in vec {
-                set.insert((i, v));
-            }
-        } else {
-            continue;
+    for l in 0..a.len() {
+        let mut min = a[l];
+        for r in l..a.len() {
+            min = min.min(a[r]);
+            max = max.max(min * (r - l + 1));
         }
     }
-    let mut before
     max
 }
 fn _solve(a: Vec<usize>) -> usize {
