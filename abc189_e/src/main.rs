@@ -1,5 +1,12 @@
 #![allow(non_snake_case)]
 
+macro_rules! debug {
+    ($($a:expr),* $(,)*) => {
+        #[cfg(debug_assertions)]
+        eprintln!(concat!($("| ", stringify!($a), "={:?} "),*, "|"), $(&$a),*);
+    };
+}
+
 use std::io::{stdin, Read};
 use std::str::FromStr;
 fn read_option<T: FromStr>() -> Option<T> {
@@ -33,6 +40,7 @@ fn main() {
         })
         .collect();
     let q = read();
+    debug!(n, &xy, m, &op, q);
 
     println!(
         "{}",
