@@ -28,19 +28,24 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(n, (0..n).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
+fn solve(_n: usize, a: Vec<i64>) -> i64 {
+    let mut cumsum = vec![];
+    let mut before = 0;
+    let mut local_max = 0;
+    for v in a {
+        let now = before + v;
+        local_max = local_max.max(now);
+        cumsum.push((now, local_max));
+        before = now;
     }
+    let mut max = 0;
+    let mut now = 0;
+    for v in cumsum {
+        max = max.max(now + v.1);
+        now += v.0;
+    }
+    max
 }
