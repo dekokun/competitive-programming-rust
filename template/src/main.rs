@@ -1,5 +1,6 @@
 #![allow(non_snake_case, unused_macros)]
 
+// https://maguro.dev/debug-macro/ から
 macro_rules! debug {
     ($($a:expr),* $(,)*) => {
         #[cfg(debug_assertions)]
