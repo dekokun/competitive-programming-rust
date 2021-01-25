@@ -9,7 +9,7 @@ macro_rules! debug {
 }
 
 use std::io::{stdin, Read};
-use std::str::FromStr;
+use std::{collections::BTreeMap, str::FromStr};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -40,7 +40,25 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+
+    println!(
+        "{}",
+        solve(n, read(), (0..n).map(|_| (read(), read())).collect())
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(_n: usize, k: usize, ab: Vec<(usize, usize)>) -> usize {
+    let mut map: BTreeMap<usize, usize> = BTreeMap::new();
+    for (a, b) in ab {
+        let entry = map.entry(a).or_insert(0);
+        *entry += b;
+    }
+    let mut count = 0;
+    for (i, v) in map {
+        count += v;
+        if count >= k {
+            return i;
+        }
+    }
+    panic!();
+}
