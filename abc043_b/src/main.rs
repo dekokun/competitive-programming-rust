@@ -27,20 +27,17 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
+fn solve(s: String) -> String {
+    let mut ans = "".to_string();
+    for c in s.chars() {
+        if c == 'B' && ans.len() != 0 {
+            let _ = ans.pop();
+        } else if c != 'B' {
+            ans.push(c);
+        }
     }
+    ans
 }
