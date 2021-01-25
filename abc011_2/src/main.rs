@@ -1,4 +1,4 @@
-#![allow(non_snake_case)]
+#![allow(non_snake_case, unused_macros)]
 
 macro_rules! debug {
     ($($a:expr),* $(,)*) => {
@@ -26,20 +26,17 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
-
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
+fn solve(s: String) -> String {
+    let mut ans = "".to_string();
+    for (i, c) in s.chars().enumerate() {
+        if i == 0 {
+            ans.push(c.to_ascii_uppercase());
+        } else {
+            ans.push(c.to_ascii_lowercase());
+        }
     }
+    ans
 }
