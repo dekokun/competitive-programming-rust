@@ -40,7 +40,33 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    let m: usize = read();
+
+    println!(
+        "{}",
+        solve(
+            (0..n).map(|_| read()).collect(),
+            (0..m).map(|_| read()).collect()
+        )
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: Vec<String>, b: Vec<String>) -> String {
+    let n = a.len();
+    let m = b.len();
+    let a: Vec<Vec<char>> = a.into_iter().map(|a| a.chars().collect()).collect();
+    let b: Vec<Vec<char>> = b.into_iter().map(|a| a.chars().collect()).collect();
+    for i in 0..=(n - m) {
+        'outer: for j in 0..=(n - m) {
+            for k in 0..m {
+                for l in 0..m {
+                    if a[i + k][j + l] != b[k][l] {
+                        continue 'outer;
+                    }
+                }
+            }
+            return "Yes".into();
+        }
+    }
+    return "No".into();
+}
