@@ -43,4 +43,9 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> String {
+    let hour = n / 3600;
+    let min = (n - hour * 3600) / 60;
+    let second = n - hour * 3600 - min * 60;
+    format!("{:02}:{:02}:{:02}", hour, min, second)
+}
