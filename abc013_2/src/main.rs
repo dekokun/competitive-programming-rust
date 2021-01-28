@@ -39,8 +39,11 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: usize, b: usize) -> usize {
+    let min = a.min(b);
+    let max = a.max(b);
+    (max - min).min(min + 10 - max)
+}
