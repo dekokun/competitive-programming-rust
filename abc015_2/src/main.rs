@@ -40,7 +40,11 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve((0..n).map(|_| read()).collect()))
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: Vec<usize>) -> usize {
+    let a = a.into_iter();
+    let count = a.clone().filter(|x| *x > 0).count();
+    (a.sum::<usize>() + count - 1)/ count
+}
