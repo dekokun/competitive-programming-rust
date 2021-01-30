@@ -40,7 +40,38 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    let m: usize = read();
+    let ab = (0..m).map(|_| (read(), read())).collect();
+    let k: usize = read();
+
+    println!(
+        "{}",
+        solve(n, m, ab, k, (0..k).map(|_| (read(), read())).collect())
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize, _m: usize, ab: Vec<(usize, usize)>, k: usize, cd: Vec<(usize, usize)>) -> usize {
+    let dishes = vec![0; n + 1];
+    dfs(dishes, 0, &k, &ab, &cd)
+}
+fn dfs(
+    dishes: Vec<usize>,
+    now: usize,
+    k: &usize,
+    ab: &Vec<(usize, usize)>,
+    cd: &Vec<(usize, usize)>,
+) -> usize {
+    if now >= *k {
+        return ab
+            .into_iter()
+            .filter(|&&(a, b)| dishes[a] >= 1 && dishes[b] >= 1)
+            .count();
+    }
+    let mut dishes1 = dishes.clone();
+    dishes1[cd[now].0] += 1;
+    let ans1 = dfs(dishes1, now + 1, k, ab, cd);
+    let mut dishes2 = dishes;
+    dishes2[cd[now].1] += 1;
+    let ans2 = dfs(dishes2, now + 1, k, ab, cd);
+    std::cmp::max(ans1, ans2)
+}
