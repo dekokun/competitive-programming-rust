@@ -39,8 +39,23 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(mut a: usize, mut b: usize, c: usize) -> String {
+    let mut count = c;
+    loop {
+        if count % 2 == 0 {
+            if a == 0 {
+                return "Aoki".into();
+            }
+            a -= 1;
+        } else {
+            if b == 0 {
+                return "Takahashi".into();
+            }
+            b -= 1;
+        }
+        count += 1;
+    }
+}
