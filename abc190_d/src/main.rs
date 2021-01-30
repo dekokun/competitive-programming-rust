@@ -39,8 +39,31 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
+    let n = read();
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: u64) -> u64 {
+    // 1以上から構成されるものを計算し、それを2倍すれば良い
+    let mut ans = 0;
+    debug!((n as f64).sqrt().ceil());
+    // for i in 1..=n {
+    for i in 1..=100 * (n as f64).sqrt().ceil() as u64 {
+        // 奇数は、その数でnを割り切れればOK
+        // 偶数は、iの半分で割り切れた数を2個の連続した数で構成できればok
+        // 2個の連続した数で構成できるとは、奇数であること
+        // どちらも0に突っ込む場合はすでに計算済みなので計算しない
+        if i % 2 == 1 {
+            if n % i == 0 && n / i > i / 2 {
+                debug!(i);
+                ans += 1;
+            }
+        } else if n % (i / 2) == 0 {
+            if (n / (i / 2)) % 2 == 1 && (n / (i / 2)) / 2 >= i / 2 {
+                debug!(i);
+                ans += 1;
+            }
+        }
+    }
+    ans * 2
+}
