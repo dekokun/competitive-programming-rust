@@ -40,7 +40,24 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+
+    println!(
+        "{}",
+        solve(
+            n,
+            read(),
+            read(),
+            (0..n).map(|_| (read(), read())).collect()
+        )
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(_n: usize, s: usize, d: usize, xy: Vec<(usize, usize)>) -> String {
+    for (x, y) in xy {
+        if x < s && y > d {
+            debug!(x, y);
+            return "Yes".into();
+        }
+    }
+    return "No".into();
+}
