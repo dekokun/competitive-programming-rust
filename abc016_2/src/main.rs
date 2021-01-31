@@ -39,8 +39,17 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: i32, b: i32, c: i32) -> char {
+    if a + b == c && a - b == c {
+        '?'
+    } else if a + b == c {
+        '+'
+    } else if a - b == c {
+        '-'
+    } else {
+        '!'
+    }
+}
