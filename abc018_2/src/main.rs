@@ -39,8 +39,23 @@ mod tests {
 }
 
 fn main() {
+    let s = read();
     let n: usize = read();
-    println!("{}", solve(n));
+    println!(
+        "{}",
+        solve(s, n, (0..n).map(|_| (read(), read())).collect())
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: String, _n: usize, lr: Vec<(usize, usize)>) -> String {
+    let mut s: Vec<_> = s.chars().collect();
+    for (l, r) in lr {
+        let s2 = s.clone();
+        for (i, &c) in (&s2[l - 1..r]).iter().rev().enumerate() {
+            debug!(i, l - 1 + i);
+            s[l - 1 + i] = c;
+        }
+        debug!(s);
+    }
+    s.into_iter().collect()
+}
