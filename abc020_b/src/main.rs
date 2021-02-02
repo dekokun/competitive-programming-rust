@@ -39,8 +39,13 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: usize, b: usize) -> usize {
+    let mut tmp = 10;
+    while b / tmp != 0 {
+        tmp *= 10;
+    }
+    (a * tmp + b) * 2
+}
