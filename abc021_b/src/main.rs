@@ -40,7 +40,21 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    let a = read();
+    let b = read();
+    let k: usize = read();
+    println!("{}", solve(n, a, b, (0..k).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize, a: usize, b: usize, p: Vec<usize>) -> String {
+    let mut visited = vec![false; n + 1];
+    visited[a] = true;
+    visited[b] = true;
+    for v in p {
+        if visited[v] {
+            return "NO".into();
+        }
+        visited[v] = true;
+    }
+    return "YES".into();
+}
