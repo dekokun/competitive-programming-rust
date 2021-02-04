@@ -40,7 +40,24 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    let t: usize = read();
+    println!("{}", solve(n, t, (0..n).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize, t: usize, a: Vec<usize>) -> usize {
+    let mut imos = vec![false; a[n - 1] + t + 1];
+    for &v in &a {
+        imos[v] = true;
+    }
+    let mut ans = 0;
+    let mut before = a[0];
+    for (now, v) in imos.into_iter().enumerate() {
+        if (before + t > now && now >= before) || v {
+            ans += 1;
+        }
+        if v {
+            before = now;
+        }
+    }
+    ans
+}
