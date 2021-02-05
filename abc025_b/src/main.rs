@@ -40,7 +40,37 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!(
+        "{}",
+        solve(
+            n,
+            read(),
+            read(),
+            (0..n).map(|_| (read(), read())).collect()
+        )
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(_n: usize, a: i32, b: i32, sd: Vec<(String, i32)>) -> String {
+    let mut ans = 0;
+    for (s, d) in sd {
+        let d = if d < a {
+            a
+        } else if d > b {
+            b
+        } else {
+            d
+        };
+        ans += match s.as_ref() {
+            "West" => -d,
+            _ => d,
+        }
+    }
+    if ans == 0 {
+        "0".into()
+    } else if ans < 0 {
+        format!("West {}", -ans)
+    } else {
+        format!("East {}", ans)
+    }
+}
