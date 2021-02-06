@@ -39,8 +39,11 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(v: usize, t: usize, s: usize, d: usize) -> String {
+    let before = v * t;
+    let after = v * s;
+    if d < before || after < d { "Yes" } else { "No" }.into()
+}
