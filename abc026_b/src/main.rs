@@ -40,7 +40,15 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{:.6}", solve((0..n).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(mut a: Vec<usize>) -> f64 {
+    a.sort();
+    a.reverse();
+    let mut ans = 0.0;
+    for (i, v) in a.into_iter().enumerate() {
+        ans += (v as f64).powi(2) * std::f64::consts::PI * if i % 2 == 0 { 1.0 } else { -1.0 };
+    }
+    ans
+}
