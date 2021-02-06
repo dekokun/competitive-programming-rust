@@ -59,9 +59,10 @@ fn solve(n: usize, _m: usize, abc: Vec<(usize, usize, i64)>) -> Vec<i64> {
     for (a, b, c) in abc {
         graph[a].push((b, c));
     }
+    debug!(graph);
 
     let set: HashSet<usize> = HashSet::new();
-    (0..n).map(|i| dfs(&graph, set.clone(), 0, i, 0)).collect()
+    (1..=n).map(|i| dfs(&graph, set.clone(), 0, i, i)).collect()
 }
 
 fn dfs(
@@ -76,7 +77,6 @@ fn dfs(
     }
     let mut values = vec![];
     for &v in &graph[now] {
-        debug!(visited.contains(&v.0));
         if visited.contains(&v.0) {
             continue;
         }
@@ -86,7 +86,9 @@ fn dfs(
     }
     if values.is_empty() {
         -1
+    } else if values.iter().all(|&v| v == -1) {
+        -1
     } else {
-        values.into_iter().max().unwrap()
+        values.into_iter().filter(|&v| v >= 0).min().unwrap()
     }
 }
