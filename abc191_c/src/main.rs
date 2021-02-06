@@ -39,8 +39,21 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    let h: usize = read();
+    let w: usize = read();
+    println!("{}", solve(h, w, (0..h).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(h: usize, w: usize, m: Vec<String>) -> usize {
+    let mut before = vec![];
+    for s in m {
+        let mut tmp = vec![];
+        for (i, c) in s.chars().enumerate() {
+            if c == '#' {
+                tmp.push(i);
+            }
+        }
+        before = tmp;
+    }
+    todo!()
+}
