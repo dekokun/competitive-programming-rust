@@ -40,7 +40,22 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!(
+        "{}",
+        solve(read(), (0..n).map(|_| read()).collect())
+            .into_iter()
+            .map(|a| a.to_string())
+            .collect::<Vec<_>>()
+            .join(" ")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(x: usize, a: Vec<usize>) -> Vec<usize> {
+    let mut ans = vec![];
+    for v in a {
+        if v != x {
+            ans.push(v);
+        }
+    }
+    ans
+}
