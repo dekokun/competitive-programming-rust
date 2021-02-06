@@ -8,8 +8,11 @@ macro_rules! debug {
     };
 }
 
-use std::io::{stdin, Read};
 use std::str::FromStr;
+use std::{
+    collections::HashSet,
+    io::{stdin, Read},
+};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -40,7 +43,50 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    let m = read();
+    println!(
+        "{}",
+        solve(n, m, (0..m).map(|_| (read(), read(), read())).collect())
+            .into_iter()
+            .map(|a| a.to_string())
+            .collect::<Vec<_>>()
+            .join("\n")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize, _m: usize, abc: Vec<(usize, usize, i64)>) -> Vec<i64> {
+    let mut graph = vec![vec![]; n + 1];
+    for (a, b, c) in abc {
+        graph[a].push((b, c));
+    }
+
+    let set: HashSet<usize> = HashSet::new();
+    (0..n).map(|i| dfs(&graph, set.clone(), 0, i, 0)).collect()
+}
+
+fn dfs(
+    graph: &Vec<Vec<(usize, i64)>>,
+    visited: HashSet<usize>,
+    cost: i64,
+    now: usize,
+    start: usize,
+) -> i64 {
+    if now == start && !visited.is_empty() {
+        return cost;
+    }
+    let mut values = vec![];
+    for &v in &graph[now] {
+        debug!(visited.contains(&v.0));
+        if visited.contains(&v.0) {
+            continue;
+        }
+        let mut visited = visited.clone();
+        visited.insert(v.0);
+        values.push(dfs(graph, visited, cost + v.1, v.0, start));
+    }
+    if values.is_empty() {
+        -1
+    } else {
+        values.into_iter().max().unwrap()
+    }
+}
