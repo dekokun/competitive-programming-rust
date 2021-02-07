@@ -44,16 +44,36 @@ fn main() {
     println!("{}", solve(h, w, (0..h).map(|_| read()).collect()));
 }
 
-fn solve(h: usize, w: usize, m: Vec<String>) -> usize {
+fn solve(_h: usize, _w: usize, m: Vec<String>) -> usize {
     let mut before = vec![];
+    let mut ans = 0;
+    let mut before_cell = None;
+    let mut before_blank = None;
     for s in m {
         let mut tmp = vec![];
         for (i, c) in s.chars().enumerate() {
             if c == '#' {
                 tmp.push(i);
+                if !before.contains(&i) {
+                    if let Some(b) = before_cell {
+                        if b + 1 != i {
+                            ans += 2;
+                        }
+                    }
+                }
+                before_cell = Some(i);
+            } else {
+                if before.contains(&i) {
+                    if let Some(b) = before_blank {
+                        if b + 1 != i {
+                            ans += 2;
+                        }
+                    }
+                }
+                before_blank = Some(i);
             }
         }
         before = tmp;
     }
-    todo!()
+    ans
 }
