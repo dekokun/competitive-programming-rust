@@ -4,4 +4,6 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "BEAF" "1 1 0 0 1 1"
+t "DECADE" "1 0 1 2 2 0"
+t ABBCCCDDDDEEEEEFFFFFF "1 2 3 4 5 6"

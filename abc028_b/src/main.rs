@@ -39,8 +39,16 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: String) -> String {
+    let mut set = vec![0; 6];
+    for c in s.chars() {
+        set[c as usize - 'A' as usize] += 1;
+    }
+    set.into_iter()
+        .map(|a| a.to_string())
+        .collect::<Vec<_>>()
+        .join(" ")
+}
