@@ -39,8 +39,9 @@ mod tests {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve((0..12).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(ss: Vec<String>) -> usize {
+    ss.into_iter().filter(|s| s.contains("r")).count()
+}
