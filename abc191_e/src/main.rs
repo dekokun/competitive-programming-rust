@@ -8,11 +8,11 @@ macro_rules! debug {
     };
 }
 
-use std::str::FromStr;
 use std::{
     collections::HashSet,
     io::{stdin, Read},
 };
+use std::{collections::VecDeque, str::FromStr};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -59,36 +59,66 @@ fn solve(n: usize, _m: usize, abc: Vec<(usize, usize, i64)>) -> Vec<i64> {
     for (a, b, c) in abc {
         graph[a].push((b, c));
     }
-    debug!(graph);
-
-    let set: HashSet<usize> = HashSet::new();
-    (1..=n).map(|i| dfs(&graph, set.clone(), 0, i, i)).collect()
+    (1..=n).map(|i| bfs(&graph, i)).collect()
 }
 
-fn dfs(
-    graph: &Vec<Vec<(usize, i64)>>,
-    visited: HashSet<usize>,
-    cost: i64,
-    now: usize,
-    start: usize,
-) -> i64 {
-    if now == start && !visited.is_empty() {
-        return cost;
-    }
-    let mut values = vec![];
-    for &v in &graph[now] {
-        if visited.contains(&v.0) {
-            continue;
+fn bfs(graph: &Vec<Vec<(usize, i64)>>, start: usize) -> i64 {
+    // (pos, cost)
+    let mut queue = VecDeque::new();
+    queue.push_front((start, 0));
+    let mut costs = vec![];
+    while let Some((now, cost)) = queue.pop_back() {
+        if now == start && cost != 0 {
+            costs.push(cost);
         }
-        let mut visited = visited.clone();
-        visited.insert(v.0);
-        values.push(dfs(graph, visited, cost + v.1, v.0, start));
+        for &v in &graph[now] {
+            queue.push_front((v.0, cost + v.1));
+        }
     }
-    if values.is_empty() {
+    if costs.is_empty() {
         -1
-    } else if values.iter().all(|&v| v == -1) {
+    } else if costs.iter().all(|&v| v == -1) {
         -1
     } else {
-        values.into_iter().filter(|&v| v >= 0).min().unwrap()
+        costs.into_iter().filter(|&v| v >= 0).min().unwrap()
     }
 }
+
+// fn solve_dfs(n: usize, _m: usize, abc: Vec<(usize, usize, i64)>) -> Vec<i64> {
+//     let mut graph = vec![vec![]; n + 1];
+//     for (a, b, c) in abc {
+//         graph[a].push((b, c));
+//     }
+//     debug!(graph);
+
+//     let set: HashSet<usize> = HashSet::new();
+//     (1..=n).map(|i| dfs(&graph, set.clone(), 0, i, i)).collect()
+// }
+
+// fn dfs(
+//     graph: &Vec<Vec<(usize, i64)>>,
+//     visited: HashSet<usize>,
+//     cost: i64,
+//     now: usize,
+//     start: usize,
+// ) -> i64 {
+//     if now == start && !visited.is_empty() {
+//         return cost;
+//     }
+//     let mut values = vec![];
+//     for &v in &graph[now] {
+//         if visited.contains(&v.0) {
+//             continue;
+//         }
+//         let mut visited = visited.clone();
+//         visited.insert(v.0);
+//         values.push(dfs(graph, visited, cost + v.1, v.0, start));
+//     }
+//     if values.is_empty() {
+//         -1
+//     } else if values.iter().all(|&v| v == -1) {
+//         -1
+//     } else {
+//         values.into_iter().filter(|&v| v >= 0).min().unwrap()
+//     }
+// }
