@@ -39,8 +39,26 @@ mod tests {
 }
 
 fn main() {
+    let l = read();
+    let h = read();
     let n: usize = read();
-    println!("{}", solve(n));
+    println!(
+        "{}",
+        solve(n, l, h, (0..n).map(|_| read()).collect()).join("\n")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(_n: usize, l: i32, h: i32, a: Vec<i32>) -> Vec<String> {
+    a.into_iter()
+        .map(|v| {
+            if v < l {
+                l - v
+            } else if v <= h {
+                0
+            } else {
+                -1
+            }
+            .to_string()
+        })
+        .collect()
+}
