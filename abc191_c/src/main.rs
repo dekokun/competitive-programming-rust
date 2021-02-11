@@ -41,39 +41,30 @@ mod tests {
 fn main() {
     let h: usize = read();
     let w: usize = read();
-    println!("{}", solve(h, w, (0..h).map(|_| read()).collect()));
+    println!(
+        "{}",
+        solve(
+            h,
+            w,
+            (0..h).map(|_| read::<String>().chars().collect()).collect()
+        )
+    );
 }
 
-fn solve(_h: usize, _w: usize, m: Vec<String>) -> usize {
-    let mut before = vec![];
+fn solve(h: usize, w: usize, m: Vec<Vec<char>>) -> usize {
     let mut ans = 0;
-    let mut before_cell = None;
-    let mut before_blank = None;
-    for s in m {
-        let mut tmp = vec![];
-        for (i, c) in s.chars().enumerate() {
-            if c == '#' {
-                tmp.push(i);
-                if !before.contains(&i) {
-                    if let Some(b) = before_cell {
-                        if b + 1 != i {
-                            ans += 2;
-                        }
-                    }
+    for i in 0..(h - 1) {
+        for j in 0..(w - 1) {
+            let mut tmp = 0;
+            for &(a, b) in &[(0, 0), (1, 0), (0, 1), (1, 1)] {
+                if m[i + a][j + b] == '#' {
+                    tmp += 1;
                 }
-                before_cell = Some(i);
-            } else {
-                if before.contains(&i) {
-                    if let Some(b) = before_blank {
-                        if b + 1 != i {
-                            ans += 2;
-                        }
-                    }
-                }
-                before_blank = Some(i);
+            }
+            if tmp % 2 == 1 {
+                ans += 1;
             }
         }
-        before = tmp;
     }
     ans
 }
