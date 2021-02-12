@@ -30,17 +30,41 @@ fn read<T: FromStr>() -> T {
 #[allow(unused_imports)]
 mod tests {
     #![allow(unused_imports)]
+    use std::collections::HashSet;
+
     use super::*;
 
     #[test]
     fn test1() {
-        assert_eq!(true, true);
+        for v in 1..1000 {
+            let ans = solve(v);
+            assert_eq!(
+                ans.len(),
+                ans.into_iter().collect::<HashSet<String>>().len()
+            )
+        }
     }
 }
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(n).join("\n"));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> Vec<String> {
+    let mut ans = vec![];
+    let mut sum = 0;
+    if n == 1 {
+        return vec!["1".into()];
+    }
+    for v in 1..=n {
+        sum += v;
+        if sum >= n {
+            let before = ans.pop().unwrap();
+            ans.push(before + n - (sum - v));
+            break;
+        }
+        ans.push(v)
+    }
+    ans.into_iter().map(|s| s.to_string()).collect()
+}
