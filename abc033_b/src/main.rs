@@ -40,7 +40,15 @@ mod tests {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve((0..n).map(|_| (read(), read())).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(sp: Vec<(String, usize)>) -> String {
+    let max = sp.iter().map(|c| c.1).max().unwrap();
+    let sum: usize = sp.iter().map(|c| c.1).sum();
+    if max > sum / 2 {
+        sp.iter().filter(|c| c.1 == max).next().unwrap().0.clone()
+    } else {
+        "atcoder".into()
+    }
+}
