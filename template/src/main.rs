@@ -26,18 +26,6 @@ fn read<T: FromStr>() -> T {
     opt.expect("failed to parse token")
 }
 
-#[cfg(test)]
-#[allow(unused_imports)]
-mod tests {
-    #![allow(unused_imports)]
-    use super::*;
-
-    #[test]
-    fn test1() {
-        assert_eq!(true, true);
-    }
-}
-
 fn main() {
     let n: usize = read();
     println!("{}", solve(n));
