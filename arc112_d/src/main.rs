@@ -45,7 +45,10 @@ fn solve(h: usize, w: usize, mut link: Vec<Vec<bool>>) -> usize {
     // 壁のないところを埋めるのに何個？
     //   縦と横で壁がない列の少ない方の壁の個数さえあればOK
     link[0][0] = true;
-    link[h - 1][w] = true;
+    link[h - 1][0] = true;
+    link[0][w - 1] = true;
+    link[h - 1][w - 1] = true;
+    debug!(link);
     let wall_count = link
         .iter()
         .map(|row| row.iter().filter(|a| **a).count())
@@ -55,18 +58,14 @@ fn solve(h: usize, w: usize, mut link: Vec<Vec<bool>>) -> usize {
     let mut count = 0;
     let mut rows = vec![vec![]; h];
     let mut columns = vec![vec![]; w];
-    let mut edge = false;
     for (i, row) in link.into_iter().enumerate() {
         for (j, cell) in row.into_iter().enumerate() {
             if cell {
-                for &r in &rows[i] {
-                    dsu.merge(count, r);
+                if !rows[i].is_empty() {
+                    dsu.merge(count, rows[i][0]);
                 }
-                for &c in &columns[j] {
-                    dsu.merge(count, c);
-                }
-                if i == 0 || i == h - 1 || j == 0 || j == w - 1 {
-                    edge = true;
+                if !columns[j].is_empty() {
+                    dsu.merge(count, columns[j][0]);
                 }
                 rows[i].push(count);
                 columns[j].push(count);
@@ -75,21 +74,15 @@ fn solve(h: usize, w: usize, mut link: Vec<Vec<bool>>) -> usize {
         }
     }
 
-    let wall_connect_count = dsu.groups().len() - if edge { 1 } else { 0 };
+    let wall_connect_count = dsu.groups().len() - 1;
     let mut rows_connect_count = 0;
     for i in 0..h {
-        if i == 0 || i == h - 1 {
-            continue;
-        }
         if rows[i].is_empty() {
             rows_connect_count += 1;
         }
     }
     let mut columns_connect_count = 0;
     for i in 0..w {
-        if i == 0 || i == w - 1 {
-            continue;
-        }
         if columns[i].is_empty() {
             columns_connect_count += 1;
         }
