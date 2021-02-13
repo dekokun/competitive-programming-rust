@@ -27,8 +27,20 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(b: i64, c: i64) -> i64 {
+    let left_left = -b - (c - 1) / 2;
+    let left_right = -b + (c - 1) / 2;
+    let right_left = b - c / 2;
+    let right_right = b + ((c - 2) / 2).max(0);
+    debug!(left_left, left_right, right_left, right_right);
+    if left_right >= right_left {
+        debug!("cover");
+        right_right.max(left_right) - left_left.min(right_left) + 1
+    } else {
+        debug!("separate");
+        left_right - left_left + 1 + right_right - right_left + 1
+    }
+}
