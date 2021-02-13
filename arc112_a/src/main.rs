@@ -27,8 +27,16 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    let t: usize = read();
+    for _ in 0..t {
+        println!("{}", solve(read(), read()));
+    }
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(l: u64, r: u64) -> u64 {
+    if l * 2 >= r + 1 {
+        return 0;
+    }
+    let n = r + 1 - 2 * l;
+    n * (n + 1) / 2
+}
