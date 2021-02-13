@@ -8,8 +8,11 @@ macro_rules! debug {
     };
 }
 
-use std::io::{stdin, Read};
 use std::str::FromStr;
+use std::{
+    collections::HashSet,
+    io::{stdin, Read},
+};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -52,19 +55,18 @@ fn main() {
 }
 
 fn solve(n: usize) -> Vec<String> {
-    let mut ans = vec![];
+    let mut ans = HashSet::new();
     let mut sum = 0;
     if n == 1 {
         return vec!["1".into()];
     }
     for v in 1..=n {
         sum += v;
+        ans.insert(v);
         if sum >= n {
-            let before = ans.pop().unwrap();
-            ans.push(before + n - (sum - v));
+            ans.remove(&(sum - n));
             break;
         }
-        ans.push(v)
     }
     ans.into_iter().map(|s| s.to_string()).collect()
 }
