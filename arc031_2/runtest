@@ -4,4 +4,34 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "xxxxxxxxxx
+xoooooooxx
+xxoooooxxx
+xxxoooxxxx
+xxxxoxxxxx
+xxxxxxxxxx
+xxxxoxxxxx
+xxxoooxxxx
+xxoooooxxx
+xxxxxxxxxx" YES
+t "xxxxxxxxxx
+xoooooooxx
+xxoooooxxx
+xxxoooxxxx
+xxxxxxxxxx
+xxxxxxxxxx
+xxxxxxxxxx
+xxxoooxxxx
+xxoooooxxx
+xxxxxxxxxx" NO
+t "xxxxoxxxxx
+xxxxoxxxxx
+xxxxoxxxxx
+xxxxoxxxxx
+ooooxooooo
+xxxxoxxxxx
+xxxxoxxxxx
+xxxxoxxxxx
+xxxxoxxxxx
+xxxxoxxxxx" YES
+
