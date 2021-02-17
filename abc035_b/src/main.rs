@@ -27,8 +27,33 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read::<String>().chars().collect(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: Vec<char>, t: usize) -> i32 {
+    let mut pos = (0, 0);
+    let mut skipped = 0;
+    for c in s {
+        let (x, y) = pos;
+        pos = match c {
+            'L' => (x - 1, y),
+            'R' => (x + 1, y),
+            'U' => (x, y + 1),
+            'D' => (x, y - 1),
+            '?' => {
+                skipped += 1;
+                (x, y)
+            }
+            _ => panic!(),
+        };
+    }
+    let (x, y): (i32, i32) = pos;
+    let dist = x.abs() + y.abs();
+    if t == 1 {
+        dist + skipped
+    } else if dist >= skipped {
+        dist - skipped
+    } else {
+        (skipped - dist) % 2
+    }
+}
