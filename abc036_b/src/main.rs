@@ -28,7 +28,26 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+
+    println!(
+        "{}",
+        solve((0..n).map(|_| read::<String>().chars().collect()).collect())
+            .into_iter()
+            .map(|s| s.into_iter().collect::<String>())
+            .collect::<Vec<_>>()
+            .join("\n")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(m: Vec<Vec<char>>) -> Vec<Vec<char>> {
+    let n = m.len();
+    let mut ans = vec![];
+    for i in 0..n {
+        let mut row = vec![];
+        for j in 0..n {
+            row.push(m[n - j - 1][i]);
+        }
+        ans.push(row);
+    }
+    ans
+}
