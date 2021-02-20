@@ -27,8 +27,38 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: u64, k: u64) -> u64 {
+    let mut n = n;
+    for _ in 0..k {
+        let mut vec = vec![];
+        let mut tmp = n;
+        while tmp > 0 {
+            vec.push(tmp % 10);
+            tmp /= 10;
+        }
+        vec.sort();
+        let mut g1 = 0;
+        let mut multi = 1;
+        for &v in &vec {
+            g1 += v * multi;
+            multi *= 10;
+        }
+        vec.reverse();
+        let mut g2 = 0;
+        let mut multi = 1;
+        for &v in &vec {
+            g2 += v * multi;
+            multi *= 10;
+        }
+        n = g1 - g2;
+    }
+    n
+}
+
+/*
+6174 7641 - 1467 = 6174
+
+*/
