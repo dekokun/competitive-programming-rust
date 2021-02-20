@@ -31,4 +31,10 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> usize {
+    if n % 100 == 0 {
+        100
+    } else {
+        100 - (n % 100)
+    }
+}
