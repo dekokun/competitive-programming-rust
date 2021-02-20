@@ -27,8 +27,14 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: String) -> String {
+    for (i, c) in n.chars().enumerate() {
+        if i % 2 == 0 && c.is_uppercase() || i % 2 == 1 && c.is_lowercase() {
+            return "No".into();
+        }
+    }
+    "Yes".into()
+}
