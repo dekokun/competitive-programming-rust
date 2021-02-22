@@ -4,4 +4,14 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "1080 1920
+1080 1920" YES
+t "1080 1920
+1920 1080" YES
+t "334 668
+668 1002" YES
+t "100 200
+300 150" NO
+t "120 120
+240 240" NO
+

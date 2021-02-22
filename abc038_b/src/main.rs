@@ -27,8 +27,13 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(h1: usize, w1: usize, h2: usize, w2: usize) -> String {
+    if h1 == h2 || h1==w2 || w1 == h2 || w1 == w2 {
+        "YES"
+    } else {
+        "NO"
+    }.into()
+}
