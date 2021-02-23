@@ -31,4 +31,11 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> usize {
+    for i in 1..=n {
+        if i.pow(4) == n {
+            return i;
+        }
+    }
+    panic!("not exists");
+}
