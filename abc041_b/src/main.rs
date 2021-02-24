@@ -27,8 +27,10 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve( read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: u64, b: u64, c: u64) -> u64 {
+    let m = 10_u64.pow(9) + 7;
+    (((a * b) % m) * c) % m
+}
