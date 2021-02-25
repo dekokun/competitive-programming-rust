@@ -27,8 +27,12 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: u64, b: u64, x: u64) -> u64 {
+    // a - 1以下でxで割り切れるものをb以下でxで割り切れるものから引く
+    let minus = if a == 0 { 0 } else { (a - 1) / x + 1 };
+    debug!((b / x), minus);
+    (b / x) + 1 - minus
+}
