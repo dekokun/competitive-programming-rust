@@ -27,8 +27,18 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: String) -> String {
+    let mut vec = vec![0; 27];
+    for c in s.chars() {
+        vec[c as usize - 'a' as usize] += 1;
+    }
+    for v in vec {
+        if v % 2 == 1 {
+            return "No".into();
+        }
+    }
+    "Yes".into()
+}
