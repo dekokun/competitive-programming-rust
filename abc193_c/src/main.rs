@@ -8,8 +8,11 @@ macro_rules! debug {
     };
 }
 
-use std::io::{stdin, Read};
 use std::str::FromStr;
+use std::{
+    collections::HashSet,
+    io::{stdin, Read},
+};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -27,8 +30,20 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: u64) -> u64 {
+    let mut set = HashSet::new();
+    let root = (n as f64).sqrt().ceil() as usize;
+    for i in 2..=root {
+        for j in 2..=root {
+            let pow = (i as u64).pow(j as u32);
+            if pow > n {
+                break;
+            }
+            set.insert(pow);
+        }
+    }
+    n - set.len() as u64
+}
