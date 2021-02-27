@@ -27,8 +27,9 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: usize, b: usize) -> f64 {
+    ((a - b) * 100) as f64 / a as f64
+}
