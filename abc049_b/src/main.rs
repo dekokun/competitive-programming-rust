@@ -1,5 +1,4 @@
 #![allow(non_snake_case, unused_macros)]
-
 // https://maguro.dev/debug-macro/ から
 macro_rules! debug {
     ($($a:expr),* $(,)*) => {
@@ -27,8 +26,23 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    let h: usize = read();
+    let _m: usize = read();
+    println!(
+        "{}",
+        solve((0..h).map(|_| read::<String>().chars().collect()).collect())
+            .into_iter()
+            .map(|s| s.into_iter().collect::<String>())
+            .collect::<Vec<_>>()
+            .join("\n")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(vec: Vec<Vec<char>>) -> Vec<Vec<char>> {
+    let mut ans = vec![];
+    for v in vec {
+        ans.push(v.clone());
+        ans.push(v);
+    }
+    ans
+}
