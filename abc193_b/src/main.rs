@@ -28,7 +28,27 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+
+    println!(
+        "{}",
+        if let Some(a) = solve((0..n).map(|_| (read(), read(), read())).collect()) {
+            a.to_string()
+        } else {
+            "-1".into()
+        }
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(apx: Vec<(usize, usize, usize)>) -> Option<usize> {
+    let mut ans = std::usize::MAX;
+    for (a, p, x) in apx {
+        if x > a {
+            ans = ans.min(p);
+        }
+    }
+    if ans == std::usize::MAX {
+        None
+    } else {
+        Some(ans)
+    }
+}
