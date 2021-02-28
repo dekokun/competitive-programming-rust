@@ -27,8 +27,17 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    let t: usize = read();
+    for _ in 0..t {
+        println!(
+            "{}",
+            if let Some(a) = solve(read(), read(), read(), read()) {
+                a.to_string()
+            } else {
+                "infinity".into()
+            }
+        );
+    }
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(x: u64, y: u64, p: u64, q: u64) -> Option<u64> {}
