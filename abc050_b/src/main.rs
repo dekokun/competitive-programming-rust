@@ -28,7 +28,20 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    let t = (0..n).map(|_| read()).collect();
+    let m: usize = read();
+
+    println!(
+        "{}",
+        solve(t, (0..m).map(|_| (read(), read())).collect())
+            .into_iter()
+            .map(|v| v.to_string())
+            .collect::<Vec<_>>()
+            .join("\n")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(t: Vec<usize>, px: Vec<(usize, usize)>) -> Vec<usize> {
+    let sum: usize = t.iter().sum();
+    px.into_iter().map(|(p, x)| sum - t[p - 1] + x).collect()
+}
