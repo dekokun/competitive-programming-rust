@@ -27,8 +27,21 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    let _n: usize = read();
+    println!("{}", solve(read::<String>().chars().collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: Vec<char>) -> i32 {
+    let mut ans = 0;
+    let mut now = 0;
+    for c in s {
+        if c == 'I' {
+            now += 1;
+        } else {
+            now -= 1;
+        }
+        debug!(now);
+        ans = ans.max(now);
+    }
+    ans
+}
