@@ -8,8 +8,11 @@ macro_rules! debug {
     };
 }
 
-use std::io::{stdin, Read};
 use std::str::FromStr;
+use std::{
+    io::{stdin, Read},
+    str::Chars,
+};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -27,8 +30,11 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read::<String>().chars()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(mut s: Chars) -> usize {
+    s.clone().collect::<Vec<_>>().len()
+        - s.clone().rev().position(|v| v == 'Z').unwrap()
+        - s.position(|v| v == 'A').unwrap()
+}
