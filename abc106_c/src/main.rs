@@ -27,8 +27,24 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: String, k: usize) -> usize {
+    let mut seq_1 = 0;
+    let mut next = 0;
+    for c in s.chars() {
+        let d = c.to_digit(10).unwrap();
+        if d == 1 {
+            seq_1 += 1;
+            continue;
+        }
+        next = d;
+        break;
+    }
+    if k <= seq_1 {
+        1
+    } else {
+        next as usize
+    }
+}
