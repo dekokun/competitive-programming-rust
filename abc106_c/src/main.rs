@@ -30,21 +30,13 @@ fn main() {
     println!("{}", solve(read(), read()));
 }
 
-fn solve(s: String, k: usize) -> usize {
-    let mut seq_1 = 0;
-    let mut next = 0;
-    for c in s.chars() {
-        let d = c.to_digit(10).unwrap();
-        if d == 1 {
-            seq_1 += 1;
-            continue;
+fn solve(s: String, k: usize) -> u32 {
+    let s = s.chars().collect::<Vec<_>>();
+    for i in 0..std::cmp::min(s.len(), k) {
+        let d = s[i];
+        if d != '1' {
+            return d.to_digit(10).unwrap();
         }
-        next = d;
-        break;
     }
-    if k <= seq_1 {
-        1
-    } else {
-        next as usize
-    }
+    1
 }
