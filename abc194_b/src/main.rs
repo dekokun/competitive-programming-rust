@@ -28,7 +28,20 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve((0..n).map(|_| (read(), read())).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(ab: Vec<(usize, usize)>) -> usize {
+    let mut ans = 10_usize.pow(9);
+    for i in 0..ab.len() {
+        for j in 0..ab.len() {
+            let tmp = if i == j {
+                ab[i].0 + ab[j].1
+            } else {
+                ab[i].0.max(ab[j].1)
+            };
+            ans = ans.min(tmp);
+        }
+    }
+    ans
+}
