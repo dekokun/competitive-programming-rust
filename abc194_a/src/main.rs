@@ -27,8 +27,19 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: usize, b: usize) -> usize {
+    let ko = a + b;
+    let shi = b;
+    if ko >= 15 && shi >= 8 {
+        1
+    } else if ko >= 10 && shi >= 3 {
+        2
+    } else if ko >= 3 {
+        3
+    } else {
+        4
+    }
+}
