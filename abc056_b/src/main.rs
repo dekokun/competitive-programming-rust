@@ -27,8 +27,16 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read(), read(), read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(w: usize, a: usize, b: usize) -> usize {
+    // aの方が小さいとする
+    let (a, b) = (a.min(b), a.max(b));
+    debug!(a, b);
+    if a + w >= b {
+        0
+    } else {
+        b - (a + w)
+    }
+}
