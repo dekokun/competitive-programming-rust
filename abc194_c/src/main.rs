@@ -1,4 +1,4 @@
-#![allow(non_snake_case, unused_macros)]
+#![allow(non_snake_case, unused_macros, dead_code)]
 
 // https://maguro.dev/debug-macro/ $B$+$i(B
 macro_rules! debug {
@@ -28,7 +28,30 @@ fn read<T: FromStr>() -> T {
 
 fn main() {
     let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve((0..n).map(|_| read()).collect()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: Vec<i64>) -> i64 {
+    // 全部の和と全部の二乗和を求める
+    // a(b + c + d) + b(c + d) + c(d) のように、和から一つずつ引きつつかけていく
+    let sum_sq: i64 = a.iter().map(|v| v.pow(2)).sum();
+    let mut sum: i64 = a.iter().sum();
+    let mut tmp = 0;
+    for &v in &a {
+        sum -= v;
+        tmp += -2 * sum * v;
+    }
+    debug!(sum_sq, tmp);
+    (a.len() - 1) as i64 * sum_sq + tmp
+}
+
+fn solve2(a: Vec<i64>) -> i64 {
+    let mut ans = 0;
+    for i in 1..a.len() {
+        for j in 0..i {
+            debug!(a[i].pow(2), a[j].pow(2), -2 * a[i] * a[j]);
+            ans += (a[i]).pow(2) + a[j].pow(2) - 2 * a[i] * a[j];
+        }
+    }
+    ans
+}
