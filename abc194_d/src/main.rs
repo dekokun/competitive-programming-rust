@@ -31,4 +31,11 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> f64 {
+    // n / (n - 1) + n / (n - 2) + ... + n / 2 + n
+    let mut ans = 0.0;
+    for i in 1..n {
+        ans += n as f64 / (n - i) as f64;
+    }
+    ans
+}
