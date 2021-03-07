@@ -1,4 +1,4 @@
-#![allow(non_snake_case, unused_macros)]
+#![allow(non_snake_case, unused_macros, dead_code)]
 
 // https://maguro.dev/debug-macro/ $B$+$i(B
 macro_rules! debug {
@@ -8,8 +8,11 @@ macro_rules! debug {
     };
 }
 
-use std::io::{stdin, Read};
 use std::str::FromStr;
+use std::{
+    collections::HashMap,
+    io::{stdin, Read},
+};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -27,8 +30,23 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize = read();
-    println!("{}", solve(n));
+    println!("{}", solve(read()));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: String) -> u64 {
+    let mut ans = 0;
+    let mut map = HashMap::new();
+    let mut count = 0;
+    for c in s.chars() {
+        let entry = map.entry(c).or_insert(0);
+        *entry += 1;
+        count += 1;
+    }
+    ans += count * (count - 1) / 2;
+    // 何も変わらない場合
+    ans += 1;
+    for (_, count) in map {
+        ans -= (count * (count - 1)) / 2
+    }
+    ans
+}
