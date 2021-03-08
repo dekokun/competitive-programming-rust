@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "abcdef
+2
+3 5
+1 4" debacf
+t "redcoat
+3
+1 7
+1 2
+3 4" atcoder
+

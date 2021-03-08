@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "aatt" 5
+t "xxxxxxxxxx" 1
+t "abracadabra" 44
+t a 1
+t aba 3

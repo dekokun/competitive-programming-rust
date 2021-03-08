@@ -1,0 +1,33 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "5
+a 10
+b 20
+c 30
+d 40
+e 100" atcoder
+t "14
+yasuzuka 3340
+uragawara 4032
+oshima 2249
+maki 2614
+kakizaki 11484
+ogata 10401
+kubiki 9746
+yoshikawa 5142
+joetsu 100000
+nakago 4733
+itakura 7517
+kiyosato 3152
+sanwa 6190
+nadachi 3169" joetsu
+t "4
+unagi 20
+usagi 13
+snuke 42
+smeke 7" snuke
+

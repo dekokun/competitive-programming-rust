@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "2 1 0" Takahashi
+t "2 2 0" Aoki
+t "2 2 1" Takahashi
+

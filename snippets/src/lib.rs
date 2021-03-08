@@ -187,3 +187,15 @@ fn prime_factorization(n: usize) -> HashMap<usize, usize> {
     }
     ans
 }
+#[snippet = "test"]
+#[cfg(test)]
+#[allow(unused_imports)]
+mod tests {
+    #![allow(unused_imports)]
+    use super::*;
+
+    #[test]
+    fn test1() {
+        assert_eq!(true, true);
+    }
+}

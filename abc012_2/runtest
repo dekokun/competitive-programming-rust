@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "3661" 01:01:01
+t 86399 23:59:59
+

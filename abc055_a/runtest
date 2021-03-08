@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "20" 15800
+t "60" 47200

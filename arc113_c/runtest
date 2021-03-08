@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t accept 3
+t ccept 3
+t ccceptaab 7
+t accceptaab 7
+t aabbcc 6
+t aabbaa 6
+t aabaa 1
+t aabaab 2
+t atcoder 0
+t anerroroccurred 16
+t cca 1
+t ccc 0
+t ccccc 0
+t ccca 1
+t cccca 1
+t acccca 1
+t accac 1
+t accacac 2
+t ccccaddd 4
+t ccccaddda 6
+t adbccdccdc 2
+t ccacccd 2

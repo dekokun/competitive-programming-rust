@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "11 2" 3
+t "0 4" 4
+t "112 20210213" 20210436
+t "-211 1000000000000000000" 1000000000000000422
+

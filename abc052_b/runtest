@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "5
+IIDID" 2
+t "7
+DDIDDII" 0
+

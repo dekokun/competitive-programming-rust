@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+t "2
+1 5
+2 4
+3 6" 3
+t "3
+1 1 1
+2 2 2
+3 3 3" 27
+t "6
+3 14 159 2 6 53
+58 9 79 323 84 6
+2643 383 2 79 50 288" 87
+

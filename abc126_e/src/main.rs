@@ -19,16 +19,16 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n: usize  =read();
+    let n: usize = read();
     let m: usize = read();
     let mut dsu = Dsu::new(n);
     for _ in 0..m {
-        let (x, y, _z): (usize , usize, usize) = (read(), read(), read());
+        let (x, y, _z): (usize, usize, usize) = (read(), read(), read());
         dsu.merge(x - 1, y - 1);
     }
+
     println!("{}", dsu.groups().len())
 }
-
 
 //https://github.com/rust-lang-ja/ac-library-rs
 
