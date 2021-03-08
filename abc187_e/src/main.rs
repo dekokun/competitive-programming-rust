@@ -1,7 +1,18 @@
 #![allow(non_snake_case)]
 
-use std::io::{stdin, Read};
+// https://maguro.dev/debug-macro/ $B$+$i(B
+macro_rules! debug {
+        ($($a:expr),* $(,)*) => {
+            #[cfg(debug_assertions)]
+            eprintln!(concat!($("| ", stringify!($a), "={:?} "),*, "|"), $(&$a),*);
+        };
+    }
+
 use std::str::FromStr;
+use std::{
+    collections::VecDeque,
+    io::{stdin, Read},
+};
 fn read_option<T: FromStr>() -> Option<T> {
     let stdin = stdin();
     let stdin = stdin.lock();
@@ -18,49 +29,71 @@ fn read<T: FromStr>() -> T {
     opt.expect("failed to parse token")
 }
 
-use std::collections::HashMap;
-
 fn main() {
     let n: usize = read();
-    let mut graph: HashMap<usize, Vec<usize>> = HashMap::new();
+    let inf = std::i64::MAX;
+    let mut graph = vec![(0, vec![]); n];
     let mut edges = vec![];
     for _ in 0..n - 1 {
-        let a = read();
-        let b = read();
+        let a: usize = read();
+        let b: usize = read();
+        let a = a - 1;
+        let b = b - 1;
 
         edges.push((a, b));
 
-        let entry = graph.entry(a).or_insert_with(|| vec![]);
-        entry.push(b);
-        let entry = graph.entry(b).or_insert_with(|| vec![]);
-        entry.push(a);
+        graph[a].1.push(b);
+        graph[b].1.push(a);
     }
-    // 木が1始まりだとして、深さ優先探索をしつつvectorに落とす
-    let mut vec = vec![];
-    vec.push((1, 1));
+    // 木が0始まりだとして、各ノードの深さを記録していく
+    let mut depth = vec![inf; n];
+    depth[0] = 0;
+    let mut q = VecDeque::new();
+    q.push_front((0, 0));
+    while let Some((pos, cost)) = q.pop_back() {
+        for &next in &graph[pos].1 {
+            if depth[next] != inf {
+                continue;
+            }
+            depth[next] = cost + 1;
+            q.push_front((next, cost + 1));
+        }
+    }
 
-    let tree_vec = dfs(1, 1, &graph);
-    // dbg!(tree_vec);
-    let mut imos = vec![0; tree_vec.len()];
     let q: usize = read();
     for _ in 0..q {
         let t: usize = read();
         let e: usize = read();
-        let x: usize = read();
-    }
-}
-
-fn dfs(before: usize, next: usize, graph: &HashMap<usize, Vec<usize>>) -> Vec<(usize, usize)> {
-    let mut ans = vec![(next, 0)];
-    if let Some(a) = graph.get(&next) {
-        for &v in a {
-            if v == before {
-                continue;
-            }
-            let mut a = dfs(next, v, graph);
-            ans.append(&mut a);
+        let x: i64 = read();
+        let e = e - 1;
+        let (a, b) = if t == 1 {
+            (edges[e].0, edges[e].1)
+        } else {
+            (edges[e].1, edges[e].0)
+        };
+        if depth[a] < depth[b] {
+            graph[0].0 += x;
+            graph[b].0 -= x;
+        } else {
+            graph[a].0 += x;
         }
     }
-    ans[0] = (next, ans.len());
-    ans
+    let mut q = VecDeque::new();
+    q.push_front((0, graph[0].0));
+    let mut ans = vec![inf; n];
+    ans[0] = graph[0].0;
+    debug!(graph);
+    while let Some((pos, cost)) = q.pop_back() {
+        for &next in &graph[pos].1 {
+            if ans[next] != inf {
+                continue;
+            }
+            let cost = cost + graph[next].0;
+            ans[next] = cost;
+            q.push_front((next, cost));
+        }
+    }
+    for v in ans {
+        println!("{}", v)
+    }
 }
