@@ -77,6 +77,9 @@ fn solve(n: usize, a: usize, b: usize, c: usize, mut l: Vec<usize>) -> usize {
                             - vec[k].min(a)
                             + merge_mp,
                     );
+                    if vec[k] > a {
+                        break;
+                    }
                 }
             }
         }
