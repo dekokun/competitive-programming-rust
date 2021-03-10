@@ -1,4 +1,4 @@
-#![allow(non_snake_case, unused_macros)]
+#![allow(non_snake_case, unused_macros, dead_code)]
 
 use proconio::input;
 
