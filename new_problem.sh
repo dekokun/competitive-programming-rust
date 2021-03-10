@@ -16,6 +16,7 @@ fi
 
 program_name="$1"
 cargo new "$program_name" --bin
+echo 'proconio = "0.4.1"' >>"$program_name"/Cargo.toml
 git checkout -b "$program_name"
 cp -pr template/src/main.rs "$program_name"/src
 cp -pr template/runtest "$program_name"/runtest
