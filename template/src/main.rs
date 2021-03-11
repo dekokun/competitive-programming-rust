@@ -10,10 +10,9 @@ macro_rules! debug {
     };
 }
 
-
 fn main() {
     input! {
-        n: u32,
+        n: usize,
     }
     println!("{}", solve(n));
 }
