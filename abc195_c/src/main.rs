@@ -12,9 +12,20 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        n: u64,
     }
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: u64) -> u64 {
+    let mut ans = 0;
+    for i in 1..=6 {
+        if n / (10_u64.pow(i * 3)) != 0 {
+            ans += (i as u64 - 1) * (10_u64.pow(i * 3) - 10_u64.pow((i - 1) * 3));
+        } else {
+            ans += (n - 10_u64.pow((i - 1) * 3) + 1) * (i as u64 - 1);
+            break;
+        }
+    }
+    ans
+}
