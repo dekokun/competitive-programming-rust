@@ -12,9 +12,16 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        m: usize,
+        h: usize
     }
-    println!("{}", solve(n));
+    println!("{}", solve(m, h));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(m: usize, h: usize) -> String {
+    if h % m == 0 {
+        "Yes"
+    } else {
+        "No"
+    }.into()
+}
