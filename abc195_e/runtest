@@ -4,4 +4,15 @@ cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
 
-t "" ""
+t "2
+35
+AT" Takahashi
+t "5
+12345
+AAAAT" Aoki
+t "5
+67890
+TTTTA" Takahashi
+t "5
+12345
+ATATA" Aoki
