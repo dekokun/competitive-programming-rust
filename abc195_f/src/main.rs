@@ -29,7 +29,11 @@ fn solve(a: u64, b: u64) -> u64 {
     q.push_front(rem);
     // {} の文を最初に数えておく
     let mut ans = 1;
-    let mut p_f: HashMap<u64, HashMap<u64, u64>> = HashMap::new();
+    let mut prime_factor_cache: HashMap<u64, HashMap<u64, u64>> = HashMap::new();
+    for i in a..=b {
+        let primes = prime_factorization(i);
+        prime_factor_cache.insert(i, primes);
+    }
     while let Some(rem) = q.pop_back() {
         // remでキャッシュすれば多分いける！
         if rem.is_empty() {
@@ -39,13 +43,7 @@ fn solve(a: u64, b: u64) -> u64 {
         for &v in &rem {
             let mut rem2 = rem.clone();
             rem2.remove(&v);
-            let primes = if p_f.contains_key(&v) {
-                p_f[&v].clone()
-            } else {
-                let primes = prime_factorization(v);
-                p_f.insert(v, primes.clone());
-                primes
-            };
+            let primes = prime_factor_cache[&v].clone();
 
             for (prime, _) in primes {
                 let first = a + (prime - (a % prime));
@@ -55,7 +53,7 @@ fn solve(a: u64, b: u64) -> u64 {
                     if now > b {
                         break;
                     }
-                   // debug!(rem2.remove(&now));
+                    // debug!(rem2.remove(&now));
                 }
             }
             q.push_front(rem2);
