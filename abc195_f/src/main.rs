@@ -1,6 +1,6 @@
 #![allow(non_snake_case, unused_macros, dead_code)]
 
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{HashMap, HashSet};
 
 use proconio::input;
 
@@ -21,45 +21,59 @@ fn main() {
 }
 
 fn solve(a: u64, b: u64) -> u64 {
-    let mut q = VecDeque::new();
     let mut rem = HashSet::new();
     for i in a..=b {
         rem.insert(i);
     }
-    q.push_front(rem);
-    // {} の文を最初に数えておく
-    let mut ans = 1;
+
     let mut prime_factor_cache: HashMap<u64, HashMap<u64, u64>> = HashMap::new();
     for i in a..=b {
         let primes = prime_factorization(i);
         prime_factor_cache.insert(i, primes);
     }
     let prime_factor_cache = prime_factor_cache;
-    while let Some(rem) = q.pop_back() {
-        // remでキャッシュすれば多分いける！
-        if rem.is_empty() {
-            ans += 1;
-            continue;
-        }
-        for &v in &rem {
-            let mut rem2 = rem.clone();
-            rem2.remove(&v);
-            let primes = prime_factor_cache[&v].clone();
+    let mut rem_cache = HashMap::new();
+    dfs(rem, &prime_factor_cache, &mut rem_cache, &(a, b))
+}
 
-            for (prime, _) in primes {
-                let first = a + (prime - (a % prime));
-                // debug!(prime);
-                for i in 0..50 {
-                    let now = first + i * prime;
-                    if now > b {
-                        break;
-                    }
-                    // debug!(rem2.remove(&now));
+fn dfs(
+    rem: HashSet<u64>,
+    prime_factor_cache: &HashMap<u64, HashMap<u64, u64>>,
+    rem_cache: &mut HashMap<Vec<u64>, u64>,
+    &ab: &(u64, u64),
+) -> u64 {
+    if rem.is_empty() {
+        return 1;
+    }
+    let mut key: Vec<u64> = rem.clone().into_iter().collect();
+    key.sort();
+    if rem_cache.contains_key(&key) {
+        debug!("hoge");
+        return rem_cache[&key];
+    }
+    let mut ans = 0;
+    for &v in &rem {
+        let mut rem2 = rem.clone();
+        rem2.remove(&v);
+        let primes = prime_factor_cache[&v].clone();
+        let a = ab.0;
+        let b = ab.1;
+        for (prime, _) in primes {
+            let first = a + (prime - (a % prime));
+            // debug!(prime);
+            for i in 0..50 {
+                let now = first + i * prime;
+                if now > b {
+                    break;
                 }
             }
-            q.push_front(rem2);
         }
+        let mut key: Vec<u64> = rem2.clone().into_iter().collect();
+        key.sort();
+        ans += dfs(rem2, prime_factor_cache, rem_cache, &ab);
     }
+    rem_cache.insert(key, ans);
+    debug!(rem_cache.len());
     ans
 }
 
