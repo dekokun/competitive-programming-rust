@@ -31,6 +31,7 @@ fn solve(a: u64, b: u64) -> u64 {
     let mut ans = 1;
     let mut p_f: HashMap<u64, HashMap<u64, u64>> = HashMap::new();
     while let Some(rem) = q.pop_back() {
+        // remでキャッシュすれば多分いける！
         if rem.is_empty() {
             ans += 1;
             continue;
@@ -48,13 +49,13 @@ fn solve(a: u64, b: u64) -> u64 {
 
             for (prime, _) in primes {
                 let first = a + (prime - (a % prime));
-                debug!(prime);
+                // debug!(prime);
                 for i in 0..50 {
                     let now = first + i * prime;
                     if now > b {
                         break;
                     }
-                    debug!(rem2.remove(&now));
+                   // debug!(rem2.remove(&now));
                 }
             }
             q.push_front(rem2);
