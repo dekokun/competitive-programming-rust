@@ -34,6 +34,7 @@ fn solve(a: u64, b: u64) -> u64 {
         let primes = prime_factorization(i);
         prime_factor_cache.insert(i, primes);
     }
+    let prime_factor_cache = prime_factor_cache;
     while let Some(rem) = q.pop_back() {
         // remでキャッシュすれば多分いける！
         if rem.is_empty() {
