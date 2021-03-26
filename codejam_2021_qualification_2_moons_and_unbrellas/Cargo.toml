@@ -1,0 +1,10 @@
+[package]
+name = "codejam_2021_qualification_2_moons_and_unbrellas"
+version = "0.1.0"
+authors = ["dekokun <dekokun@hatena.ne.jp>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+proconio = "0.3.7"
