@@ -11,7 +11,7 @@ runtest() {
     echo -e "${RED}fail"
     echo "input: $1"
     echo
-    echo -e "$2 expected. but got $output${NC}"
+    echo -e "$2 \nexpected. but got \n$output${NC}"
   else
     echo -e "${GREEN}OK${NC}"
   fi
