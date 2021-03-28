@@ -14,8 +14,8 @@ runtest() {
   elif [ "$output" != "$2" ]; then
     echo -e "${RED}fail"
     echo "expect                          got"
-    diff <(echo $2) <(echo $output) -y -W 60
-    echo "input: $1D"
+    diff <(echo "$2") <(echo "$output") -y -W 60
+    echo "input: $1"
     echo -en "${NC}"
   else
     echo -e "${GREEN}OK${NC}"
