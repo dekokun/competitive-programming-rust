@@ -12,7 +12,8 @@ runtest() {
     echo -e "${RED}command fail${NC}"
     echo -e "please run command: echo $1 | time cargo run"
   elif [ "$output" != "$2" ]; then
-    echo -e "${RED}fail"
+    echo -en "${RED}"
+    echo "fail"
     echo "expect                          got"
     diff <(echo "$2") <(echo "$output") -y -W 60
     echo "input: $1"
