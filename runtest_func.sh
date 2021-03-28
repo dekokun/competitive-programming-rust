@@ -13,9 +13,10 @@ runtest() {
     echo -e "please run command: echo $1 | time cargo run"
   elif [ "$output" != "$2" ]; then
     echo -e "${RED}fail"
-    echo "input: $1"
-    echo
-    echo -e "$2 \nexpected. but got \n$output${NC}"
+    echo "expect                          got"
+    diff <(echo $2) <(echo $output) -y -W 60
+    echo "input: $1D"
+    echo -en "${NC}"
   else
     echo -e "${GREEN}OK${NC}"
   fi
