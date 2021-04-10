@@ -8,7 +8,7 @@ runtest() {
     cargo build
   fi
 
-  if ! output=$(echo "$1" | time $exec_file); then
+  if ! output=$(echo "$1" | time cargo run); then
     echo -e "${RED}command fail${NC}"
     echo -e "please run command: echo $1 | time cargo run"
   elif [ "$output" != "$2" ]; then
