@@ -6,7 +6,7 @@ runtest() {
   exec_file=./target/debug/$(cd "$(dirname "$0")" && basename "$(pwd)")
   cargo build
 
-  if ! output=$(echo "$1" | time cargo run); then
+  if ! output=$(echo "$1" | time $exec_file); then
     echo -e "${RED}command fail${NC}"
     echo -e "please run command: echo $1 | time cargo run"
   elif [ "$output" != "$2" ]; then
