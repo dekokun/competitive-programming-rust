@@ -4,9 +4,7 @@ NC='\033[0m'
 
 runtest() {
   exec_file=./target/debug/$(cd "$(dirname "$0")" && basename "$(pwd)")
-  if [ ! -e "$exec_file" ]; then
-    cargo build
-  fi
+  cargo build
 
   if ! output=$(echo "$1" | time cargo run); then
     echo -e "${RED}command fail${NC}"
