@@ -1,6 +1,6 @@
 #![allow(non_snake_case, unused_macros, dead_code)]
 
-// https://maguro.dev/debug-macro/ から
+// https://maguro.dev/debug-macro/ $B$+$i(B
 macro_rules! debug {
     ($($a:expr),* $(,)*) => {
         #[cfg(debug_assertions)]
@@ -62,14 +62,13 @@ fn dfs(sum: u64, multi: u64, mut remain: HashMap<u64, u64>, before: u64) -> u64 
             remain.remove(&prime);
             continue;
         }
-        let mut remain = remain.clone();
         remain.remove(&prime);
         for i in 0..=count {
-            if sum - prime * i < multi * prime.pow(i as u32) {
+            if sum - (prime * i) < multi * prime.pow(i as u32) {
                 break;
             }
             let new = dfs(
-                sum - prime * i,
+                sum - (prime * i),
                 multi * prime.pow(i as u32),
                 remain.clone(),
                 prime,
