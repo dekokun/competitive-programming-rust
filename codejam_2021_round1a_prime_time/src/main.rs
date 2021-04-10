@@ -64,7 +64,7 @@ fn dfs(sum: u64, multi: u64, mut remain: HashMap<u64, u64>, before: u64) -> u64 
         }
         let mut remain = remain.clone();
         remain.remove(&prime);
-        for i in 0..=count {
+        for i in 1..=count {
             if sum - prime * i < multi * prime.pow(i as u32) {
                 break;
             }
