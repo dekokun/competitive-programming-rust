@@ -1,3 +1,5 @@
+#!/bin/bash
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
@@ -13,7 +15,22 @@ runtest() {
     echo -en "${RED}"
     echo "fail"
     echo "expect                          got"
-    diff <(echo "$2") <(echo "$output") -y -W 60
+    max_length=0
+
+    # count column length
+    while read -r line; do
+        if [ ${#line} -gt $max_length ]; then
+            max_length=${#line}
+        fi
+    done < <(echo "$output")
+    while read -r line; do
+        if [ ${#line} -gt "$max_length" ]; then
+            max_length=${#line}
+        fi
+    done < <(echo "$2")
+    # I don't know what count is appropreate
+    length=$(( 2 * max_length + 10))
+    diff <(echo "$2") <(echo "$output") -y -W"$length"
     echo "input: $1"
     echo -en "${NC}"
   else
