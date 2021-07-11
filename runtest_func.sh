@@ -6,7 +6,9 @@ NC='\033[0m'
 
 runtest() {
   exec_file=./target/debug/$(cd "$(dirname "$0")" && basename "$(pwd)")
-
+  if [ ! -e "$exec_file" ]; then
+    cargo build
+  fi
   if ! output=$(echo "$1" | time $exec_file); then
     echo -e "${RED}command fail${NC}"
     echo -e "please run command: echo $1 | time cargo run"
@@ -18,17 +20,17 @@ runtest() {
 
     # count column length
     while read -r line; do
-        if [ ${#line} -gt $max_length ]; then
-            max_length=${#line}
-        fi
+      if [ ${#line} -gt $max_length ]; then
+        max_length=${#line}
+      fi
     done < <(echo "$output")
     while read -r line; do
-        if [ ${#line} -gt "$max_length" ]; then
-            max_length=${#line}
-        fi
+      if [ ${#line} -gt "$max_length" ]; then
+        max_length=${#line}
+      fi
     done < <(echo "$2")
     # I don't know what count is appropreate
-    length=$(( 2 * max_length + 10))
+    length=$((2 * max_length + 10))
     diff <(echo "$2") <(echo "$output") -y -W"$length"
     echo "input: $1"
     echo -en "${NC}"
