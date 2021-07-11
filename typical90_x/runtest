@@ -5,4 +5,12 @@ source ../runtest_func.sh
 cargo test
 cargo build
 
-t "" ""
+t "2 5
+1 3
+2 1" Yes
+t "3 1
+7 8 9
+7 8 9" No
+t "7 999999999
+3 1 4 1 5 9 2
+1 2 3 4 5 6 7" Yes

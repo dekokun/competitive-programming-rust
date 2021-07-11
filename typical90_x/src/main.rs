@@ -13,8 +13,24 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        k: usize,
+        a: [usize; n],
+        b: [usize; n],
     }
-    println!("{}", solve(n));
+    println!("{}", solve(n, k, a, b));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(_n: usize, k: usize, a: Vec<usize>, b: Vec<usize>) -> String {
+    let mut diff = 0;
+    for (i, v) in a.into_iter().enumerate() {
+        diff += v.max(b[i]) - v.min(b[i]);
+    }
+    if diff > k {
+        "No"
+    } else if (k - diff) % 2 == 0 {
+        "Yes"
+    } else {
+        "No"
+    }
+    .into()
+}
