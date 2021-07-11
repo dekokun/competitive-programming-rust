@@ -28,33 +28,25 @@ fn main() {
 }
 
 fn solve(
-    n: usize,
+    _n: usize,
     cp: Vec<(usize, usize)>,
     _q: usize,
     lr: Vec<(usize, usize)>,
 ) -> Vec<(usize, usize)> {
-    let mut c1 = vec![0; n];
-    let mut c2 = vec![0; n];
-    for (i, (c, p)) in cp.into_iter().enumerate() {
-        if c == 1 {
-            c1[i] = p;
-        } else {
-            c2[i] = p;
-        }
-    }
-    debug!(c1, c2);
     let mut c1_cumsum = vec![0];
     let mut c2_cumsum = vec![0];
     let mut c1_now = 0;
-    for p in c1 {
-        c1_now += p;
-        c1_cumsum.push(c1_now);
-    }
     let mut c2_now = 0;
-    for p in c2 {
-        c2_now += p;
+    for (c, p) in cp {
+        if c == 1 {
+            c1_now += p;
+        } else {
+            c2_now += p;
+        }
+        c1_cumsum.push(c1_now);
         c2_cumsum.push(c2_now);
     }
+
     let mut ans = vec![];
     for (l, r) in lr {
         ans.push((
