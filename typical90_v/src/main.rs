@@ -12,9 +12,22 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: u64,
+        b: u64,
+        c: u64,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b, c));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: u64, b: u64, c: u64) -> u64 {
+    let size = gcd(gcd(a, b), c);
+    (a / size) - 1 + (b / size) - 1 + (c / size) - 1
+}
+fn gcd(a: u64, b: u64) -> u64 {
+    // a の方が大きい
+    let (a, b) = if a < b { (b, a) } else { (a, b) };
+    if a % b == 0 {
+        return b;
+    }
+    gcd(b, a % b)
+}
