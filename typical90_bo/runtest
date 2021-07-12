@@ -3,6 +3,13 @@
 cd "$(dirname "$0")" || exit
 source ../runtest_func.sh
 cargo test
-cargo build
 
-t "" ""
+if ! cargo build; then
+    echo -e "${RED}Cargo build failed.${NC}"
+    exit 0
+fi
+
+t "21 1" 15
+t "1330 1" 555
+t "2311640221315 15" 474547
+t "0 10" 0
