@@ -12,9 +12,15 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        h: usize,
+        w: usize,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(h, w));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(h: usize, w: usize) -> usize {
+    if h == 1 || w == 1 {
+        return h * w;
+    }
+    ((h + 1) / 2) * ((w + 1) / 2)
+}
