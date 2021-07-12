@@ -23,11 +23,16 @@ fn main() {
 fn solve(n: usize, p: usize, q: usize, a: Vec<usize>) -> usize {
     let mut ans = 0;
     for i in 0..n {
+        let v = a[i];
         for j in i + 1..n {
+            let v = (v * a[j]) % p;
             for k in j + 1..n {
+                let v = (v * a[k]) % p;
                 for l in k + 1..n {
+                    let v = (v * a[l]) % p;
                     for m in l + 1..n {
-                        if (((((((a[i] * a[j]) % p) * a[k]) % p) * a[l]) % p) * a[m]) % p == q {
+                        let v = (v * a[m]) % p;
+                        if v == q {
                             ans += 1;
                         }
                     }
