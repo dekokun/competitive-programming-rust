@@ -1,8 +1,6 @@
 #![allow(non_snake_case, unused_macros, dead_code)]
 
-use std::collections::HashMap;
-
-use proconio::input;
+use proconio::{input, marker::Usize1};
 
 // https://maguro.dev/debug-macro/ から
 macro_rules! debug {
@@ -16,21 +14,19 @@ fn main() {
     input! {
         n: usize,
         m: usize,
-        ab: [(usize, usize); m],
+        ab: [(Usize1, Usize1); m],
     }
     println!("{}", solve(n, m, ab));
 }
 
-fn solve(_n: usize, _m: usize, ab: Vec<(usize, usize)>) -> usize {
-    let mut graph = HashMap::new();
+fn solve(n: usize, _m: usize, ab: Vec<(usize, usize)>) -> usize {
+    let mut graph = vec![vec![]; n];
     for (a, b) in ab {
-        let entry = graph.entry(a).or_insert_with(|| vec![]);
-        entry.push(b);
-        let entry = graph.entry(b).or_insert_with(|| vec![]);
-        entry.push(a);
+        graph[a].push(b);
+        graph[b].push(a);
     }
     let mut ans = 0;
-    'outer: for (k, v) in graph {
+    'outer: for (k, v) in graph.into_iter().enumerate() {
         let mut count = 0;
         for i in v {
             if i < k {
