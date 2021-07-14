@@ -32,22 +32,12 @@ fn solve(mut a: Vec<usize>, b: Vec<usize>) -> Vec<usize> {
     debug!(a);
     let mut ans = vec![];
     for v in b {
-        let mut l = -1;
-        let mut r = a.len() as i32;
-        while r - l > 1 {
-            let m = (r + l) / 2;
-            if v < a[m as usize] {
-                r = m;
-            } else {
-                l = m;
-            }
-        }
-        ans.push(if r == a.len() as i32 {
-            v - a[a.len() - 1]
-        } else if l == -1 {
-            a[0] - v
-        } else {
-            (a[r as usize] - v).min(v - a[l as usize])
+        let ret = a.binary_search(&v);
+        ans.push(match ret {
+            Ok(_) => 0,
+            Err(0) => a[0] - v,
+            Err(i) if i == a.len() => v - a[a.len() - 1],
+            Err(i) => (a[i] - v).min(v - a[i - 1]),
         });
     }
     ans
