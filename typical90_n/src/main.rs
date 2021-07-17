@@ -13,8 +13,18 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        a: [usize; n],
+        b: [usize; n]
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(mut a: Vec<usize>, mut b: Vec<usize>) -> usize {
+    let mut ans = 0;
+    a.sort();
+    b.sort();
+    for (i, v) in a.into_iter().enumerate() {
+        ans += v.max(b[i]) - v.min(b[i]);
+    }
+    ans
+}
