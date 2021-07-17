@@ -13,8 +13,17 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        a: usize,
+        x: usize,
+        y: usize,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(n, a, x, y));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize, a: usize, x: usize, y: usize) -> usize {
+    if n > a {
+        a * x + (n - a) * y
+    } else {
+        n * x
+    }
+}
