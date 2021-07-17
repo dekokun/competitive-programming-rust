@@ -23,16 +23,9 @@ fn solve(n: usize, mut v: Vec<usize>) -> usize {
     v.reverse();
     debug!(v);
     let mut ans = 10000;
-    for i in 0..10000 {
-        let sum = i * v[0];
-        if sum > n {
-            break;
-        }
-        for j in 0..10000 - i {
+    for i in 0..=(n / v[0]) {
+        for j in 0..=(n - v[0] * i) / v[1] {
             let sum = i * v[0] + j * v[1];
-            if sum > n {
-                break;
-            }
             if (n - sum) % v[2] == 0 {
                 ans = ans.min(i + j + (n - sum) / v[2]);
             }
