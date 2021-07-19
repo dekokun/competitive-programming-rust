@@ -12,9 +12,35 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a1: i64,
+        a2: i64,
+        a3: i64,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a1, a2, a3));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a1: i64, a2: i64, a3: i64) -> i64 {
+    let mut ans = 0;
+    let mut d1 = a2 - a1;
+    let mut d2 = a3 - a2;
+    while d1 != d2 {
+        // a2を増やす
+        if d2 - d1 >= 2 {
+            let diff = d2 - d1;
+            let count = diff / 2;
+            d1 += count;
+            d2 -= count;
+            ans += count;
+        } else if d2 - d1 == 1 {
+            // a3を増やす
+            d2 += 1;
+            ans += 1;
+        } else if d2 < d1 {
+            // a1 を増やす
+            let diff = d1 - d2;
+            d1 -= diff;
+            ans += diff;
+        }
+    }
+    ans
+}
