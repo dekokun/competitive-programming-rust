@@ -3,12 +3,14 @@
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
+TOP='\033[0G'
 
 runtest() {
   exec_file=./target/debug/$(cd "$(dirname "$0")" && basename "$(pwd)")
   if [ ! -e "$exec_file" ]; then
     cargo build
   fi
+  echo -en "testing...${TOP}"
   if ! output=$(echo "$1" | time $exec_file); then
     echo -e "${RED}command fail${NC}"
     echo -e "please run command: echo $1 | time cargo run"
