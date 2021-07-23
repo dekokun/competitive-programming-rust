@@ -12,9 +12,13 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: u64,
+        b: u64,
+        c: u64,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b, c));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: u64, b: u64, c: u64) -> String {
+    if a < c.pow(b as u32) { "Yes" } else { "No" }.into()
+}
