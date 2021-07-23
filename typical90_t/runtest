@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit
+source ../runtest_func.sh
+cargo test
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+if ! cargo build; then
+    echo -e "${RED}Cargo build failed.${NC}"
+    exit 1
+fi
+
+t "4 3 2" Yes
+t "16 3 2" No
+t "8 3 2" No
