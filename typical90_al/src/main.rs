@@ -12,9 +12,25 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: u64,
+        b: u64,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: u64, b: u64) -> String {
+    let gcd = gcd(a, b);
+    match (a / gcd).checked_mul(b) {
+        None => "Large".into(),
+        Some(a) if a > 10_u64.pow(18) => "Large".into(),
+        Some(a) => a.to_string(),
+    }
+}
+
+fn gcd(a: u64, b: u64) -> u64 {
+    let (a, b) = if a < b { (b, a) } else { (a, b) };
+    if a % b == 0 {
+        return b;
+    }
+    gcd(b, a % b)
+}
