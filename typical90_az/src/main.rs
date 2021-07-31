@@ -13,8 +13,14 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        a: [[usize; 6]; n]
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: Vec<Vec<usize>>) -> usize {
+    let MOD = 10_usize.pow(9) + 7;
+    a.into_iter()
+        .map(|a| a.into_iter().sum::<usize>() % MOD)
+        .fold(1, |acc, x: usize| acc * x % MOD)
+}
