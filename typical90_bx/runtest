@@ -12,4 +12,11 @@ if ! cargo build; then
     exit 1
 fi
 
-t "" ""
+t "10
+1 1 1 1 1 1 1 1 1 1" Yes
+t "3
+1 1 1" No
+t "3
+1 18 1" Yes
+t "4
+1 9 1 9" No

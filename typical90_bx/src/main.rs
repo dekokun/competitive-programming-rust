@@ -13,8 +13,39 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        a: [usize; n],
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: Vec<usize>) -> String {
+    let sum = a.iter().sum();
+    let a = a.repeat(2);
+    let mut tmp = 0;
+    let mut j = 0;
+    for i in 0..a.len() {
+        if i != 0 {
+            tmp -= a[i - 1];
+        }
+        if a[i] * 10 == sum {
+            return "Yes".into();
+        }
+        if tmp * 10 == sum {
+            return "Yes".into();
+        }
+        loop {
+            if j == a.len() {
+                break;
+            }
+            tmp += a[j];
+            j += 1;
+            if tmp * 10 == sum {
+                return "Yes".into();
+            }
+            if tmp * 10 > sum {
+                break;
+            }
+        }
+    }
+    "No".into()
+}
