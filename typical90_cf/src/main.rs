@@ -13,8 +13,13 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        s: String
     }
-    println!("{}", solve(n));
+    println!("{}", solve(n, s));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize, s: String) -> usize {
+    let mut map = vec![None; n];
+    let mut last = None;
+    for c in s.chars().enumerate().collect::<Vec<_>>().windows(2) {}
+}
