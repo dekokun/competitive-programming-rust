@@ -12,9 +12,12 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: usize,
+        b: usize,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: usize, b: usize) -> usize {
+    a ^ b
+}
