@@ -13,8 +13,19 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        a: [usize; n]
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: Vec<usize>) -> usize {
+    let mut a = a
+        .into_iter()
+        .enumerate()
+        .map(|(a, b)| (b, a))
+        .collect::<Vec<(usize, usize)>>();
+    a.sort();
+    a.reverse();
+    debug!(a);
+    a[1].1 + 1
+}
