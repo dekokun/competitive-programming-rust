@@ -19,61 +19,39 @@ fn main() {
 }
 
 fn solve(n: usize, s: String) -> usize {
-    let next_x = s
-        .chars()
-        .rev()
-        .enumerate()
-        .fold(vec![], |mut acc, (i, c)| {
-            if c == 'x' {
-                acc.push(Some(n - i - 1));
-                acc
-            } else if acc.is_empty() {
-                vec![None]
-            } else {
-                acc.push(acc[acc.len() - 1]);
-                acc
-            }
-        })
-        .into_iter()
-        .rev()
-        .collect::<Vec<_>>();
-    let next_o = s
-        .chars()
-        .rev()
-        .enumerate()
-        .fold(vec![], |mut acc, (i, c)| {
-            if c == 'o' {
-                acc.push(Some(n - i - 1));
-                acc
-            } else if acc.is_empty() {
-                vec![None]
-            } else {
-                acc.push(acc[acc.len() - 1]);
-                acc
-            }
-        })
-        .into_iter()
-        .rev()
-        .collect::<Vec<_>>();
+    let next_x = next('x', &s);
+    let next_o = next('o', &s);
     let mut ans = 0;
     for (i, c) in s.chars().enumerate() {
-        ans += if c == 'x' {
-            let next = next_o[i];
-            if next.is_none() {
-                0
-            } else {
-                let next = next.unwrap();
-                n - next
-            }
+        let next = if c == 'x' { &next_o } else { &next_x };
+        let next = next[i];
+        ans += if next.is_none() {
+            0
         } else {
-            let next = next_x[i];
-            if next.is_none() {
-                0
-            } else {
-                let next = next.unwrap();
-                n - next
-            }
-        }
+            let next = next.unwrap();
+            n - next
+        };
     }
     ans
+}
+
+fn next(cc: char, s: &String) -> Vec<Option<usize>> {
+    let n = s.len();
+    s.chars()
+        .rev()
+        .enumerate()
+        .fold(vec![], |mut acc, (i, c)| {
+            if c == cc {
+                acc.push(Some(n - i - 1));
+                acc
+            } else if acc.is_empty() {
+                vec![None]
+            } else {
+                acc.push(acc[acc.len() - 1]);
+                acc
+            }
+        })
+        .into_iter()
+        .rev()
+        .collect::<Vec<_>>()
 }
