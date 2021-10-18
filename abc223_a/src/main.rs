@@ -17,4 +17,12 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> String {
+    if n == 0 {
+        "No"
+    } else if n % 100 == 0 {
+        "Yes"
+    } else {
+        "No"
+    }.into()
+}
