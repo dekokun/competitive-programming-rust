@@ -12,4 +12,9 @@ if ! cargo build; then
     exit 1
 fi
 
-t "" ""
+t aaba "aaab
+baaa"
+t z "z
+z"
+t abracadabra "aabracadabr
+racadabraab"
