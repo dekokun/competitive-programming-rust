@@ -1,6 +1,6 @@
 #![allow(non_snake_case, unused_macros, dead_code)]
 
-use proconio::input;
+use proconio::{input, marker::Chars};
 
 // https://maguro.dev/debug-macro/ から
 macro_rules! debug {
@@ -12,9 +12,15 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        s: Chars,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(s));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: Vec<char>) -> String {
+    if s[s.len() - 1] == 'r' && s[s.len() - 2] == 'e' {
+        "er"
+    } else {
+       "ist"
+    }.to_string()
+}
