@@ -2,7 +2,7 @@
 
 use proconio::input;
 
-// https://maguro.dev/debug-macro/ から
+// https://maguro.dev/debug-macro/
 macro_rules! debug {
     ($($a:expr),* $(,)*) => {
         #[cfg(debug_assertions)]
