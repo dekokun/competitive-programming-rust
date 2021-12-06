@@ -17,4 +17,6 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> String {
+    format!("AGC{:03}", if n < 42 {n} else {n + 1})
+}
