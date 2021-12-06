@@ -18,7 +18,7 @@ fn main() {
 }
 
 fn solve(s: String) -> String {
-    if s.len() == 0 {
+    if s.len() == 1 {
         return "Yes".into();
     }
     if s.len() == 2 {
@@ -44,6 +44,9 @@ fn solve(s: String) -> String {
     for i in 0..s.len() {
         if i % 3 != 0 {
             continue;
+        }
+        if i + 3 > s.len() {
+            return "No".into();
         }
         if &s[i..i + 3] != "oxx" {
             return "No".into();
