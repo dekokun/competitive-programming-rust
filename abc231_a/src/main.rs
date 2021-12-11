@@ -12,9 +12,12 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        d: usize,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(d));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> f64 {
+    let n = n as f64;
+    n / 100.0
+}
