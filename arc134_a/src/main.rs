@@ -13,8 +13,22 @@ macro_rules! debug {
 fn main() {
     input! {
         n: usize,
+        l: u64,
+        w: u64,
+        a: [u64; n],
     }
-    println!("{}", solve(n));
+    println!("{}", solve(l, w, a));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(l: u64, w: u64, mut a: Vec<u64>) -> u64 {
+    a.sort();
+    let mut ans = 0;
+    if a[0] != 0 {
+        ans += 1 + (a[0] - 1) / w;
+    }
+    ans += (l - a.last().unwrap() - 1) / w;
+    for window in a.windows(2) {
+        ans += (window[1] - window[0] - 1) / w;
+    }
+    ans
+}
