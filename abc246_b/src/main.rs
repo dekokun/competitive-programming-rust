@@ -12,9 +12,14 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: f64,
+        b: f64,
     }
-    println!("{}", solve(n));
+    let ans = solve(a, b);
+    println!("{} {}", ans.0, ans.1);
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: f64, b: f64) -> (f64, f64) {
+    let dist = (a.powf(2.0) + b.powf(2.0)).sqrt();
+    (a / dist, b / dist)
+}
