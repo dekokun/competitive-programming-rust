@@ -12,4 +12,9 @@ if ! cargo build; then
     exit 1
 fi
 
-t "" ""
+t "3
+PEEL
+AAAAAAAAAA
+CODEJAMDAY" "Case #1: PEEEEL
+Case #2: AAAAAAAAAA
+Case #3: CCODDEEJAAMDAAY"
