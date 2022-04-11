@@ -14,7 +14,22 @@ fn main() {
     input! {
         n: usize,
     }
-    println!("{}", solve(n));
+    println!(
+        "{}",
+        solve(n)
+            .into_iter()
+            .map(|a| a.to_string())
+            .collect::<Vec<_>>()
+            .join(" ")
+    );
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> Vec<usize> {
+    let mut ans = vec![];
+    for i in 1..=n {
+        let mut tmp = ans.clone();
+        ans.push(i);
+        ans.append(&mut tmp);
+    }
+    ans
+}
