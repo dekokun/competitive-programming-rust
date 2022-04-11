@@ -12,4 +12,22 @@ if ! cargo build; then
     exit 1
 fi
 
-t "" ""
+t "3
+tanaka taro
+tanaka jiro
+suzuki hanako" Yes
+t "3
+aaa bbb
+xxx aaa
+bbb yyy" No
+t "2
+tanaka taro
+tanaka taro" No
+t "3
+takahashi chokudai
+aoki kensho
+snu ke" Yes
+t "3
+takahashi takahashi
+aoki kensho
+snu ke" Yes
