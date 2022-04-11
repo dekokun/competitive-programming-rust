@@ -1,6 +1,8 @@
 #![allow(non_snake_case, unused_macros, dead_code)]
 
-use proconio::input;
+use std::collections::VecDeque;
+
+use proconio::{input, marker::Chars};
 
 // https://maguro.dev/debug-macro/
 macro_rules! debug {
@@ -12,9 +14,14 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        s: Chars,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(s));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: Vec<char>) -> String {
+    let mut v: VecDeque<char> = s.into();
+    v.pop_back();
+    v.push_front('0');
+    v.into_iter().collect()
+}
