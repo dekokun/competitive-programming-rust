@@ -12,4 +12,6 @@ if ! cargo build; then
     exit 1
 fi
 
-t "" ""
+t "1 4 2" 2
+t "7 7 10" 0
+t "31 415926 5" 6

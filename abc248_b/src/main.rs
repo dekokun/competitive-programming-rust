@@ -12,9 +12,22 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: usize,
+        b: usize,
+        k: usize,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b, k));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(mut a: usize, b: usize, k: usize) -> usize {
+    for scream in 0..100 {
+        if b == a {
+            return scream;
+        }
+        if b / k <= a {
+            return scream + 1;
+        }
+        a = a * k;
+    }
+    panic!()
+}
