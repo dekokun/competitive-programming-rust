@@ -1,6 +1,6 @@
 #![allow(non_snake_case, unused_macros, dead_code)]
 
-use proconio::input;
+use proconio::{input, marker::Chars};
 
 // https://maguro.dev/debug-macro/
 macro_rules! debug {
@@ -12,9 +12,17 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        s: Chars,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(s));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(s: Vec<char>) -> u32 {
+    for i in 0..=9 {
+        if s.contains(&std::char::from_digit(i, 10).unwrap()) {
+            continue;
+        }
+        return i;
+    }
+    panic!()
+}
