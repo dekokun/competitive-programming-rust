@@ -17,4 +17,6 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> String {
+    return format!("{:<02}", n % 100)
+}
