@@ -12,9 +12,12 @@ macro_rules! debug {
 
 fn main() {
     input! {
-        n: usize,
+        a: f64,
+        b: f64,
     }
-    println!("{}", solve(n));
+    println!("{}", solve(a, b));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(a: f64, b: f64) -> String {
+    format!("{:.3}", b / a)
+}
