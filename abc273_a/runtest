@@ -12,4 +12,7 @@ if ! cargo build; then
     exit 1
 fi
 
-t "" ""
+t 2 2
+t 3 6
+t 0 1
+t 10 3628800

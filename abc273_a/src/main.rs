@@ -17,4 +17,10 @@ fn main() {
     println!("{}", solve(n));
 }
 
-fn solve(n: usize) -> usize {}
+fn solve(n: usize) -> usize {
+    let mut ans = 1;
+    for i in 1..=n {
+        ans *= i;
+    }
+    ans
+}
