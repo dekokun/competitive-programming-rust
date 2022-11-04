@@ -1,6 +1,21 @@
 # Atcoder
 
-## Usage
+## Usage: Atcoder
+
+### Start new contest
+
+```
+$ cargo compete new abc275
+$ cd abc275
+```
+
+### submit
+
+```
+$ cargo compete submit a
+```
+
+## Usage: Other Contest
 
 example problem: abc135_e
 
